@@ -1,0 +1,22 @@
+Variable,No. (home/non-home),Home (n=154),Non-home (n=51),P value
+DEMOGRAPHICS,,,,
+"Age, y, median (IQR)",154/51,63.3 (54.1–70.5),70.2 (62.5–77.7),<.001
+"Female sex, No. (%)",154/51,66 (43%),32 (63%),.016
+"BMI, median (IQR)",147/51,30.1 (26.5–35.5),30.9 (26.9–38.4),.655
+COMORBIDITIES,,,,
+"Hypertension, No. (%)",154/51,88 (57%),43 (84%),<.001
+"Diabetes, No. (%)",154/51,38 (25%),20 (39%),.051
+"COPD, No. (%)",154/51,12 (8%),8 (16%),.108
+"CHF, No. (%)",154/51,8 (5%),4 (8%),.498
+"Prior MI, No. (%)",154/51,0 (0%),0 (0%),
+"PVD, No. (%)",154/51,9 (6%),4 (8%),.740
+"Prior CVA, No. (%)",154/51,3 (2%),2 (4%),.600
+SURGICAL,,,,
+"ASA class, median (IQR)",154/51,2.0 (2.0–3.0),3.0 (3.0–3.0),<.001
+"No. of levels, median (IQR)",153/51,2.0 (2.0–3.0),3.0 (2.0–4.0),<.001
+"Fusion, No. (%)",154/51,36 (23%),17 (33%),.196
+"Operative time, min, median (IQR)",152/51,158.5 (130.0–193.8),190.0 (151.5–230.5),<.001
+MUSCLE MORPHOMETRY,,,,
+"Iliopsoas volume, cm³, median (IQR)",154/51,96.0 (71.5–129.0),82.0 (64.2–107.2),.008
+"Deep Back volume, cm³, median (IQR)",153/51,160.2 (136.9–190.2),163.6 (127.8–182.5),.506
+"Gluteus Medius volume, cm³, median (IQR)",101/35,11.9 (6.9–18.4),9.2 (5.0–15.1),.187

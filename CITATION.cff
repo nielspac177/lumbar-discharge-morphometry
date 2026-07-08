@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "lumbar-discharge-morphometry: internally-validated multi-muscle MRI morphometry for predicting non-home discharge after lumbar spine surgery"
+type: software
+authors:
+  - family-names: "Pacheco-Barrios"
+    given-names: "Niels"
+version: 0.1.0
+date-released: "2026-07-08"
+license: MIT
+repository-code: "https://github.com/nielspac177/lumbar-discharge-morphometry"
+keywords:
+  - clinical prediction model
+  - decision-curve analysis
+  - sarcopenia
+  - lumbar spine surgery
+  - discharge disposition
+  - TRIPOD

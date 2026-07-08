@@ -1,0 +1,72 @@
+# ============================================================
+# DATA & PHI — NEVER COMMIT. This repo is code-only.
+# ============================================================
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*.parquet
+*.dta
+*.sav
+*.dcm
+data/
+Lumbar segments*
+**/analytic_cohort*
+**/data_dictionary*
+
+# Local config points at an absolute PHI path — use config.example.yaml
+config.yaml
+config.legacy.yaml
+config.smoke.yaml
+
+# ------------------------------------------------------------
+# Results: publish ONLY aggregate tables (whitelisted below).
+# Row-level predictions (roc_data.csv) and logs stay local.
+# ------------------------------------------------------------
+results/*
+!results/.gitkeep
+!results/model_metrics.csv
+!results/reclassification.csv
+!results/calibration.csv
+!results/calibration_binned.csv
+!results/optimism_corrected.csv
+!results/dca.csv
+!results/dca_summary.json
+!results/delta_net_benefit.csv
+!results/delta_net_benefit_summary.json
+!results/model_coefficients.csv
+!results/coef_stability.csv
+!results/collinearity.csv
+!results/table1_cohort.csv
+!results/univariate_imaging.csv
+!results/run_meta.json
+# explicitly NOT whitelisted (row-level / logs):
+results/roc_data.csv
+results/_run.log
+
+# Figures are regenerable, PHI-free aggregate plots/schematics — committed for readers.
+figures/*
+!figures/.gitkeep
+!figures/*.png
+!figures/*.pdf
+!figures/*.svg
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+*.egg-info/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# temp determinism-check artifacts
+results_chk/
+results_chk.log
+.venv/

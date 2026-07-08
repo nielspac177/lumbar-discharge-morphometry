@@ -1,0 +1,14 @@
+# Template config for lumbar-discharge-morphometry.
+# Copy to config.yaml and set data_path to your local frozen analytic dataset.
+# The analytic dataset (patient-level) is NOT distributed with this repo (code-only).
+data_path: "data/analytic_cohort.csv"
+outcome: "rehab"                 # 1 = non-home discharge, 0 = home
+seed: 20260518                   # master seed; all RNG derived from this
+
+n_repeats: 100                   # repeated stratified CV repeats
+n_folds: 10
+n_boot: 2000                     # bootstrap resamples (CIs, optimism, DCA bands)
+
+leak_free: true                  # fit imputation + scaling inside CV folds (never set false for reporting)
+
+l2_C: 1.0                        # ridge inverse-regularization strength
