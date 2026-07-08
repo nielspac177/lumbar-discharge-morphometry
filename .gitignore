@@ -37,6 +37,7 @@ results/*
 !results/model_coefficients.csv
 !results/coef_stability.csv
 !results/collinearity.csv
+!results/predictor_correlation.csv
 !results/table1_cohort.csv
 !results/univariate_imaging.csv
 !results/run_meta.json

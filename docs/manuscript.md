@@ -229,6 +229,15 @@ See `results/model_coefficients.csv` (adjusted per-SD ORs), `results/collinearit
 sign-consistency).
 
 # Figure legends
+- **Figure (Methods overview).** Single-page study-design schematic
+  (`figures/Methods_pipeline_overview`): cohort and segmentation; the **model
+  specification** — outcome, the pre-specified clinical adjustment set (age, sex, ASA
+  class, number of operated levels, fusion), the muscle predictors added, and the
+  nested M0→M1→M2 structure with per-SD standardization, ridge penalization, and
+  events-per-variable; leak-free estimation and collinearity diagnostics (predictor
+  correlation heatmap); and the findings (adjusted-OR forest with collinearity
+  artifacts flagged, and incremental net benefit over the clinical model). All
+  embedded data panels are regenerated from `results/`.
 - **Figure 1.** Adjusted per-SD odds ratios (95% CI) for non-home discharge; clinical
   (slate) and imaging (blue) predictors; reference line at OR = 1; asterisks mark
   P < .05. The deep-paraspinal coefficient is flagged as a collinearity artifact

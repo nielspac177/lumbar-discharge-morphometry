@@ -31,6 +31,16 @@ from .validation import (calibration, coefficient_stability, collinearity_diagno
 MODEL_ORDER = ["M0_clinical", "M1_iliopsoas", "M2_multimuscle"]
 
 
+def _predictor_correlation(df, cfg):
+    """Correlation matrix among the full-model predictors (imputed, standardized)."""
+    from sklearn.experimental import enable_iterative_imputer  # noqa: F401
+    from sklearn.impute import IterativeImputer
+    predictors = model_specs()["M2_multimuscle"]
+    X = df[predictors].astype(float).to_numpy()
+    X = IterativeImputer(max_iter=20, random_state=0).fit_transform(X)
+    return pd.DataFrame(np.corrcoef(X.T), index=predictors, columns=predictors)
+
+
 def run(config_path: str = "config.yaml", outdir: str = "results") -> dict:
     os.makedirs(outdir, exist_ok=True)
     cfg = load_config(config_path)
@@ -104,6 +114,10 @@ def run(config_path: str = "config.yaml", outdir: str = "results") -> dict:
     fit_full_logit(df, cfg).to_csv(f"{outdir}/model_coefficients.csv", index=False)
     coefficient_stability(df, cfg).to_csv(f"{outdir}/coef_stability.csv", index=False)
     collinearity_diagnostics(df, cfg).to_csv(f"{outdir}/collinearity.csv", index=False)
+
+    # Aggregate predictor correlation matrix (imputed, standardized) — PHI-free,
+    # used by the pipeline-overview methods figure.
+    _predictor_correlation(df, cfg).to_csv(f"{outdir}/predictor_correlation.csv")
 
     with open(f"{outdir}/run_meta.json", "w") as f:
         json.dump(meta, f, indent=2)
