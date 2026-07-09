@@ -114,7 +114,7 @@ def validation_schematic():
     _box(ax, 0.52, 0.60, 0.20, 0.24,
          "Within EACH train fold:\nimpute + standardize", "white", ec=JAMA["orange"], fs=7.2)
     _box(ax, 0.52, 0.28, 0.20, 0.24,
-         "Apply to held-out\nfold → OOF preds", "white", ec=JAMA["green"], fs=7.2)
+         "Apply to held-out fold\n(out-of-fold predictions)", "white", ec=JAMA["green"], fs=7.2)
     _box(ax, 0.76, 0.42, 0.22, 0.30,
          "AUC · calibration\nNRI/IDI · DCA\n+ bootstrap optimism", "#FBF1E6",
          ec=JAMA["orange"], fs=7.4)

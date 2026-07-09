@@ -38,52 +38,160 @@ def _save(fig, name):
 
 
 # ======================================================================================
-# Figure 1 — Forest of adjusted per-SD odds ratios (M2), clinical + imaging
+# Figure 1 — Crude vs adjusted table-forest (JAMA style)
 # ======================================================================================
 
-def fig1_forest(res=RES):
-    d = pd.read_csv(res / "model_coefficients.csv")
-    d["label"] = d["feature"].map(LABELS)
-    d["group"] = d["feature"].map(GROUP)
-    # Flag suppression/collinearity artifacts (sign flip vs univariable)
-    try:
-        col = pd.read_csv(res / "collinearity.csv").set_index("feature")
-        d["artifact"] = d["feature"].map(col["sign_flip"]).fillna(False)
-    except FileNotFoundError:
-        d["artifact"] = False
-    d = pd.concat([d[d.group == "Clinical"], d[d.group == "Imaging"]], ignore_index=True)
+# Display order and labels (grouped by muscle for the imaging block)
+_DISPLAY = [
+    ("SECTION", "Clinical factors"),
+    ("age_yrs", "Age"),
+    ("female", "Female sex"),
+    ("asa", "ASA class"),
+    ("num_level", "No. of operated levels"),
+    ("fusion", "Fusion vs decompression"),
+    ("SECTION", "Muscle morphometry"),
+    ("iliopsoas__vol_norm_vert", "Iliopsoas volume"),
+    ("iliopsoas__int_mean_mean", "Iliopsoas T2 signal"),
+    ("deep_back__vol_norm_vert", "Deep paraspinal volume"),
+    ("deep_back__int_mean_mean", "Deep paraspinal T2 signal"),
+    ("gluteus_medius__vol_norm_vert", "Gluteus medius volume"),
+    ("gluteus_medius__int_mean_mean", "Gluteus medius T2 signal"),
+]
 
-    n = len(d)
-    fig, ax = plt.subplots(figsize=(5.0, 0.34 * n + 1.1))
-    ys = np.arange(n)[::-1]
-    for y, (_, r) in zip(ys, d.iterrows()):
-        color = JAMA["slate"] if r.group == "Clinical" else JAMA["blue"]
-        lo, hi = max(0.05, r.ci_lo), min(20, r.ci_hi)
-        ax.plot([lo, hi], [y, y], color=color, lw=1.4, zorder=2)
-        ax.scatter(r.OR_per_SD, y, marker="s", s=26, color=color,
-                   edgecolor="white", linewidth=0.6, zorder=3)
-    ax.axvline(1, color="black", lw=0.7, ls="--", alpha=0.6)
-    ax.set_xscale("log")
-    ax.set_xlim(0.05, 20)
-    ax.set_xticks([0.1, 0.25, 0.5, 1, 2, 4, 10])
-    ax.set_xticklabels(["0.1", "0.25", "0.5", "1", "2", "4", "10"])
-    ax.set_yticks(ys)
-    ax.set_yticklabels([f"{r.label}" + ("  *" if r.p < 0.05 else "")
-                        + ("  †" if r.artifact else "")
-                        for _, r in d.iterrows()])
-    ax.set_ylim(-0.6, n - 0.4)
-    ax.set_xlabel("Adjusted OR for non-home discharge (per 1 SD; 95% CI)")
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.text(0.06, n - 0.2, "← favors home        favors non-home →",
-            fontsize=6.5, color=JAMA["gray"], style="italic", transform=ax.get_yaxis_transform(),
-            ha="left")
-    ax.set_title("Adjusted predictors of non-home discharge (n=205, 51 events)",
-                 fontsize=9, loc="left", weight="bold")
-    fig.text(0.01, -0.04, "*P<.05. †sign reverses vs the univariable association "
-             "(collinearity/suppression artifact — not interpreted). Estimates from the "
-             "multi-muscle logistic model; predictors standardized to per-SD effects.",
-             fontsize=6, color=JAMA["gray"])
-    _save(fig, "Fig1_forest_or")
+_LOX, _HIX = 0.1, 10.0  # forest log axis range
+
+
+def _xmap(v, x0, x1):
+    v = min(max(v, _LOX), _HIX)
+    return x0 + (x1 - x0) * (np.log(v) - np.log(_LOX)) / (np.log(_HIX) - np.log(_LOX))
+
+
+def _fmt_or(o, lo, hi):
+    return f"{o:.2f} ({lo:.2f}-{hi:.2f})"
+
+
+def _p(p):
+    return "<.001" if p < 0.001 else f"{p:.2f}".lstrip("0").replace("0.", ".") if p < 1 else f"{p:.2f}"
+
+
+def _draw_forest_band(ax, x0, x1, rows, or_key, lo_key, hi_key, n_rows):
+    """Draw one forest column (crude or adjusted) across all predictor rows."""
+    # reference line at OR=1
+    x1line = _xmap(1.0, x0, x1)
+    top_y = n_rows - 2.0
+    bot_y = 1.0
+    ax.plot([x1line, x1line], [bot_y, top_y], color="black", lw=0.7, alpha=0.55, zorder=1)
+    for r in rows:
+        if r["kind"] != "row":
+            continue
+        y = r["y"]
+        lo = _xmap(r[lo_key], x0, x1); hi = _xmap(r[hi_key], x0, x1)
+        est = _xmap(r[or_key], x0, x1)
+        ax.plot([lo, hi], [y, y], color="black", lw=1.0, zorder=2)
+        # caps
+        for xc in (lo, hi):
+            ax.plot([xc, xc], [y - 0.12, y + 0.12], color="black", lw=0.8, zorder=2)
+        # truncation arrows
+        if r[lo_key] < _LOX:
+            ax.annotate("", xy=(x0, y), xytext=(x0 + 0.012, y),
+                        arrowprops=dict(arrowstyle="->", color="black", lw=0.8))
+        if r[hi_key] > _HIX:
+            ax.annotate("", xy=(x1, y), xytext=(x1 - 0.012, y),
+                        arrowprops=dict(arrowstyle="->", color="black", lw=0.8))
+        ax.scatter(est, y, marker="s", s=22, color="black", zorder=3)
+    # axis ticks under the band
+    for tick in (0.1, 0.5, 1, 2, 10):
+        xt = _xmap(tick, x0, x1)
+        ax.plot([xt, xt], [0.55, 0.75], color="black", lw=0.7)
+        ax.text(xt, 0.15, f"{tick:g}", ha="center", va="center", fontsize=6)
+    # directional labels — left arrow + label well left of centre, right arrow + label well right
+    ax.annotate("", xy=(_xmap(0.22, x0, x1), -0.55), xytext=(_xmap(0.72, x0, x1), -0.55),
+                arrowprops=dict(arrowstyle="->", color=JAMA["gray"], lw=0.8))
+    ax.text(_xmap(0.34, x0, x1), -1.05, "Favors home", ha="center",
+            va="center", fontsize=5.4, color=JAMA["gray"], style="italic")
+    ax.annotate("", xy=(_xmap(4.5, x0, x1), -0.55), xytext=(_xmap(1.4, x0, x1), -0.55),
+                arrowprops=dict(arrowstyle="->", color=JAMA["gray"], lw=0.8))
+    ax.text(_xmap(3.0, x0, x1), -1.05, "Favors non-home", ha="center",
+            va="center", fontsize=5.4, color=JAMA["gray"], style="italic")
+
+
+def fig1_forest(res=RES):
+    col = pd.read_csv(res / "collinearity.csv").set_index("feature")
+    meta = pd.read_csv(res / "model_metrics.csv").iloc[0]
+    n, ev = int(meta["n"]), int(meta["events"])
+
+    # Build row layout
+    rows, y = [], 0.0
+    n_content = len(_DISPLAY)
+    n_rows = n_content + 3  # header + axis area
+    ypos = n_rows - 1.0
+    header_y = ypos
+    ypos -= 1.0
+    for kind, key in _DISPLAY:
+        if kind == "SECTION":
+            rows.append({"kind": "section", "y": ypos, "label": key})
+        else:
+            c = col.loc[kind]
+            rows.append({"kind": "row", "y": ypos, "label": key, "feature": kind,
+                         "uni_OR_per_SD": c.uni_OR_per_SD, "uni_lo": c.uni_lo, "uni_hi": c.uni_hi,
+                         "uni_p": c.uni_p, "adj_OR_per_SD": c.adj_OR_per_SD, "adj_lo": c.adj_lo,
+                         "adj_hi": c.adj_hi, "adj_p": c.adj_p, "artifact": bool(c.sign_flip)})
+        ypos -= 1.0
+
+    fig = plt.figure(figsize=(8.4, 0.36 * n_rows + 1.1))
+    ax = fig.add_axes([0.0, 0.0, 1.0, 1.0]); ax.set_xlim(0, 1); ax.set_ylim(-2.8, n_rows)
+    ax.axis("off")
+
+    # column x-anchors:  label | crude OR text | crude forest | adj OR text | adj forest
+    LX = 0.005
+    CRUDE_T = 0.255                 # crude OR text (right-aligned)
+    CRUDE_F = (0.285, 0.475)        # crude forest band
+    ADJ_T = 0.735                   # adjusted OR text (right-aligned)
+    ADJ_F = (0.770, 0.985)          # adjusted forest band
+
+    # top & bottom heavy rules
+    for yy in (n_rows - 0.35, 0.45):
+        ax.plot([0.0, 1.0], [yy, yy], color="black", lw=1.6)
+    # header under-rule
+    ax.plot([0.0, 1.0], [header_y - 0.45, header_y - 0.45], color="black", lw=0.8)
+
+    # column headers
+    ax.text(LX, header_y, "Predictor (per 1 SD)", fontsize=8, weight="bold", va="center")
+    ax.text(CRUDE_T, header_y, "Crude OR (95% CI)", fontsize=8, weight="bold", va="center", ha="right")
+    ax.text((CRUDE_F[0] + CRUDE_F[1]) / 2, header_y, "Crude", fontsize=8, weight="bold", va="center", ha="center")
+    ax.text(ADJ_T, header_y, "Adjusted OR (95% CI)", fontsize=8, weight="bold", va="center", ha="right")
+    ax.text((ADJ_F[0] + ADJ_F[1]) / 2, header_y, "Adjusted", fontsize=8, weight="bold", va="center", ha="center")
+
+    # section bands + rows text
+    for r in rows:
+        if r["kind"] == "section":
+            ax.add_patch(plt.Rectangle((0.0, r["y"] - 0.42), 1.0, 0.84,
+                         facecolor="#EEEEEE", edgecolor="none", zorder=0))
+            ax.text(LX, r["y"], r["label"], fontsize=7.6, weight="bold", va="center")
+        else:
+            dagger = " †" if r["artifact"] else ""
+            ax.text(LX + 0.012, r["y"], r["label"] + dagger, fontsize=7.2, va="center")
+            ax.text(CRUDE_T, r["y"], _fmt_or(r["uni_OR_per_SD"], r["uni_lo"], r["uni_hi"]),
+                    fontsize=6.8, va="center", ha="right")
+            wa = "bold" if r["adj_p"] < 0.05 else "normal"
+            ax.text(ADJ_T, r["y"], _fmt_or(r["adj_OR_per_SD"], r["adj_lo"], r["adj_hi"]),
+                    fontsize=6.8, va="center", ha="right", weight=wa)
+
+    _draw_forest_band(ax, CRUDE_F[0], CRUDE_F[1], rows, "uni_OR_per_SD", "uni_lo", "uni_hi", n_rows)
+    _draw_forest_band(ax, ADJ_F[0], ADJ_F[1], rows, "adj_OR_per_SD", "adj_lo", "adj_hi", n_rows)
+
+    ax.text(0.5, n_rows - 0.02,
+            "Odds ratios for non-home discharge (n=%d; %d events), per 1-SD increase in each predictor"
+            % (n, ev), ha="center", fontsize=9, weight="bold")
+
+    ax.text(0.005, -2.05,
+            "Crude = each predictor modeled alone. Adjusted = one ridge-penalized multivariable logistic model mutually "
+            "adjusting for ALL listed covariates (age, female sex, ASA class, no. of operated\n"
+            "levels, fusion) plus the three muscle groups (volume + T2 signal). Bold adjusted OR: P<.05.  "
+            "† crude-to-adjusted sign reversal (collinearity/suppression artifact; not interpreted).  "
+            "Squares = point estimate; whiskers = 95% CI; arrows = CI beyond axis range.",
+            ha="left", va="top", fontsize=5.8, color=JAMA["gray"])
+    _save(fig, "Fig1_forest_table")
 
 
 # ======================================================================================
@@ -199,8 +307,10 @@ def fig4_roc(res=RES):
     ax.spines[["top", "right"]].set_visible(False)
     ax.set_aspect("equal")
     dauc = opt.loc["M2_multimuscle", "corrected_auc"]
-    ax.text(0.02, 0.02, f"Optimism-corrected multi-muscle AUC = {dauc:.2f}; "
-            "ΔAUC vs clinical not significant (DeLong).", fontsize=5.6, color=JAMA["gray"])
+    fig.subplots_adjust(bottom=0.20)
+    fig.text(0.5, 0.03, f"Optimism-corrected multi-muscle AUC = {dauc:.2f}; "
+             "ΔAUC vs clinical not significant (DeLong).", ha="center",
+             fontsize=5.8, color=JAMA["gray"])
     _save(fig, "FigS_roc")
 
 

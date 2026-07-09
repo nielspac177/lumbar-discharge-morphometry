@@ -199,9 +199,10 @@ def collinearity_diagnostics(df, cfg, model: str = "M2_multimuscle"):
     X = IterativeImputer(max_iter=20, random_state=0).fit_transform(X)
     Xs = StandardScaler().fit_transform(X)
 
-    # adjusted ORs
+    # adjusted ORs with CIs
     adj = sm.Logit(y, sm.add_constant(Xs)).fit(disp=0)
     adj_or = np.exp(np.asarray(adj.params)[1:])
+    adj_ci = np.exp(np.asarray(adj.conf_int())[1:])
     adj_p = np.asarray(adj.pvalues)[1:]
 
     # VIF from the standardized design correlation matrix
@@ -211,10 +212,14 @@ def collinearity_diagnostics(df, cfg, model: str = "M2_multimuscle"):
     for i, f in enumerate(predictors):
         uni = sm.Logit(y, sm.add_constant(Xs[:, i])).fit(disp=0)
         uni_or = float(np.exp(uni.params[1]))
+        uni_ci = np.exp(np.asarray(uni.conf_int())[1])
         uni_p = float(uni.pvalues[1])
         rows.append({
-            "feature": f, "uni_OR_per_SD": uni_or, "uni_p": uni_p,
-            "adj_OR_per_SD": float(adj_or[i]), "adj_p": float(adj_p[i]),
+            "feature": f, "n": len(y),
+            "uni_OR_per_SD": uni_or, "uni_lo": float(uni_ci[0]),
+            "uni_hi": float(uni_ci[1]), "uni_p": uni_p,
+            "adj_OR_per_SD": float(adj_or[i]), "adj_lo": float(adj_ci[i, 0]),
+            "adj_hi": float(adj_ci[i, 1]), "adj_p": float(adj_p[i]),
             "VIF": float(vif[i]),
             "sign_flip": bool((uni_or - 1) * (adj_or[i] - 1) < 0),
         })

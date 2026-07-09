@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-07-08T14:50:38.302429</dc:date>
+    <dc:date>2026-07-08T20:32:38.752512</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -40,7 +40,7 @@ Q 40.94784 23.521536 40.94784 26.071776
 L 40.94784 57.184704 
 Q 40.94784 59.734944 43.29144 59.734944 
 z
-" clip-path="url(#pffa05a10d6)" style="fill: #edf1f2; stroke: #374e55; stroke-linejoin: miter"/>
+" clip-path="url(#pc05ac1f842)" style="fill: #edf1f2; stroke: #374e55; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 43.29144 123.490944 
@@ -53,7 +53,7 @@ Q 40.94784 87.277536 40.94784 89.827776
 L 40.94784 120.940704 
 Q 40.94784 123.490944 43.29144 123.490944 
 z
-" clip-path="url(#pffa05a10d6)" style="fill: #eaf5fa; stroke: #00a1d5; stroke-linejoin: miter"/>
+" clip-path="url(#pc05ac1f842)" style="fill: #eaf5fa; stroke: #00a1d5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 43.29144 187.246944 
@@ -66,7 +66,7 @@ Q 40.94784 151.033536 40.94784 153.583776
 L 40.94784 184.696704 
 Q 40.94784 187.246944 43.29144 187.246944 
 z
-" clip-path="url(#pffa05a10d6)" style="fill: #ffffff; stroke: #374e55; stroke-linejoin: miter"/>
+" clip-path="url(#pc05ac1f842)" style="fill: #ffffff; stroke: #374e55; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 19.85544 248.452704 
@@ -79,7 +79,7 @@ Q 17.51184 209.689056 17.51184 212.239296
 L 17.51184 245.902464 
 Q 17.51184 248.452704 19.85544 248.452704 
 z
-" clip-path="url(#pffa05a10d6)" style="fill: #ffffff; stroke: #79af97; stroke-linejoin: miter"/>
+" clip-path="url(#pc05ac1f842)" style="fill: #ffffff; stroke: #79af97; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
     <path d="M 132.34824 248.452704 
@@ -92,7 +92,7 @@ Q 130.00464 209.689056 130.00464 212.239296
 L 130.00464 245.902464 
 Q 130.00464 248.452704 132.34824 248.452704 
 z
-" clip-path="url(#pffa05a10d6)" style="fill: #ffffff; stroke: #b24745; stroke-linejoin: miter"/>
+" clip-path="url(#pc05ac1f842)" style="fill: #ffffff; stroke: #b24745; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- Patients undergoing lumbar spine surgery -->
@@ -1566,7 +1566,7 @@ L 173.454362 209.416402
   </g>
  </g>
  <defs>
-  <clipPath id="pffa05a10d6">
+  <clipPath id="pc05ac1f842">
    <rect x="7.2" y="7.2" width="234.36" height="255.024"/>
   </clipPath>
  </defs>

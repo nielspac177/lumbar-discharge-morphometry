@@ -238,10 +238,14 @@ sign-consistency).
   correlation heatmap); and the findings (adjusted-OR forest with collinearity
   artifacts flagged, and incremental net benefit over the clinical model). All
   embedded data panels are regenerated from `results/`.
-- **Figure 1.** Adjusted per-SD odds ratios (95% CI) for non-home discharge; clinical
-  (slate) and imaging (blue) predictors; reference line at OR = 1; asterisks mark
-  P < .05. The deep-paraspinal coefficient is flagged as a collinearity artifact
-  (null univariable OR). Source: `results/model_coefficients.csv`, `collinearity.csv`.
+- **Figure 1.** Crude and adjusted per-SD odds ratios (95% CI) for non-home discharge,
+  as a two-panel table-forest. **Crude** = each predictor modeled alone; **Adjusted**
+  = one ridge-penalized multivariable logistic model mutually adjusting for all listed
+  covariates (age, female sex, ASA class, number of operated levels, fusion) plus the
+  three muscle groups (volume + T2 signal). Squares = point estimate; whiskers = 95%
+  CI; arrows = CI beyond axis range; reference line at OR = 1; bold adjusted OR marks
+  P < .05. † denotes a crude-to-adjusted sign reversal (collinearity/suppression
+  artifact; not interpreted). Source: `results/collinearity.csv`.
 - **Figure 2.** Incremental net benefit of the multi-muscle model over the clinical
   model across the 10%–40% threshold range, with bootstrap 95% CI (spanning zero).
   Source: `results/delta_net_benefit.csv`.
