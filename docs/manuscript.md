@@ -236,8 +236,9 @@ sign-consistency).
   nested M0→M1→M2 structure with per-SD standardization, ridge penalization, and
   events-per-variable; leak-free estimation and collinearity diagnostics (predictor
   correlation heatmap); and the findings (adjusted-OR forest with collinearity
-  artifacts flagged, and incremental net benefit over the clinical model). All
-  embedded data panels are regenerated from `results/`.
+  artifacts flagged, and incremental net benefit over the clinical model). The
+  findings panel shows the muscle predictors as a compact crude-vs-adjusted
+  table-forest. All embedded data panels are regenerated from `results/`.
 - **Figure 1.** Crude and adjusted per-SD odds ratios (95% CI) for non-home discharge,
   as a two-panel table-forest. **Crude** = each predictor modeled alone; **Adjusted**
   = one ridge-penalized multivariable logistic model mutually adjusting for all listed
@@ -250,7 +251,9 @@ sign-consistency).
   model across the 10%–40% threshold range, with bootstrap 95% CI (spanning zero).
   Source: `results/delta_net_benefit.csv`.
 - **Figure (Methods), panels A–D.** (A) L3–L5 segmentation workflow; (B) leak-free
-  validation flow (secondary analysis); (C) covariate specification; (D) participant
-  flow (n = 205; 51 non-home discharges).
+  validation flow (secondary analysis); (C) covariate specification and model building
+  — the pre-specification rule, events-per-variable, and nested models, followed by the
+  crude-vs-adjusted table-forest of every predictor's association (`collinearity.csv`);
+  (D) participant flow (n = 205; 51 non-home discharges).
 - **Supplementary Figure.** Calibration and ROC of the nested models (secondary
   analysis). Source: `results/calibration*.csv`, `results/roc_data.csv`.

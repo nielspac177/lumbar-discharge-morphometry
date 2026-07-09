@@ -74,13 +74,15 @@ def _p(p):
     return "<.001" if p < 0.001 else f"{p:.2f}".lstrip("0").replace("0.", ".") if p < 1 else f"{p:.2f}"
 
 
-def _draw_forest_band(ax, x0, x1, rows, or_key, lo_key, hi_key, n_rows):
-    """Draw one forest column (crude or adjusted) across all predictor rows."""
-    # reference line at OR=1
+def _draw_forest_band(ax, x0, x1, rows, or_key, lo_key, hi_key, *,
+                      ref_top, ref_bot, tick_base, favors=True, fs=1.0):
+    """Draw one forest column (crude or adjusted) across all predictor rows.
+
+    Geometry is parameterized (ref_top/ref_bot for the OR=1 line, tick_base for the
+    axis ticks) so the same renderer serves the full-size Figure 1, the covariate
+    methods figure, and the compact pipeline-overview panel."""
     x1line = _xmap(1.0, x0, x1)
-    top_y = n_rows - 2.0
-    bot_y = 1.0
-    ax.plot([x1line, x1line], [bot_y, top_y], color="black", lw=0.7, alpha=0.55, zorder=1)
+    ax.plot([x1line, x1line], [ref_bot, ref_top], color="black", lw=0.7, alpha=0.55, zorder=1)
     for r in rows:
         if r["kind"] != "row":
             continue
@@ -88,46 +90,34 @@ def _draw_forest_band(ax, x0, x1, rows, or_key, lo_key, hi_key, n_rows):
         lo = _xmap(r[lo_key], x0, x1); hi = _xmap(r[hi_key], x0, x1)
         est = _xmap(r[or_key], x0, x1)
         ax.plot([lo, hi], [y, y], color="black", lw=1.0, zorder=2)
-        # caps
         for xc in (lo, hi):
             ax.plot([xc, xc], [y - 0.12, y + 0.12], color="black", lw=0.8, zorder=2)
-        # truncation arrows
         if r[lo_key] < _LOX:
             ax.annotate("", xy=(x0, y), xytext=(x0 + 0.012, y),
                         arrowprops=dict(arrowstyle="->", color="black", lw=0.8))
         if r[hi_key] > _HIX:
             ax.annotate("", xy=(x1, y), xytext=(x1 - 0.012, y),
                         arrowprops=dict(arrowstyle="->", color="black", lw=0.8))
-        ax.scatter(est, y, marker="s", s=22, color="black", zorder=3)
-    # axis ticks under the band
+        ax.scatter(est, y, marker="s", s=22 * fs, color="black", zorder=3)
     for tick in (0.1, 0.5, 1, 2, 10):
         xt = _xmap(tick, x0, x1)
-        ax.plot([xt, xt], [0.55, 0.75], color="black", lw=0.7)
-        ax.text(xt, 0.15, f"{tick:g}", ha="center", va="center", fontsize=6)
-    # directional labels — left arrow + label well left of centre, right arrow + label well right
-    ax.annotate("", xy=(_xmap(0.22, x0, x1), -0.55), xytext=(_xmap(0.72, x0, x1), -0.55),
-                arrowprops=dict(arrowstyle="->", color=JAMA["gray"], lw=0.8))
-    ax.text(_xmap(0.34, x0, x1), -1.05, "Favors home", ha="center",
-            va="center", fontsize=5.4, color=JAMA["gray"], style="italic")
-    ax.annotate("", xy=(_xmap(4.5, x0, x1), -0.55), xytext=(_xmap(1.4, x0, x1), -0.55),
-                arrowprops=dict(arrowstyle="->", color=JAMA["gray"], lw=0.8))
-    ax.text(_xmap(3.0, x0, x1), -1.05, "Favors non-home", ha="center",
-            va="center", fontsize=5.4, color=JAMA["gray"], style="italic")
+        ax.plot([xt, xt], [tick_base, tick_base + 0.2], color="black", lw=0.7)
+        ax.text(xt, tick_base - 0.4, f"{tick:g}", ha="center", va="center", fontsize=6 * fs)
+    if favors:
+        ya, yl = tick_base - 1.0, tick_base - 1.5
+        ax.annotate("", xy=(_xmap(0.22, x0, x1), ya), xytext=(_xmap(0.72, x0, x1), ya),
+                    arrowprops=dict(arrowstyle="->", color=JAMA["gray"], lw=0.8))
+        ax.text(_xmap(0.34, x0, x1), yl, "Favors home", ha="center",
+                va="center", fontsize=5.4 * fs, color=JAMA["gray"], style="italic")
+        ax.annotate("", xy=(_xmap(4.5, x0, x1), ya), xytext=(_xmap(1.4, x0, x1), ya),
+                    arrowprops=dict(arrowstyle="->", color=JAMA["gray"], lw=0.8))
+        ax.text(_xmap(3.0, x0, x1), yl, "Favors non-home", ha="center",
+                va="center", fontsize=5.4 * fs, color=JAMA["gray"], style="italic")
 
 
-def fig1_forest(res=RES):
-    col = pd.read_csv(res / "collinearity.csv").set_index("feature")
-    meta = pd.read_csv(res / "model_metrics.csv").iloc[0]
-    n, ev = int(meta["n"]), int(meta["events"])
-
-    # Build row layout
-    rows, y = [], 0.0
-    n_content = len(_DISPLAY)
-    n_rows = n_content + 3  # header + axis area
-    ypos = n_rows - 1.0
-    header_y = ypos
-    ypos -= 1.0
-    for kind, key in _DISPLAY:
+def _build_rows(col, display, y_top):
+    rows, ypos = [], y_top
+    for kind, key in display:
         if kind == "SECTION":
             rows.append({"kind": "section", "y": ypos, "label": key})
         else:
@@ -137,60 +127,72 @@ def fig1_forest(res=RES):
                          "uni_p": c.uni_p, "adj_OR_per_SD": c.adj_OR_per_SD, "adj_lo": c.adj_lo,
                          "adj_hi": c.adj_hi, "adj_p": c.adj_p, "artifact": bool(c.sign_flip)})
         ypos -= 1.0
+    return rows, y_top - len(display)
 
+
+def render_table_forest(ax, col, display, geom, y_top, *, show_headers=True,
+                        show_or_text=True, show_favors=True, show_bands=True, fs=1.0):
+    """Render a crude|adjusted table-forest into an existing axes. Returns geometry
+    (header_y, ybot, tick_base) so the caller can place rules/titles/captions."""
+    rows, ybot = _build_rows(col, display, y_top)
+    tick_base = ybot - 0.45
+    header_y = y_top + 1.0
+    lx, ct, cf, at, af = geom["lx"], geom["crude_t"], geom["crude_f"], geom["adj_t"], geom["adj_f"]
+    if show_headers:
+        ax.text(lx, header_y, "Predictor (per 1 SD)", fontsize=8 * fs, weight="bold", va="center")
+        ax.text((cf[0] + cf[1]) / 2, header_y, "Crude", fontsize=8 * fs, weight="bold", va="center", ha="center")
+        ax.text((af[0] + af[1]) / 2, header_y, "Adjusted", fontsize=8 * fs, weight="bold", va="center", ha="center")
+        if show_or_text:
+            ax.text(ct, header_y, "Crude OR (95% CI)", fontsize=8 * fs, weight="bold", va="center", ha="right")
+            ax.text(at, header_y, "Adjusted OR (95% CI)", fontsize=8 * fs, weight="bold", va="center", ha="right")
+    for r in rows:
+        if r["kind"] == "section":
+            if show_bands:
+                ax.add_patch(plt.Rectangle((0.0, r["y"] - 0.42), 1.0, 0.84,
+                             facecolor="#EEEEEE", edgecolor="none", zorder=0))
+            ax.text(lx, r["y"], r["label"], fontsize=7.6 * fs, weight="bold", va="center")
+        else:
+            dagger = " †" if r["artifact"] else ""
+            ax.text(lx + 0.012, r["y"], r["label"] + dagger, fontsize=7.2 * fs, va="center")
+            if show_or_text:
+                ax.text(ct, r["y"], _fmt_or(r["uni_OR_per_SD"], r["uni_lo"], r["uni_hi"]),
+                        fontsize=6.8 * fs, va="center", ha="right")
+                wa = "bold" if r["adj_p"] < 0.05 else "normal"
+                ax.text(at, r["y"], _fmt_or(r["adj_OR_per_SD"], r["adj_lo"], r["adj_hi"]),
+                        fontsize=6.8 * fs, va="center", ha="right", weight=wa)
+    _draw_forest_band(ax, cf[0], cf[1], rows, "uni_OR_per_SD", "uni_lo", "uni_hi",
+                      ref_top=y_top, ref_bot=ybot, tick_base=tick_base, favors=show_favors, fs=fs)
+    _draw_forest_band(ax, af[0], af[1], rows, "adj_OR_per_SD", "adj_lo", "adj_hi",
+                      ref_top=y_top, ref_bot=ybot, tick_base=tick_base, favors=show_favors, fs=fs)
+    return {"header_y": header_y, "ybot": ybot, "tick_base": tick_base}
+
+
+_FOREST_CAPTION = (
+    "Crude = each predictor modeled alone. Adjusted = one ridge-penalized multivariable logistic model mutually "
+    "adjusting for ALL listed covariates (age, female sex, ASA class, no. of operated\n"
+    "levels, fusion) plus the three muscle groups (volume + T2 signal). Bold adjusted OR: P<.05.  "
+    "† crude-to-adjusted sign reversal (collinearity/suppression artifact; not interpreted).  "
+    "Squares = point estimate; whiskers = 95% CI; arrows = CI beyond axis range.")
+
+
+def fig1_forest(res=RES):
+    col = pd.read_csv(res / "collinearity.csv").set_index("feature")
+    meta = pd.read_csv(res / "model_metrics.csv").iloc[0]
+    n, ev = int(meta["n"]), int(meta["events"])
+    n_rows = len(_DISPLAY) + 3
+    y_top = n_rows - 2.0
     fig = plt.figure(figsize=(8.4, 0.36 * n_rows + 1.1))
     ax = fig.add_axes([0.0, 0.0, 1.0, 1.0]); ax.set_xlim(0, 1); ax.set_ylim(-2.8, n_rows)
     ax.axis("off")
-
-    # column x-anchors:  label | crude OR text | crude forest | adj OR text | adj forest
-    LX = 0.005
-    CRUDE_T = 0.255                 # crude OR text (right-aligned)
-    CRUDE_F = (0.285, 0.475)        # crude forest band
-    ADJ_T = 0.735                   # adjusted OR text (right-aligned)
-    ADJ_F = (0.770, 0.985)          # adjusted forest band
-
-    # top & bottom heavy rules
-    for yy in (n_rows - 0.35, 0.45):
+    geom = dict(lx=0.005, crude_t=0.255, crude_f=(0.285, 0.475), adj_t=0.735, adj_f=(0.770, 0.985))
+    info = render_table_forest(ax, col, _DISPLAY, geom, y_top)
+    for yy in (n_rows - 0.35, info["ybot"] - 0.55):
         ax.plot([0.0, 1.0], [yy, yy], color="black", lw=1.6)
-    # header under-rule
-    ax.plot([0.0, 1.0], [header_y - 0.45, header_y - 0.45], color="black", lw=0.8)
-
-    # column headers
-    ax.text(LX, header_y, "Predictor (per 1 SD)", fontsize=8, weight="bold", va="center")
-    ax.text(CRUDE_T, header_y, "Crude OR (95% CI)", fontsize=8, weight="bold", va="center", ha="right")
-    ax.text((CRUDE_F[0] + CRUDE_F[1]) / 2, header_y, "Crude", fontsize=8, weight="bold", va="center", ha="center")
-    ax.text(ADJ_T, header_y, "Adjusted OR (95% CI)", fontsize=8, weight="bold", va="center", ha="right")
-    ax.text((ADJ_F[0] + ADJ_F[1]) / 2, header_y, "Adjusted", fontsize=8, weight="bold", va="center", ha="center")
-
-    # section bands + rows text
-    for r in rows:
-        if r["kind"] == "section":
-            ax.add_patch(plt.Rectangle((0.0, r["y"] - 0.42), 1.0, 0.84,
-                         facecolor="#EEEEEE", edgecolor="none", zorder=0))
-            ax.text(LX, r["y"], r["label"], fontsize=7.6, weight="bold", va="center")
-        else:
-            dagger = " †" if r["artifact"] else ""
-            ax.text(LX + 0.012, r["y"], r["label"] + dagger, fontsize=7.2, va="center")
-            ax.text(CRUDE_T, r["y"], _fmt_or(r["uni_OR_per_SD"], r["uni_lo"], r["uni_hi"]),
-                    fontsize=6.8, va="center", ha="right")
-            wa = "bold" if r["adj_p"] < 0.05 else "normal"
-            ax.text(ADJ_T, r["y"], _fmt_or(r["adj_OR_per_SD"], r["adj_lo"], r["adj_hi"]),
-                    fontsize=6.8, va="center", ha="right", weight=wa)
-
-    _draw_forest_band(ax, CRUDE_F[0], CRUDE_F[1], rows, "uni_OR_per_SD", "uni_lo", "uni_hi", n_rows)
-    _draw_forest_band(ax, ADJ_F[0], ADJ_F[1], rows, "adj_OR_per_SD", "adj_lo", "adj_hi", n_rows)
-
+    ax.plot([0.0, 1.0], [info["header_y"] - 0.55, info["header_y"] - 0.55], color="black", lw=0.8)
     ax.text(0.5, n_rows - 0.02,
             "Odds ratios for non-home discharge (n=%d; %d events), per 1-SD increase in each predictor"
             % (n, ev), ha="center", fontsize=9, weight="bold")
-
-    ax.text(0.005, -2.05,
-            "Crude = each predictor modeled alone. Adjusted = one ridge-penalized multivariable logistic model mutually "
-            "adjusting for ALL listed covariates (age, female sex, ASA class, no. of operated\n"
-            "levels, fusion) plus the three muscle groups (volume + T2 signal). Bold adjusted OR: P<.05.  "
-            "† crude-to-adjusted sign reversal (collinearity/suppression artifact; not interpreted).  "
-            "Squares = point estimate; whiskers = 95% CI; arrows = CI beyond axis range.",
-            ha="left", va="top", fontsize=5.8, color=JAMA["gray"])
+    ax.text(0.005, -2.05, _FOREST_CAPTION, ha="left", va="top", fontsize=5.8, color=JAMA["gray"])
     _save(fig, "Fig1_forest_table")
 
 

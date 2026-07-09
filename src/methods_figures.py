@@ -49,51 +49,60 @@ def _save(fig, name):
 # Covariate-selection figure (user requirement) — regenerated from features.py
 # ======================================================================================
 
-def covariate_selection(n_events: int = 51):
-    fig, ax = plt.subplots(figsize=(7.0, 4.6))
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
+def covariate_selection(res="results"):
+    """Combined covariate figure: model-building schematic (how covariates were
+    selected) on top, and the crude vs adjusted table-forest of their associations
+    below — the same table treatment as Figure 1."""
+    import pandas as pd
+    from .figures import _DISPLAY, _FOREST_CAPTION, render_table_forest
 
-    ax.text(0.5, 0.965, "Covariate specification and model building",
-            ha="center", fontsize=11, weight="bold", color=JAMA["slate"])
-
-    # Candidate pool
-    clin = "\n".join(LABELS[c].replace(" (per SD)", "") for c in CLINICAL)
-    img_muscles = "Iliopsoas · Deep paraspinal · Gluteus medius\n(L4-normalized volume + mean T2 signal)"
-    _box(ax, 0.03, 0.60, 0.28, 0.28,
-         "Candidate pool\n(pre-specified)\n\nClinical:\n" + clin,
-         "#EDF1F2", fs=7.2)
-    _box(ax, 0.03, 0.28, 0.28, 0.26,
-         "Imaging (anatomically\npre-specified):\n\n" + img_muscles,
-         "#EAF5FA", ec=JAMA["blue"], fs=7.2)
-
-    # Rule box
-    _box(ax, 0.36, 0.40, 0.26, 0.40,
-         "Selection RULE\n\n• No data-driven\n  selection (no stepwise)\n"
-         "• Blocks entered by\n  pre-planned nesting\n• Ridge (L2) shrinkage\n"
-         f"• EPV = {n_events}/11 = {epv(n_events):.1f}",
-         "#FBF1E6", ec=JAMA["orange"], fs=7.4, weight="normal")
-
-    # Nested models
+    res = Path(res)
+    col = pd.read_csv(res / "collinearity.csv").set_index("feature")
+    meta = json.load(open(res / "run_meta.json"))
+    n, ev = meta["n"], meta["events"]
     specs = model_specs()
-    ys = [0.70, 0.44, 0.18]
-    names = [("M0", "Clinical", "M0_clinical", JAMA["slate"]),
-             ("M1", "+ Iliopsoas", "M1_iliopsoas", JAMA["green"]),
-             ("M2", "+ Multi-muscle", "M2_multimuscle", JAMA["blue"])]
-    for (tag, sub, key, color), y in zip(names, ys):
-        k = len(specs[key])
-        _box(ax, 0.68, y, 0.29, 0.20,
-             f"{tag}  {sub}\n{k} predictors", "white", ec=color, fs=8, weight="bold")
 
-    # arrows
-    ax.annotate("", xy=(0.36, 0.60), xytext=(0.31, 0.66),
-                arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
-    ax.annotate("", xy=(0.36, 0.50), xytext=(0.31, 0.40),
-                arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
-    for y in ys:
-        ax.annotate("", xy=(0.68, y + 0.10), xytext=(0.62, 0.55),
-                    arrowprops=dict(arrowstyle="->", color=JAMA["gray"], alpha=0.7))
-    ax.text(0.5, 0.05, "Predictor lists shown are read directly from src/features.py "
-            "(the fitted model design).", ha="center", fontsize=6.5, color=JAMA["gray"])
+    fig = plt.figure(figsize=(8.4, 10.6))
+
+    # ---- Top band: model-building schematic ------------------------------------------
+    axt = fig.add_axes([0.0, 0.685, 1.0, 0.30]); axt.set_xlim(0, 1); axt.set_ylim(0, 1); axt.axis("off")
+    axt.text(0.5, 0.95, "Covariate specification and model building",
+             ha="center", fontsize=12, weight="bold", color=JAMA["slate"])
+    clin = "\n".join(LABELS[c].replace(" (per SD)", "") for c in CLINICAL)
+    _box(axt, 0.02, 0.44, 0.44, 0.42,
+         "Candidate pool (PRE-SPECIFIED)\n\nClinical (adjustment set):\n" + clin +
+         "\n\nImaging: iliopsoas · deep paraspinal ·\ngluteus medius (volume + T2 signal)",
+         "#EDF1F2", JAMA["slate"], fs=7.4)
+    _box(axt, 0.52, 0.44, 0.46, 0.42,
+         "Selection RULE\n\n• No data-driven selection (no stepwise)\n"
+         "• Blocks entered by pre-planned nesting\n• Ridge (L2) shrinkage\n"
+         f"• EPV = {ev}/11 = {epv(ev):.1f}",
+         "#FBF1E6", JAMA["orange"], fs=7.4)
+    for i, (tag, sub, key, color) in enumerate([
+            ("M0", "Clinical", "M0_clinical", JAMA["slate"]),
+            ("M1", "+ Iliopsoas", "M1_iliopsoas", JAMA["green"]),
+            ("M2", "+ Multi-muscle", "M2_multimuscle", JAMA["blue"])]):
+        _box(axt, 0.02 + i * 0.335, 0.04, 0.30, 0.26,
+             f"{tag}  {sub}\n{len(specs[key])} predictors", "white", color, fs=8, weight="bold")
+    for i in range(2):
+        axt.annotate("", xy=(0.02 + (i + 1) * 0.335, 0.17),
+                     xytext=(0.02 + i * 0.335 + 0.30, 0.17),
+                     arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
+
+    # ---- Bottom band: crude vs adjusted table-forest ---------------------------------
+    n_rows = len(_DISPLAY) + 3
+    y_top = n_rows - 2.0
+    axb = fig.add_axes([0.0, 0.0, 1.0, 0.65]); axb.set_xlim(0, 1); axb.set_ylim(-2.8, n_rows)
+    axb.axis("off")
+    geom = dict(lx=0.005, crude_t=0.255, crude_f=(0.285, 0.475), adj_t=0.735, adj_f=(0.770, 0.985))
+    info = render_table_forest(axb, col, _DISPLAY, geom, y_top)
+    for yy in (n_rows - 0.35, info["ybot"] - 0.55):
+        axb.plot([0.0, 1.0], [yy, yy], color="black", lw=1.6)
+    axb.plot([0.0, 1.0], [info["header_y"] - 0.55, info["header_y"] - 0.55], color="black", lw=0.8)
+    axb.text(0.5, n_rows - 0.02,
+             "Crude and adjusted associations with non-home discharge (n=%d; %d events)" % (n, ev),
+             ha="center", fontsize=9, weight="bold")
+    axb.text(0.005, -2.05, _FOREST_CAPTION, ha="left", va="top", fontsize=5.8, color=JAMA["gray"])
     _save(fig, "MethodsC_covariate_selection")
 
 
@@ -250,29 +259,19 @@ def pipeline_overview(res="results"):
 
     # ---- Lane 4: Findings ------------------------------------------------------------
     _lane_label(fig, 0.020, 0.285, "Findings", C["red"])
-    # adjusted OR forest (real)
-    d = pd.read_csv(res / "model_coefficients.csv")
-    try:
-        col = pd.read_csv(res / "collinearity.csv").set_index("feature")
-        d["artifact"] = d["feature"].map(col["sign_flip"]).fillna(False)
-    except FileNotFoundError:
-        d["artifact"] = False
-    d["label"] = d["feature"].map(LABELS); d["grp"] = d["feature"].map(
-        lambda f: "Clinical" if f in specs["M0_clinical"] else "Imaging")
-    d = pd.concat([d[d.grp == "Clinical"], d[d.grp == "Imaging"]], ignore_index=True)
-    axf = fig.add_axes([0.24, 0.075, 0.30, 0.205])
-    ys = np.arange(len(d))[::-1]
-    for y, (_, r) in zip(ys, d.iterrows()):
-        color = C["slate"] if r.grp == "Clinical" else C["blue"]
-        axf.plot([max(0.05, r.ci_lo), min(20, r.ci_hi)], [y, y], color=color, lw=1.1)
-        axf.scatter(r.OR_per_SD, y, marker="s", s=14, color=color, edgecolor="white", lw=0.4, zorder=3)
-    axf.axvline(1, color="black", lw=0.6, ls="--", alpha=0.6)
-    axf.set_xscale("log"); axf.set_xlim(0.05, 20); axf.set_xticks([0.1, 1, 10])
-    axf.set_xticklabels(["0.1", "1", "10"], fontsize=5)
-    axf.set_yticks(ys); axf.set_yticklabels(
-        [r.label.replace(" (per SD)", "") + (" †" if r.artifact else "") for _, r in d.iterrows()], fontsize=4.8)
-    axf.set_title("Adjusted OR (per SD)", fontsize=7, weight="bold")
-    axf.spines[["top", "right"]].set_visible(False); axf.tick_params(length=2)
+    from .figures import _DISPLAY, render_table_forest
+    col = pd.read_csv(res / "collinearity.csv").set_index("feature")
+    # compact crude vs adjusted table-forest for the muscle predictors (same
+    # treatment as Figure 1; clinical rows omitted here for space)
+    muscle_display = _DISPLAY[6:]                       # "Muscle morphometry" section + 6 rows
+    n_rows_m = len(muscle_display) + 3
+    axf = fig.add_axes([0.12, 0.045, 0.47, 0.235]); axf.set_xlim(0, 1)
+    axf.set_ylim(-0.5, n_rows_m); axf.axis("off")
+    geom_m = dict(lx=0.005, crude_t=0, crude_f=(0.42, 0.65), adj_t=0, adj_f=(0.76, 0.99))
+    render_table_forest(axf, col, muscle_display, geom_m, n_rows_m - 2.0,
+                        show_headers=True, show_or_text=False, show_favors=False,
+                        show_bands=True, fs=0.72)
+    axf.set_title("Muscle predictors — crude vs adjusted OR", fontsize=7, weight="bold", loc="center")
 
     # incremental net benefit (real)
     dnb = pd.read_csv(res / "delta_net_benefit.csv")
