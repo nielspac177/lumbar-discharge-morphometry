@@ -3,6 +3,13 @@
 Analysis code for the study *A Multi-Tissue MRI Aging Signature and Non-Home Discharge After
 Lumbar Spine Surgery: A Hypothesis-Generating Study of Imaging Age Acceleration* (STROBE).
 
+![Study design: multi-tissue MRI aging clock and age acceleration](figures/1.Figure_1_methods_overview.png)
+
+*Study design. Multi-tissue segmentation of preoperative axial T2 MRI (iliopsoas, deep
+paraspinal, vertebra, disc, cord) feeds a cross-validated ridge aging clock; the age-acceleration
+residual (orthogonal to chronological age) is related to non-home discharge by Firth penalized
+logistic regression.*
+
 ## Summary
 
 We tested whether preoperative lumbar MRI encodes a component of biological aging that predicts
