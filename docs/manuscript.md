@@ -109,14 +109,23 @@ The outcome was non-home discharge, defined as discharge to inpatient rehabilita
 skilled nursing facility versus discharge to home, ascertained from the medical record.
 
 ## Image segmentation and features
-Using 3D Slicer with TotalSegmentator (version 5.8.1), the iliopsoas, deep paraspinal
-(erector spinae/multifidus complex), vertebral body, intervertebral disc, and spinal cord were
-segmented at the L3–L5 levels. For each structure we extracted volume and mean T2 signal
-intensity. Because raw T2 intensity is not comparable across scanners or protocols, the primary
-imaging features were constructed to be robust to a global scanner scaling factor: size-normalized
-volumes (each normalized to vertebral-body volume) and **intensity ratios** expressing each
-tissue's mean T2 signal relative to the vertebral body. Feature construction is defined in code
-and is identical across analyses.
+On preoperative axial T2-weighted lumbar MRI, the iliopsoas, deep paraspinal (erector
+spinae/multifidus complex), vertebral body, intervertebral disc, and spinal cord were segmented
+at the L3–L5 levels using 3D Slicer with TotalSegmentator (version 5.8.1); segmentations were
+reviewed for gross accuracy by a study investigator (Figure 1). For each structure we extracted
+volume and mean T2 signal intensity. Because raw T2 intensity is not comparable across scanners
+or protocols, the primary imaging features were constructed to be robust to a global scanner
+scaling factor: size-normalized volumes (each normalized to vertebral-body volume) and
+**intensity ratios** expressing each tissue's mean T2 signal relative to the vertebral body.
+Feature construction is defined in code and is identical across analyses. Formal segmentation
+reliability (inter- or intra-rater agreement) was not assessed and is noted as a limitation.
+
+## Missing data
+The aging clock requires all five tissues to be segmentable. Of 204 eligible patients, 192
+(94%) had complete multi-tissue imaging and constitute the analytic cohort; the 12 excluded for
+incomplete imaging were similar to those included in age, sex, ASA class, and comorbidity (all
+standardized differences < 0.2; Supplementary Table S3), making substantial selection bias
+unlikely. The clock was therefore fit on complete cases without imputation.
 
 ## The MRI aging clock and age acceleration
 We trained a ridge-regression model to predict chronological age from the multi-tissue feature
@@ -149,7 +158,9 @@ fully reproducible; code is publicly available.
 
 ## Cohort and clock performance
 Of 192 patients with complete multi-tissue imaging (median age 64 years; 48% female), 47
-(24.5%) had a non-home discharge. The aging clock predicted chronological age with a
+(24.5%) had a non-home discharge. Patients with a non-home discharge were older and had higher
+ASA class, more hypertension, and greater age acceleration (median +2.8 vs −0.1 years) than
+those discharged home (Table 1). The aging clock predicted chronological age with a
 cross-validated R² of 0.22 and a mean absolute error of 8.5 years, and the age-acceleration
 residual had a standard deviation of 5.8 years and was, by construction, uncorrelated with
 chronological age (Figure 2). Deep paraspinal and disc T2 ratios contributed most strongly to
@@ -203,9 +214,9 @@ composition rather than by muscle size, was robust to clock specification and re
 strengthened under scanner-robust intensity ratios. To our knowledge, this is the first
 application of the geroscience aging-clock framework to preoperative spine imaging.
 
-The central conceptual contribution is methodological as much as clinical. Preoperative muscle and
-tissue morphometry has been studied extensively in spine surgery, yet single-measure associations
-are fragile because chronological age confounds them and correlated tissues generate collinearity.
+This result is as much methodological as clinical. Preoperative muscle and tissue morphometry has
+been studied extensively in spine surgery, yet single-measure associations are fragile because
+chronological age confounds them and correlated tissues generate collinearity.
 We show directly that naive operationalizations mislead: a single muscle is not independently
 associated, a dichotomized threshold is cutoff-dependent, and an age-uncorrected age gap adjusted
 for age is a suppression artifact. Recasting the problem as a biological-age clock, and analyzing
@@ -244,28 +255,62 @@ attention to scanner harmonization before any clinical application.
 
 ---
 
+# Study details and disclosures
+
+**Ethics.** The study was approved by the institutional review board (protocol [IRB NUMBER]),
+which waived informed consent for this retrospective, minimal-risk analysis.
+
+**Funding.** [Funding source(s), or "This work received no specific external funding."]
+
+**Conflicts of interest.** [The authors declare no competing interests / list any.]
+
+**Author contributions.** J.G.-S. and N.P.-B. (co-first authors) contributed equally to the study
+design, data curation, analysis, and drafting. [Complete for all authors per ICMJE criteria.]
+
+**Data and code availability.** The analysis code is publicly available at
+https://github.com/nielspac177/lumbar-discharge-morphometry and reproduces every reported result
+from the frozen analytic dataset. Individual patient data cannot be shared owing to privacy
+restrictions; de-identified derived data may be available from the corresponding author on
+reasonable request and with institutional approval.
+
+**Reporting.** The study follows the STROBE reporting guideline; the completed checklist is
+provided as a supplement.
+
+---
+
 # Table legends
-- **1.Table_1_cohort.** Cohort characteristics by discharge destination.
-- **2.Table_2_primary_association.** Age-acceleration residual and non-home discharge: adjustment
-  ladder (crude, +age, +age/sex/ASA) and clock-specification sensitivity, with per-SD ORs (95% CI).
+- **1.Table_1_cohort.** Characteristics of the analytic cohort (n = 192) by discharge destination,
+  including imaging age and age acceleration, with standardized mean differences.
+- **2.Table_2_primary_association.** Age acceleration and non-home discharge: adjustment ladder
+  (crude, +age, +age/sex/ASA) and clock-specification sensitivity, with per-SD ORs (95% CI).
 - **3.Table_3_clock_and_value.** Clock performance (age R², MAE) and incremental discrimination
-  (AUC clinical vs +age acceleration).
-- **S1.Table_S1_features.** Imaging features and missingness.
-- **S2.Table_S2_sensitivity.** Age-acceleration association across ridge penalties and seeds.
+  (AUC of the clinical model with and without age acceleration).
+- **S1.Table_S1_features.** Imaging features and per-feature missingness.
+- **S2.Table_S2_sensitivity.** Age-acceleration association across ridge penalties and random seeds.
+- **S3.Table_S3_attrition.** Comparison of included (complete multi-tissue imaging) versus excluded
+  patients, with standardized mean differences.
 
 # Figure legends
-- **1.Figure_1_methods_overview.** Study design: (A) preoperative MRI and automated multi-tissue
-  segmentation; (B) scanner-robust features and the cross-validated ridge aging clock; (C) the
-  age-acceleration residual, orthogonal to chronological age; (D) the association analysis.
+- **1.Figure_1_methods_overview.** Study design. From top: the cohort and automated multi-tissue
+  segmentation on preoperative axial T2 MRI (iliopsoas, deep paraspinal, vertebra, disc, cord);
+  the cross-validated ridge aging clock (penalty selected by age-prediction fit; imaging versus
+  chronological age); the age-acceleration residual, orthogonal to chronological age; and the
+  association analysis (table-forest across the adjustment ladder, discordance matrix, and
+  incremental-value ROC).
 - **2.Figure_2_aging_clock.** (A) Imaging (predicted) age versus chronological age with identity
   and fit lines; (B) distribution of the age-acceleration residual; (C) standardized tissue
   contributions to the clock.
-- **3.Figure_3_primary_association.** (A) Forest of per-SD ORs for age acceleration and non-home
-  discharge across the adjustment ladder; (B) clock-specification robustness; (C) discordance
-  matrix of chronological age × imaging age showing non-home-discharge frequency.
+- **3.Figure_3_primary_association.** Per-SD odds ratios (95% CI) for age acceleration and non-home
+  discharge, shown as a table-forest with two sections: the adjustment ladder (crude, +age,
+  +age/sex/ASA) for the scanner-robust clock, and the clock-specification sensitivity
+  (scanner-robust, intensity-ratio only, volume only).
 - **4.Figure_4_robustness_and_value.** (A) Age-prediction R² versus ridge penalty (penalty selected
-  by age fit); (B) association by clock specification; (C) ROC for the clinical model with and
-  without age acceleration.
+  by age fit); (B) discordance matrix of chronological age × imaging age showing non-home-discharge
+  frequency; (C) ROC for the clinical model with and without age acceleration.
+- **S1.Figure_S1_STROBE_flow.** Participant flow.
+- **S2.Figure_S2_feature_correlation.** Correlations among imaging features.
+- **S3.Figure_S3_naive_approaches.** Why naive operationalizations mislead (single muscle,
+  dichotomized threshold, and the age-gap suppression artifact) versus the age-acceleration residual.
 - **S1.Figure_S1_STROBE_flow.** Participant flow.
 - **S2.Figure_S2_feature_correlation.** Correlations among imaging features.
 - **S3.Figure_S3_naive_approaches.** Why naive operationalizations mislead (single muscle,

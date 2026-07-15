@@ -464,22 +464,46 @@ def _fmt(o, lo, hi, p):
     return f"{o:.2f} ({lo:.2f}-{hi:.2f})", f"{p:.3f}"
 
 
+def _smd(a, b, binary):
+    a, b = pd.to_numeric(a, errors="coerce").dropna(), pd.to_numeric(b, errors="coerce").dropna()
+    if binary:
+        p1, p2 = a.mean(), b.mean(); s = np.sqrt((p1 * (1 - p1) + p2 * (1 - p2)) / 2)
+    else:
+        s = np.sqrt((a.var(ddof=1) + b.var(ddof=1)) / 2)
+    return (a.mean() - b.mean()) / s if s > 0 else 0.0
+
+
 def tables(df, cfg):
     RES.mkdir(exist_ok=True); TAB = FIG.parent / "tables"; TAB.mkdir(exist_ok=True)
     outcome = cfg["outcome"]
-    sub = df.copy(); sub["female"] = (sub["sex"] == "F").astype(int)
-    grp = sub.groupby(outcome)
-    def summ(col, kind):
-        if kind == "bin":
-            return {g: f"{100*pd.to_numeric(d[col],errors='coerce').mean():.0f}%" for g, d in grp}
-        return {g: f"{pd.to_numeric(d[col],errors='coerce').median():.1f}" for g, d in grp}
+    df = df.copy(); df["female"] = (df["sex"] == "F").astype(float)
+    clock, _ = fit_clock(df, cfg); ci = clock.index
+    # Table 1 — clock cohort by discharge, with imaging age, AAR, and standardized differences
+    t1df = df.loc[ci].copy(); t1df["imaging_age"] = clock["imaging_age"].values; t1df["aar"] = clock["aar"].values
+    g0, g1 = t1df[t1df[outcome] == 0], t1df[t1df[outcome] == 1]
     rows = []
-    for lab, col, kind in [("Age, y (median)", "age_yrs", "cont"), ("Female", "female", "bin"),
-                           ("ASA class (median)", "asa", "cont"), ("Hypertension", "htn", "bin"),
-                           ("Diabetes", "diabetes", "bin"), ("Fusion", "fusion", "bin"),
-                           ("No. operated levels (median)", "num_level", "cont")]:
-        dd = summ(col, kind); rows.append({"Characteristic": lab, "Home": dd.get(0, ""), "Non-home": dd.get(1, "")})
+    for lab, col, binary in [("Age, y (median)", "age_yrs", False), ("Female, %", "female", True),
+                             ("ASA class (median)", "asa", False), ("Hypertension, %", "htn", True),
+                             ("Diabetes, %", "diabetes", True), ("Fusion, %", "fusion", True),
+                             ("No. operated levels (median)", "num_level", False),
+                             ("Imaging age, y (median)", "imaging_age", False),
+                             ("Age acceleration, y (median)", "aar", False)]:
+        a0, a1 = pd.to_numeric(g0[col], errors="coerce"), pd.to_numeric(g1[col], errors="coerce")
+        home = f"{100*a0.mean():.0f}" if binary else f"{a0.median():.1f}"
+        nonh = f"{100*a1.mean():.0f}" if binary else f"{a1.median():.1f}"
+        rows.append({"Characteristic": lab, "Home": home, "Non-home": nonh, "SMD": f"{_smd(a0, a1, binary):+.2f}"})
     pd.DataFrame(rows).to_csv(TAB / "1.Table_1_cohort.csv", index=False)
+    # Table S3 — attrition (included vs excluded for incomplete imaging)
+    inc, exc = df.loc[ci], df.drop(index=ci)
+    arows = []
+    for lab, col, binary in [("Age, y (mean)", "age_yrs", False), ("Female, %", "female", True),
+                             ("ASA class (mean)", "asa", False), ("Hypertension, %", "htn", True),
+                             ("Diabetes, %", "diabetes", True), ("Non-home discharge, %", outcome, True)]:
+        ai, ae = pd.to_numeric(inc[col], errors="coerce"), pd.to_numeric(exc[col], errors="coerce")
+        vi = f"{100*ai.mean():.0f}" if binary else f"{ai.mean():.1f}"
+        ve = f"{100*ae.mean():.0f}" if binary else f"{ae.mean():.1f}"
+        arows.append({"Characteristic": lab, "Included": vi, "Excluded": ve, "SMD": f"{_smd(ai, ae, binary):+.2f}"})
+    pd.DataFrame(arows).to_csv(TAB / "S3.Table_S3_attrition.csv", index=False)
     a = pd.read_csv(RES / "aar_association.csv"); s = pd.read_csv(RES / "clock_specs_sensitivity.csv")
     t2 = []
     for _, r in a.iterrows():

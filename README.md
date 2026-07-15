@@ -1,84 +1,70 @@
 # lumbar-discharge-morphometry
 
-Reproducible analysis for the manuscript *"A Multi-Tissue MRI Aging Signature and
-Non-Home Discharge After Lumbar Spine Surgery: A Hypothesis-Generating Study of
-Imaging Age Acceleration"* (reporting standard: STROBE).
+Analysis code for the study *A Multi-Tissue MRI Aging Signature and Non-Home Discharge After
+Lumbar Spine Surgery: A Hypothesis-Generating Study of Imaging Age Acceleration* (STROBE).
 
-Single-center retrospective cohort, **n = 204** (analytic); **n = 192** with the
-complete multi-tissue imaging required for the aging clock, **47 non-home-discharge
-events (24.5%)**. Iliopsoas, deep paraspinal, vertebra, disc, and spinal cord are
-segmented at L3–L5 with 3D Slicer / TotalSegmentator.
+## Summary
 
-> **Headline result.** A ridge-regression **aging clock** predicts chronological age
-> from a scanner-robust multi-tissue MRI signature (size-normalized volumes + vertebra-
-> referenced T2 intensity ratios; cross-validated age R² = 0.22, MAE 8.5 y). Its
-> **age-acceleration residual** — tissues looking older than the patient's chronological
-> age, orthogonal to age by construction — is associated with non-home discharge
-> **independent of and additive to chronological age** (OR per SD 1.84 [95% CI 1.18–2.95],
-> P = .007; intensity-ratio clock OR 2.12, P < .001; volume-only clock null). Naive
-> single-muscle, threshold, and age-uncorrected "age-gap" approaches are null or
-> artifactual. **Hypothesis-generating** — single center, modest events, no scanner
-> harmonization; external multi-site validation required.
+We tested whether preoperative lumbar MRI encodes a component of biological aging that predicts
+non-home discharge beyond chronological age. On axial T2-weighted MRI, the iliopsoas, deep
+paraspinal muscle, vertebral body, intervertebral disc, and spinal cord were segmented at L3–L5
+(3D Slicer / TotalSegmentator v5.8.1). A ridge-regression clock was trained to predict
+chronological age from scanner-robust multi-tissue features (size-normalized volumes and
+vertebra-referenced T2 intensity ratios), using out-of-fold cross-validation with the penalty
+selected by age-prediction accuracy rather than by the outcome. The age-acceleration residual
+(imaging age minus chronological age, orthogonalized to chronological age) was the exposure and
+was related to non-home discharge by Firth penalized logistic regression.
 
-## Why the aging-clock framing
-Single preoperative muscle measurements are confounded by chronological age and are
-collinear with each other, which produces unstable and sometimes artifactual
-associations (see `S3.Figure_S3_naive_approaches`). Following geroscience practice, we
-instead train a clock to predict age from the imaging and analyze the **age-orthogonal
-residual** (à la epigenetic / brain-age acceleration). Because the residual is
-uncorrelated with chronological age by construction, adjusting the outcome model for age
-cannot induce a suppression artifact.
+In 192 patients with complete multi-tissue imaging (47 non-home discharges), the clock predicted
+chronological age with a cross-validated R² of 0.22 (mean absolute error 8.5 years). Age
+acceleration was associated with non-home discharge independently of and additively to
+chronological age (odds ratio per SD 1.84; 95% CI 1.18–2.95; P = .007). The association was
+stronger for a clock built from intensity ratios alone (OR 2.12; 95% CI 1.40–3.32) and null for a
+clock built from volumes alone (OR 1.01), indicating a tissue-quality rather than an atrophy
+signature. Single-muscle, dichotomized-threshold, and age-uncorrected age-gap analyses were null
+or produced suppression artifacts. The findings are hypothesis-generating: the study is
+single-center with a modest event count, several exposure operationalizations were examined
+without multiplicity adjustment, and the imaging features are not harmonized across scanners.
 
-## This repo is code-only
-Patient-level data are **not** distributed (protected health information). The pipeline
-reads a frozen analytic CSV kept locally and gitignored; only aggregate result tables are
-committed, and row-level clock predictions (`results/clock_predictions.csv`) are gitignored.
-See [`DATA_AVAILABILITY.md`](DATA_AVAILABILITY.md).
+## Data availability
 
-## Reproduce
+The repository contains code only. Individual patient data are not distributed. The pipeline
+reads a frozen analytic CSV kept locally and listed in `.gitignore`; only aggregate result tables
+are committed, and row-level clock predictions (`results/clock_predictions.csv`) are excluded. See
+`DATA_AVAILABILITY.md`.
+
+## Reproducing the analysis
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp config.example.yaml config.yaml           # point data_path at your local cohort
+cp config.example.yaml config.yaml            # set data_path to the local analytic CSV
 
-# 1. aging-clock analysis → results/clock_*.csv (deterministic; fixed master seed)
-python -m src.aging_clock
-
-# 2. figures (SVG + PNG + PDF) + tables → figures/, tables/
-python -m src.clock_figures
-
-# 3. tests (mocked frames — no real data needed)
-pytest -q
+python -m src.aging_clock          # writes results/clock_*.csv
+python -m src.clock_figures        # writes figures/ (SVG, PNG, PDF) and tables/
+pytest -q                          # tests run on synthetic frames; no real data required
 ```
 
-The clock ridge penalty is selected by out-of-fold **age-prediction** accuracy (never the
-outcome); all estimation is Firth-penalized. Two consecutive runs are byte-identical.
+The clock, the age-acceleration residual, and all association estimates use only NumPy, SciPy,
+and pandas (Firth logistic regression is implemented in `src/firth.py`). A fixed master seed makes
+two consecutive runs byte-identical.
 
-## Figure / table → source map
-| Output | Produced by | Reads |
-|---|---|---|
-| `1.Figure_1_methods_overview` | `src/clock_figures.py` | schematic |
-| `2.Figure_2_aging_clock` | `src/clock_figures.py` | `results/clock_predictions.csv`, `clock_coefficients.csv` |
-| `3.Figure_3_primary_association` | `src/clock_figures.py` | `aar_association.csv`, `clock_specs_sensitivity.csv` |
-| `4.Figure_4_robustness_and_value` | `src/clock_figures.py` | clock recompute + `clock_specs_sensitivity.csv` |
-| `S1–S3.Figure_S*` | `src/clock_figures.py` | STROBE flow / feature corr / naive-approach comparison |
-| `1–3.Table_*`, `S1–S2.Table_*` | `src/clock_figures.py` | `results/clock_*.csv` |
-| Aging clock, AAR, association | `src/aging_clock.py` | analytic cohort |
-| Firth penalized logistic (profile CIs, PLR p) | `src/firth.py` | — |
+## Repository layout
 
-## Layout
 ```
-src/aging_clock.py   the MRI aging clock + age-acceleration residual + association
-src/firth.py         Firth penalized logistic regression (profile CIs, PLR p-values)
-src/clock_figures.py manuscript figures (SVG/PNG/PDF) and tables
-src/                 cohort loading + the earlier discharge-association analysis
-                     (retained for the naive-approach cautionary comparison)
-results/             aggregate result tables (row-level clock predictions gitignored)
-figures/ , tables/   regenerated outputs
-docs/                manuscript.md, refs.bib, adr/
-tests/               synthetic-data tests incl. the leak-free contract test
+src/aging_clock.py    multi-tissue aging clock, age-acceleration residual, association models
+src/firth.py          Firth penalized logistic regression (profile-likelihood CIs, PLR p-values)
+src/clock_figures.py  manuscript figures (SVG/PNG/PDF) and tables
+src/data_loading.py   cohort construction from the frozen analytic CSV
+results/              aggregate result tables (row-level predictions excluded)
+figures/ , tables/    generated outputs
+docs/                 manuscript.md, STROBE_checklist.md, refs.bib, adr/
+tests/                synthetic-data tests, including the age-orthogonality and Firth checks
 ```
 
-## Citation
-See [`CITATION.cff`](CITATION.cff). Licensed under [MIT](LICENSE).
+`src/` also retains the earlier discharge-association modules used to generate the naive-approach
+comparison (Figure S3); they are not part of the primary analysis.
+
+## Citation and license
+
+Cite as in `CITATION.cff`. Released under the MIT License (`LICENSE`).

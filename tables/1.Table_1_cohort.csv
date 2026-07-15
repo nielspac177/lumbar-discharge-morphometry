@@ -1,8 +1,10 @@
-Characteristic,Home,Non-home
-"Age, y (median)",63.5,70.2
-Female,43%,63%
-ASA class (median),2.0,3.0
-Hypertension,57%,84%
-Diabetes,24%,39%
-Fusion,24%,33%
-No. operated levels (median),2.0,3.0
+Characteristic,Home,Non-home,SMD
+"Age, y (median)",63.8,69.3,-0.58
+"Female, %",43,62,-0.37
+ASA class (median),2.0,3.0,-0.72
+"Hypertension, %",58,83,-0.57
+"Diabetes, %",25,36,-0.25
+"Fusion, %",23,34,-0.25
+No. operated levels (median),2.0,3.0,-0.63
+"Imaging age, y (median)",63.3,67.8,-0.78
+"Age acceleration, y (median)",-0.1,2.8,-0.54
