@@ -93,29 +93,23 @@ def _mini(ax, title):
 # ======================================================================================
 # JAMA table-forest (reusable) — monochrome, table columns, section bands
 # ======================================================================================
-def table_forest(rows, figname, *, title=None, xlim=(0.5, 2.2),
-                 xticks=(0.5, 0.75, 1.0, 1.5, 2.0), favors=("Favors lower risk", "Favors higher risk"),
-                 analysis_header="Analysis", note=None, width=7.4):
-    """Render a JAMA-style table-forest and save it.
+def _render_forest(ax, rows, *, xlim, xticks, favors, analysis_header,
+                   note=None, title=None, fs=1.0, show_favors=True):
+    """Draw a JAMA table-forest into ``ax`` (axis-off, xlim/ylim 0..1). Fonts scale
+    by ``fs`` so the same renderer serves the standalone figures and the compact
+    panel embedded in Figure 1.
 
     ``rows`` is an ordered list of dicts, each either a section header
     ``{"section": "..."}`` or a data row ``{"label","n","or","lo","hi","p"}``
-    (``n`` and ``p`` optional; use ``dagger=True`` to append a footnote marker).
+    (``n``/``p`` optional; ``dagger=True`` appends a footnote marker).
     """
-    n = len(rows)
-    fig_h = 1.55 + 0.42 * n
-    fig = plt.figure(figsize=(width, fig_h))
-    ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off"); ax.set_xlim(0, 1); ax.set_ylim(0, 1)
-
-    # column anchors (figure fraction)
     x_label, x_n = 0.035, 0.40
     fx0, fx1 = 0.44, 0.66          # forest column span
     x_or, x_p = 0.715, 0.965
-
-    top = 0.815 if title else 0.865   # leave headroom for an optional title
-    bot = 0.175                        # vertical span of the table rows
-    dy = (top - bot) / n
-    ys = [top - (i + 0.5) * dy for i in range(n)]
+    top = 0.815 if title else 0.865
+    bot = 0.175
+    dy = (top - bot) / len(rows)
+    ys = [top - (i + 0.5) * dy for i in range(len(rows))]
     lgx0, lgx1 = np.log(xlim[0]), np.log(xlim[1])
 
     def xmap(v):
@@ -123,60 +117,63 @@ def table_forest(rows, figname, *, title=None, xlim=(0.5, 2.2),
         return fx0 + (np.log(v) - lgx0) / (lgx1 - lgx0) * (fx1 - fx0)
 
     xref = xmap(1.0)
-    # reference line
     ax.plot([xref, xref], [bot, top + 0.02], color=GRAY, lw=0.9, zorder=1)
 
-    # heavy top rule + column headers (+ optional title above the rule)
     hdr_y = top + 0.055
     rule_top = hdr_y + 0.032
     ax.plot([0.03, 0.985], [rule_top, rule_top], color=INK, lw=2.2)
     if title:
-        ax.text(0.03, rule_top + 0.040, title, fontsize=10.5, weight="bold", color=INK)
-    ax.text(x_label, hdr_y, analysis_header, fontsize=8.5, weight="bold", va="center")
-    ax.text(x_n, hdr_y, "No.", fontsize=8.5, weight="bold", va="center", ha="center")
-    ax.text(x_or, hdr_y, "OR (95% CI)", fontsize=8.5, weight="bold", va="center")
-    ax.text(x_p, hdr_y, "P Value", fontsize=8.5, weight="bold", va="center", ha="right")
+        ax.text(0.03, rule_top + 0.040, title, fontsize=10.5 * fs, weight="bold", color=INK)
+    ax.text(x_label, hdr_y, analysis_header, fontsize=8.5 * fs, weight="bold", va="center")
+    ax.text(x_n, hdr_y, "No.", fontsize=8.5 * fs, weight="bold", va="center", ha="center")
+    ax.text(x_or, hdr_y, "OR (95% CI)", fontsize=8.5 * fs, weight="bold", va="center")
+    ax.text(x_p, hdr_y, "P Value", fontsize=8.5 * fs, weight="bold", va="center", ha="right")
     ax.plot([0.03, 0.985], [top + 0.025, top + 0.025], color=INK, lw=0.8)
 
     for i, r in enumerate(rows):
         y = ys[i]
         if "section" in r:
             ax.add_patch(Rectangle((0.03, y - dy / 2), 0.955, dy, fc=BAND, ec="none", zorder=0))
-            ax.text(x_label - 0.005, y, r["section"], fontsize=8, weight="bold", va="center")
+            ax.text(x_label - 0.005, y, r["section"], fontsize=8 * fs, weight="bold", va="center")
             continue
         lab = r["label"] + ("$^{†}$" if r.get("dagger") else "")
-        ax.text(x_label, y, lab, fontsize=7.6, va="center")
+        ax.text(x_label, y, lab, fontsize=7.6 * fs, va="center")
         if r.get("n") is not None:
-            ax.text(x_n, y, str(int(r["n"])), fontsize=7.6, va="center", ha="center")
+            ax.text(x_n, y, str(int(r["n"])), fontsize=7.6 * fs, va="center", ha="center")
         o, lo, hi = r["or"], r["lo"], r["hi"]
-        # whisker (with arrowheads if beyond axis)
         ax.plot([xmap(lo), xmap(hi)], [y, y], color=INK, lw=1.1, zorder=2)
-        for edge, val in [(xmap(lo), lo), (xmap(hi), hi)]:
+        for edge in (xmap(lo), xmap(hi)):
             ax.plot([edge, edge], [y - 0.006, y + 0.006], color=INK, lw=1.1)
-        ax.plot(xmap(o), y, "s", ms=6.5, color=INK, zorder=3)
-        p = r.get("p")
-        ci = f"{o:.2f} ({lo:.2f}-{hi:.2f})"
-        ax.text(x_or, y, ci, fontsize=7.6, va="center")
-        if p is not None:
-            ax.text(x_p, y, _pfmt(p), fontsize=7.6, va="center", ha="right")
+        ax.plot(xmap(o), y, "s", ms=6.5 * fs, color=INK, zorder=3)
+        ax.text(x_or, y, f"{o:.2f} ({lo:.2f}-{hi:.2f})", fontsize=7.6 * fs, va="center")
+        if r.get("p") is not None:
+            ax.text(x_p, y, _pfmt(r["p"]), fontsize=7.6 * fs, va="center", ha="right")
 
-    # heavy bottom rule
     ax.plot([0.03, 0.985], [bot - 0.015, bot - 0.015], color=INK, lw=2.2)
 
-    # log scale ticks under the forest column
     ty = bot - 0.055
     for xt in xticks:
         xx = xmap(xt)
         ax.plot([xx, xx], [ty + 0.012, ty + 0.028], color=INK, lw=0.9)
-        ax.text(xx, ty, f"{xt:g}", fontsize=7, ha="center", va="top")
-    # favors arrows (labels grow outward from centre so they never collide)
-    fy = ty - 0.055
-    _arrow(ax, xref - 0.02, fy, fx0 + 0.005, fy, color=INK)
-    _arrow(ax, xref + 0.02, fy, fx1 - 0.005, fy, color=INK)
-    ax.text(xref - 0.03, fy - 0.030, favors[0], fontsize=6.0, ha="right", va="top", color=INK)
-    ax.text(xref + 0.03, fy - 0.030, favors[1], fontsize=6.0, ha="left", va="top", color=INK)
-    if note:
-        ax.text(0.035, fy - 0.075, note, fontsize=6.4, color=GRAY, va="top")
+        ax.text(xx, ty, f"{xt:g}", fontsize=7 * fs, ha="center", va="top")
+    if show_favors:
+        fy = ty - 0.055
+        _arrow(ax, xref - 0.02, fy, fx0 + 0.005, fy, color=INK)
+        _arrow(ax, xref + 0.02, fy, fx1 - 0.005, fy, color=INK)
+        ax.text(xref - 0.03, fy - 0.030, favors[0], fontsize=6.0 * fs, ha="right", va="top", color=INK)
+        ax.text(xref + 0.03, fy - 0.030, favors[1], fontsize=6.0 * fs, ha="left", va="top", color=INK)
+        if note:
+            ax.text(0.035, fy - 0.075, note, fontsize=6.4 * fs, color=GRAY, va="top")
+
+
+def table_forest(rows, figname, *, title=None, xlim=(0.5, 2.2),
+                 xticks=(0.5, 0.75, 1.0, 1.5, 2.0), favors=("Favors lower risk", "Favors higher risk"),
+                 analysis_header="Analysis", note=None, width=7.4):
+    """Render a standalone JAMA-style table-forest and save it."""
+    fig = plt.figure(figsize=(width, 1.55 + 0.42 * len(rows)))
+    ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off"); ax.set_xlim(0, 1); ax.set_ylim(0, 1)
+    _render_forest(ax, rows, xlim=xlim, xticks=xticks, favors=favors,
+                   analysis_header=analysis_header, note=note, title=title)
     _save(fig, figname)
 
 
@@ -189,21 +186,6 @@ def _stage_label(ax, yc, h, text, ec=SLATE):
                  boxstyle="round,pad=0.004,rounding_size=0.012", fc="white", ec=ec, lw=1.4))
     ax.text(x0 + w / 2, yc, text, rotation=90, ha="center", va="center",
             fontsize=9, weight="bold", color=SLATE)
-
-
-def _inset_forest(ax, rows):
-    """Compact table-forest thumbnail for the methods figure."""
-    ax.axvline(1, color=GRAY, ls="--", lw=0.8)
-    yy = np.arange(len(rows))[::-1]
-    for yi, (lab, o, lo, hi, p) in zip(yy, rows):
-        ax.plot([lo, hi], [yi, yi], color=INK, lw=1.0)
-        ax.plot(o, yi, "s", ms=4.5, color=INK)
-        ax.text(3.6, yi, f"{o:.2f} ({lo:.1f}–{hi:.1f})", fontsize=5.0, va="center", clip_on=False)
-    ax.set_yticks(yy); ax.set_yticklabels([r[0] for r in rows], fontsize=5.4)
-    ax.set_xscale("log"); ax.set_xlim(0.7, 3.4); ax.set_xticks([1, 2, 3])
-    ax.set_xticklabels(["1", "2", "3"], fontsize=5.2); ax.xaxis.set_minor_locator(NullLocator())
-    ax.set_title("AAR → non-home discharge", fontsize=6.2, weight="bold", color=INK)
-    ax.spines[["top", "right", "left"]].set_visible(False); ax.tick_params(left=False, labelsize=5.2)
 
 
 def fig1_methods_overview(df, cfg):
@@ -261,10 +243,17 @@ def fig1_methods_overview(df, cfg):
          "Firth penalized logistic regression\n\nNon-home discharge  ~  age acceleration\n+ chronological age + sex + ASA class\n\nSensitivity: clock specification · λ · seed",
          fc="white", ec=SLATE, fs=7.2)
     aa = pd.read_csv(RES / "aar_association.csv").set_index("model")
-    frows = [("Crude", *aa.loc["crude", ["AAR_OR", "ci_lo", "ci_hi", "p"]]),
-             ("+ age", *aa.loc["adj_age", ["AAR_OR", "ci_lo", "ci_hi", "p"]]),
-             ("+ age, sex, ASA", *aa.loc["adj_age_sex_asa", ["AAR_OR", "ci_lo", "ci_hi", "p"]])]
-    axf = fig.add_axes([0.52, 0.205, 0.34, 0.085]); _inset_forest(axf, frows)
+
+    def _mrow(lab, key):
+        r = aa.loc[key]
+        return {"label": lab, "n": int(r["n"]), "or": r["AAR_OR"], "lo": r["ci_lo"],
+                "hi": r["ci_hi"], "p": r["p"]}
+    frows = [_mrow("Crude", "crude"), _mrow("Adjusted for age", "adj_age"),
+             _mrow("Adjusted for age, sex, ASA", "adj_age_sex_asa")]
+    axf = fig.add_axes([0.46, 0.175, 0.52, 0.185]); axf.axis("off"); axf.set_xlim(0, 1); axf.set_ylim(0, 1)
+    _render_forest(axf, frows, xlim=(0.5, 3.5), xticks=(0.5, 1, 2, 3),
+                   favors=("Favors home", "Favors non-home"),
+                   analysis_header="AAR (per 1-SD)", fs=0.62, show_favors=True)
     # discordance
     axd = fig.add_axes([0.50, 0.055, 0.17, 0.10])
     amed = np.median(age); grid = np.zeros((2, 2))
