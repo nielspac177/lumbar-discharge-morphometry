@@ -19,6 +19,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
+from matplotlib.ticker import NullLocator
 
 from .aging_clock import (CLOCK_SPECS, LAMBDA_GRID, PRIMARY_SPEC, build_features,
                           clock_coefficients, fit_clock, _ridge_cv_age, _z)
@@ -80,6 +81,13 @@ def _placeholder(ax, x, y, w, h, label):
     ax.add_patch(Rectangle((x, y), w, h, fc=LIGHT, ec=GRAY, lw=1.0, ls=(0, (4, 3))))
     ax.text(x + w / 2, y + h / 2, f"[ {label} ]", ha="center", va="center",
             fontsize=7, style="italic", color=GRAY)
+
+
+def _mini(ax, title):
+    """Style a small embedded panel."""
+    ax.set_title(title, fontsize=6.5, color=SLATE, pad=2)
+    ax.tick_params(labelsize=5.2, length=2, pad=1)
+    ax.spines[["top", "right"]].set_visible(False)
 
 
 # ======================================================================================
@@ -183,12 +191,35 @@ def _stage_label(ax, yc, h, text, ec=SLATE):
             fontsize=9, weight="bold", color=SLATE)
 
 
-def fig1_methods_overview(df=None, cfg=None):
+def _inset_forest(ax, rows):
+    """Compact table-forest thumbnail for the methods figure."""
+    ax.axvline(1, color=GRAY, ls="--", lw=0.8)
+    yy = np.arange(len(rows))[::-1]
+    for yi, (lab, o, lo, hi, p) in zip(yy, rows):
+        ax.plot([lo, hi], [yi, yi], color=INK, lw=1.0)
+        ax.plot(o, yi, "s", ms=4.5, color=INK)
+        ax.text(3.6, yi, f"{o:.2f} ({lo:.1f}–{hi:.1f})", fontsize=5.0, va="center", clip_on=False)
+    ax.set_yticks(yy); ax.set_yticklabels([r[0] for r in rows], fontsize=5.4)
+    ax.set_xscale("log"); ax.set_xlim(0.7, 3.4); ax.set_xticks([1, 2, 3])
+    ax.set_xticklabels(["1", "2", "3"], fontsize=5.2); ax.xaxis.set_minor_locator(NullLocator())
+    ax.set_title("AAR → non-home discharge", fontsize=6.2, weight="bold", color=INK)
+    ax.spines[["top", "right", "left"]].set_visible(False); ax.tick_params(left=False, labelsize=5.2)
+
+
+def fig1_methods_overview(df, cfg):
+    clock, meta = fit_clock(df, cfg)
+    age = clock["age_yrs"].to_numpy(); im = clock["imaging_age"].to_numpy()
+    aar = clock["aar"].to_numpy(); y = clock[cfg["outcome"]].astype(int).to_numpy()
+    cols = CLOCK_SPECS[PRIMARY_SPEC]
+    feats = build_features(df)[cols].dropna()
+    d = pd.concat([feats, df.loc[feats.index, ["age_yrs"]]], axis=1).dropna()
+    Xs = ((d[cols] - d[cols].mean()) / d[cols].std()).to_numpy(); agev = d["age_yrs"].to_numpy()
+    r2s = [1 - np.sum((agev - _ridge_cv_age(Xs, agev, lam, cfg["seed"])) ** 2) / np.sum((agev - agev.mean()) ** 2) for lam in LAMBDA_GRID]
+
     fig = plt.figure(figsize=(7.6, 9.4))
     ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off"); ax.set_xlim(0, 1); ax.set_ylim(0, 1)
     ax.text(0.53, 0.978, "Study design: a multi-tissue MRI aging clock and age acceleration",
             ha="center", fontsize=11.5, weight="bold", color=INK)
-
     _stage_label(ax, 0.855, 0.150, "Cohort &\nsegmentation")
     _stage_label(ax, 0.635, 0.185, "MRI aging\nclock", ec=SLATE)
     _stage_label(ax, 0.435, 0.150, "Age\nacceleration", ec=ORANGE)
@@ -196,32 +227,74 @@ def fig1_methods_overview(df=None, cfg=None):
     for y0, y1 in [(0.775, 0.735), (0.540, 0.515), (0.355, 0.315)]:
         _arrow(ax, 0.30, y0, 0.30, y1)
 
-    # Stage 1
+    # Stage 1 — MRI panel stays a placeholder (supplied by collaborator)
     _box(ax, 0.10, 0.865, 0.45, 0.070,
          "204 patients · preoperative lumbar MRI\nAutomated multi-tissue segmentation\n(3D Slicer / TotalSegmentator)", fc=LIGHT, fs=7.2)
     _box(ax, 0.10, 0.782, 0.45, 0.070,
          "Scanner-robust features:\nsize-normalized volumes + vertebra-referenced\nT2 intensity ratios (iliopsoas, deep paraspinal,\nvertebra, disc, cord)", fc="white", fs=6.9)
     _placeholder(ax, 0.60, 0.788, 0.35, 0.14, "segmented MRI panel")
 
-    # Stage 2
-    _box(ax, 0.10, 0.585, 0.32, 0.095,
-         "Ridge regression predicts\nchronological age from the\nmulti-tissue signature\n(10-fold CV; λ selected by age R²)", fc="white", ec=SLATE, fs=7.2)
-    _placeholder(ax, 0.45, 0.560, 0.24, 0.15, "λ-selection curve")
-    _placeholder(ax, 0.71, 0.560, 0.24, 0.15, "imaging vs chronological age")
+    # Stage 2 — real clock panels
+    _box(ax, 0.10, 0.585, 0.30, 0.095,
+         "Ridge regression predicts\nchronological age from the\nmulti-tissue signature\n(10-fold CV; λ by age R²)", fc="white", ec=SLATE, fs=7.2)
+    axl = fig.add_axes([0.45, 0.575, 0.19, 0.11])
+    axl.plot(LAMBDA_GRID, r2s, "o-", color=SLATE, ms=3); axl.set_xscale("log")
+    axl.axvline(meta["lambda"], color=ORANGE, ls="--", lw=1)
+    axl.set_xlabel("ridge λ", fontsize=6); axl.set_ylabel("age R²", fontsize=6); _mini(axl, "λ by age fit")
+    axs = fig.add_axes([0.72, 0.575, 0.22, 0.12])
+    axs.scatter(age, im, s=8, color=SLATE, alpha=0.5, edgecolor="none")
+    axs.plot([35, 90], [35, 90], color=GRAY, ls="--", lw=1)
+    b = np.polyfit(age, im, 1); axs.plot([35, 90], [b[0]*35+b[1], b[0]*90+b[1]], color=ORANGE, lw=1.2)
+    axs.text(0.04, 0.93, f"R²={meta['age_R2']:.2f}\nMAE={meta['MAE']:.1f}y", transform=axs.transAxes, fontsize=5.3, va="top")
+    axs.set_xlabel("chronological age", fontsize=6); axs.set_ylabel("imaging age", fontsize=6); _mini(axs, "imaging vs chronological")
 
-    # Stage 3
+    # Stage 3 — real AAR distribution
     _box(ax, 0.10, 0.390, 0.46, 0.090,
          "Age acceleration (AAR) = residual of\nimaging age ~ chronological age\nOrthogonal to chronological age (no suppression)\npositive = tissues look older than the patient's age",
          fc="white", ec=ORANGE, fs=7.2)
-    _placeholder(ax, 0.62, 0.375, 0.33, 0.12, "age-acceleration distribution")
+    axa = fig.add_axes([0.64, 0.388, 0.29, 0.10])
+    axa.hist(aar, bins=20, color=ORANGE, alpha=0.85, edgecolor="white", lw=0.3)
+    axa.axvline(0, color=INK, ls="--", lw=1); axa.set_xlabel("age acceleration, y", fontsize=6); _mini(axa, "AAR distribution")
 
-    # Stage 4
-    _box(ax, 0.10, 0.175, 0.36, 0.120,
-         "Firth penalized logistic regression\n\nNon-home discharge  ~  age acceleration\n+ chronological age + sex + ASA class\n\nSensitivity: clock specification · λ · random seed",
+    # Stage 4 — real forest + discordance + ROC
+    _box(ax, 0.10, 0.175, 0.34, 0.120,
+         "Firth penalized logistic regression\n\nNon-home discharge  ~  age acceleration\n+ chronological age + sex + ASA class\n\nSensitivity: clock specification · λ · seed",
          fc="white", ec=SLATE, fs=7.2)
-    _placeholder(ax, 0.50, 0.170, 0.45, 0.13, "table-forest of the association")
-    _placeholder(ax, 0.50, 0.040, 0.20, 0.11, "discordance matrix")
-    _placeholder(ax, 0.73, 0.040, 0.22, 0.11, "ROC: clinical ± AAR")
+    aa = pd.read_csv(RES / "aar_association.csv").set_index("model")
+    frows = [("Crude", *aa.loc["crude", ["AAR_OR", "ci_lo", "ci_hi", "p"]]),
+             ("+ age", *aa.loc["adj_age", ["AAR_OR", "ci_lo", "ci_hi", "p"]]),
+             ("+ age, sex, ASA", *aa.loc["adj_age_sex_asa", ["AAR_OR", "ci_lo", "ci_hi", "p"]])]
+    axf = fig.add_axes([0.52, 0.205, 0.34, 0.085]); _inset_forest(axf, frows)
+    # discordance
+    axd = fig.add_axes([0.50, 0.055, 0.17, 0.10])
+    amed = np.median(age); grid = np.zeros((2, 2))
+    for i, old in enumerate([1, 0]):
+        for j, acc in enumerate([0, 1]):
+            m = ((age >= amed) == bool(old)) & ((aar > 0) == bool(acc))
+            grid[i, j] = 100 * y[m].mean() if m.sum() else np.nan
+    axd.imshow(grid, cmap="Oranges", vmin=0, vmax=45, aspect="auto")
+    for i in range(2):
+        for j in range(2):
+            axd.text(j, i, f"{grid[i,j]:.0f}%", ha="center", va="center", fontsize=6.5,
+                     color="white" if grid[i, j] > 25 else INK, weight="bold")
+    axd.set_xticks([0, 1]); axd.set_xticklabels(["norm", "accel"], fontsize=5.2)
+    axd.set_yticks([0, 1]); axd.set_yticklabels(["old", "young"], fontsize=5.2)
+    axd.set_title("discordance (% non-home)", fontsize=6.0, color=INK, pad=2)
+    # ROC
+    axr = fig.add_axes([0.74, 0.055, 0.20, 0.11])
+    sub = df.loc[clock.index]
+    age_z = _z(sub["age_yrs"].astype(float).to_numpy()); fem = (sub["sex"] == "F").astype(float).to_numpy()
+    asa_z = _z(pd.to_numeric(sub["asa"], errors="coerce").fillna(2).to_numpy()); aarz = _z(aar)
+    for cm, color, ls, lab in [([age_z, fem, asa_z], SLATE, "-", "clinical"),
+                               ([age_z, fem, asa_z, aarz], ORANGE, "--", "+ AAR")]:
+        f = firth_logit(np.column_stack(cm), y); lp = np.column_stack([np.ones(len(y))] + cm) @ f["beta"]
+        tpr = []; fpr = []
+        for t in np.r_[np.inf, np.sort(lp)[::-1], -np.inf]:
+            pred = lp >= t; tpr.append((pred & (y == 1)).sum() / (y == 1).sum()); fpr.append((pred & (y == 0)).sum() / (y == 0).sum())
+        axr.plot(fpr, tpr, color=color, ls=ls, lw=1.4, label=f"{lab} {_auc(lp, y):.2f}")
+    axr.plot([0, 1], [0, 1], color=GRAY, ls=":", lw=0.7); axr.set_aspect("equal")
+    axr.set_xlabel("1 − spec.", fontsize=6); axr.set_ylabel("sens.", fontsize=6)
+    axr.legend(frameon=False, fontsize=5.0, loc="lower right"); _mini(axr, "incremental value")
     _save(fig, "1.Figure_1_methods_overview")
 
 
@@ -467,11 +540,13 @@ def tables(df, cfg):
 def make_all():
     from .data_loading import load_cohort, load_config
     cfg = load_config("config.yaml"); df = load_cohort(cfg)
-    fig1_methods_overview()
+    fig1_methods_overview(df, cfg)
     fig2_aging_clock(df, cfg)
     fig3_primary_association(df, cfg)
     fig4_robustness_and_value(df, cfg)
-    figS1_strobe(df, cfg)
+    # figS1_strobe is intentionally NOT called here: the committed STROBE flow
+    # (S1) is hand-finalized in Inkscape. Run figS1_strobe(df, cfg) explicitly to
+    # regenerate the code baseline (this overwrites the hand-edited S1 SVG).
     figS2_feature_correlation(df, cfg)
     figS3_naive_approaches(df, cfg)
     tables(df, cfg)
