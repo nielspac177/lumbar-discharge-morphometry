@@ -28,6 +28,35 @@ from __future__ import annotations
 # --- Clinical block (pre-specified from discharge-prediction literature) --------------
 CLINICAL: list[str] = ["age_yrs", "female", "asa", "num_level", "fusion"]
 
+# --- Etiologic adjustment set (confounders of iliopsoas volume -> discharge) -----------
+# For the PRIMARY etiologic estimand — the total effect of iliopsoas volume on non-home
+# discharge — the adjustment set is restricted to variables that plausibly cause both
+# low muscle mass and discharge destination on the study DAG: age, sex, and comorbidity
+# burden (ASA class, hypertension, diabetes). Surgical extent (number of operated
+# levels, fusion vs decompression) is treated as a potential mediator/collider on the
+# path from frailty to discharge and is therefore EXCLUDED from the primary model and
+# examined only in sensitivity analysis.
+CONFOUNDERS: list[str] = ["age_yrs", "female", "asa", "htn", "diabetes"]
+SURGICAL: list[str] = ["num_level", "fusion"]          # potential mediators (sensitivity)
+PRIMARY_EXPOSURE: str = "iliopsoas__vol_norm_vert"     # fully observed (n = 205)
+
+# Binary 0/1 predictors are reported per unit; all others are standardized to per-SD.
+BINARY: set[str] = {"female", "fusion", "htn", "diabetes"}
+
+
+def primary_spec() -> list[str]:
+    """Predictors of the primary confounder-adjusted etiologic model."""
+    return CONFOUNDERS + [PRIMARY_EXPOSURE]
+
+
+def sensitivity_specs() -> dict[str, list[str]]:
+    """Alternative adjustment sets for the iliopsoas-volume stability table."""
+    return {
+        "confounders": CONFOUNDERS + [PRIMARY_EXPOSURE],
+        "confounders_plus_surgical": CONFOUNDERS + SURGICAL + [PRIMARY_EXPOSURE],
+        "saturated_multimuscle": model_specs()["M2_multimuscle"],
+    }
+
 # --- Imaging blocks (pre-specified anatomically) --------------------------------------
 # Volume is normalized to L4 vertebral body volume (body-size scaling); intensity is the
 # bilateral mean T2 signal (a fatty-infiltration / muscle-quality proxy).
@@ -58,6 +87,8 @@ LABELS: dict[str, str] = {
     "age_yrs": "Age (per SD)",
     "female": "Female sex",
     "asa": "ASA class (per SD)",
+    "htn": "Hypertension",
+    "diabetes": "Diabetes",
     "num_level": "No. of operated levels (per SD)",
     "fusion": "Fusion vs decompression",
     "iliopsoas__vol_norm_vert": "Iliopsoas volume (per SD)",

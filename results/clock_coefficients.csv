@@ -1,0 +1,9 @@
+feature,label,coef
+deepback_ir,Deep paraspinal T2 ratio,4.092771936409555
+disc_ir,Disc T2 ratio,-3.623623490143948
+ilio_vol,Iliopsoas volume,-1.9824277678176525
+cord_ir,Cord T2 ratio,-1.981428602844346
+disc_vol_n,Disc volume,1.6329511852463243
+deepback_vol,Deep paraspinal volume,-1.3899052796303286
+cord_vol_n,Cord volume,-0.5856435808566653
+ilio_ir,Iliopsoas T2 ratio,-0.4216341253527365

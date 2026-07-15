@@ -228,7 +228,7 @@ def fig2_dca(res=RES):
     with open(res / "dca_summary.json") as f:
         s = json.load(f)
     t = d["threshold"] * 100
-    fig, ax = plt.subplots(figsize=(5.0, 3.6))
+    fig, ax = plt.subplots(figsize=(5.0, 4.4))
 
     ax.axvspan(10, 40, color=JAMA["gray"], alpha=0.08, lw=0)
     ax.plot(t, d["nb_treat_none"], color="black", lw=0.9, ls=":", label="Treat none")
@@ -246,12 +246,13 @@ def fig2_dca(res=RES):
                  loc="left", weight="bold")
     ax.legend(frameon=False, fontsize=7, loc="upper right")
     ax.spines[["top", "right"]].set_visible(False)
-    ax.text(0.5, -0.16, f"Shaded band = 10–40% clinical range; mean net-benefit gain vs "
-            f"treat-all = +{s['mean_gain_vs_treat_all_10_40']:.3f} "
-            f"(≈{s['extra_tp_per_100']:.0f} more correctly identified per 100). "
-            "Bands = 95% bootstrap CI. Comparison vs treat-all is shown for context; "
-            "added value of morphometry is judged vs the clinical model (Fig 2).",
-            transform=ax.transAxes, ha="center", fontsize=6, color=JAMA["gray"])
+    ax.text(0.5, -0.15,
+            "Shaded band = 10–40% clinical range; mean net-benefit gain vs treat-all\n"
+            f"= +{s['mean_gain_vs_treat_all_10_40']:.3f} "
+            f"(≈{s['extra_tp_per_100']:.0f} more correctly identified per 100); "
+            "bands = 95% bootstrap CI.\n"
+            "Added value of morphometry is judged vs the clinical model (Fig 2).",
+            transform=ax.transAxes, ha="center", va="top", fontsize=6, color=JAMA["gray"])
     _save(fig, "FigS_decision_curve_vs_treatall")
 
 
@@ -295,12 +296,12 @@ def fig4_roc(res=RES):
     y = d["y"].to_numpy()
     fig, ax = plt.subplots(figsize=(3.8, 3.8))
     ax.plot([0, 1], [0, 1], color="black", lw=0.7, ls="--", alpha=0.5)
-    for col, color, lab in [("pred_M0_clinical", JAMA["orange"], "Clinical"),
-                            ("pred_M1_iliopsoas", JAMA["green"], "+Iliopsoas"),
-                            ("pred_M2_multimuscle", JAMA["blue"], "Multi-muscle")]:
+    for col, color, ls, lab in [("pred_M0_clinical", JAMA["orange"], "-", "Clinical"),
+                                ("pred_M1_iliopsoas", JAMA["green"], "--", "+Iliopsoas"),
+                                ("pred_M2_multimuscle", JAMA["blue"], ":", "Multi-muscle")]:
         model = col.replace("pred_", "")
         fpr, tpr, _ = roc_curve(y, d[col])
-        ax.plot(fpr, tpr, color=color, lw=1.6,
+        ax.plot(fpr, tpr, color=color, lw=1.8, ls=ls,
                 label=f"{lab}: AUC {m.loc[model,'AUC']:.2f} "
                       f"({m.loc[model,'AUC_lo']:.2f}–{m.loc[model,'AUC_hi']:.2f})")
     ax.set_xlabel("1 − specificity"); ax.set_ylabel("Sensitivity")

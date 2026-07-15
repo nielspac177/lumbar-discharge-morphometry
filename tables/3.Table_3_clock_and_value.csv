@@ -1,0 +1,6 @@
+Metric,Value
+Clock age R² (CV),0.22
+"Clock MAE, y",8.5
+"AUC clinical (age, sex, ASA)",0.736
+AUC clinical + age acceleration,0.773
+ΔAUC (in-sample),+0.036

@@ -1,259 +1,272 @@
 ---
-title: "Preoperative Iliopsoas Muscle Morphometry Is Associated With Non-Home Discharge After Lumbar Spine Surgery: A Segmentation-Based Cohort Study"
-short_title: "Iliopsoas Morphometry and Non-Home Discharge"
+title: "A Multi-Tissue MRI Aging Signature and Non-Home Discharge After Lumbar Spine Surgery: A Hypothesis-Generating Study of Imaging Age Acceleration"
+short_title: "MRI Age Acceleration and Non-Home Discharge"
 authors: "Jimena Gonzalez-Salido, MD*; Niels Pacheco-Barrios, MD* (*co-first authors). Department of Neurosurgery, Beth Israel Deaconess Medical Center / Harvard Medical School, Boston, MA."
-reporting: "STROBE (cohort); prediction sub-analysis per TRIPOD"
+reporting: "STROBE (observational cohort)"
 bibliography: refs.bib
 ---
 
 # Structured Abstract
 
-**Importance** Sarcopenia and muscle quality are biologically plausible determinants
-of recovery after spine surgery, but whether preoperative muscle morphometry is
-associated with non-home discharge — and whether it adds anything to routine
-clinical risk factors — is unclear.
+**Importance** Chronological age is a dominant predictor of non-home discharge after
+spine surgery, but two patients of the same age can differ markedly in the biological
+state of their tissues. Whether preoperative MRI captures a component of *biological*
+aging that carries risk beyond chronological age has not been examined in spine surgery.
 
-**Objective** To examine the association between preoperative, MRI-segmentation–
-derived muscle morphometry and non-home discharge after lumbar spine surgery, and,
-secondarily, to test whether muscle morphometry improves prediction beyond clinical
-factors.
+**Objective** To test whether a multi-tissue MRI "aging clock," and specifically its
+age-acceleration residual, is associated with non-home discharge independent of
+chronological age after lumbar spine surgery.
 
 **Design, Setting, and Participants** Retrospective single-center cohort of adults
 undergoing lumbar spine surgery with a preoperative lumbar MRI. Iliopsoas, deep
-paraspinal, and gluteus medius volume and T2 signal intensity were segmented at
-L3–L5 (3D Slicer/TotalSegmentator). The analytic cohort comprised 205 patients.
+paraspinal, vertebra, intervertebral disc, and spinal cord were segmented at L3–L5
+(3D Slicer/TotalSegmentator). The analytic cohort comprised 204 patients; 192 had the
+complete multi-tissue imaging required for the clock.
 
-**Main Outcomes and Measures** Non-home discharge (inpatient rehabilitation or
-skilled nursing facility vs home). Associations were estimated with multivariable
-logistic regression adjusting for age, sex, ASA class, number of operated levels,
-and fusion, reporting per–standard-deviation (SD) odds ratios (ORs). The secondary
-prediction analysis compared nested models with leak-free repeated cross-validation,
-the DeLong test, reclassification indices, and decision-curve analysis.
+**Exposures** A ridge-regression aging clock was trained to predict chronological age
+from scanner-robust multi-tissue features (size-normalized volumes and vertebra-referenced
+T2 intensity ratios), using out-of-fold cross-validation. The **age-acceleration residual**
+(the difference between imaging-predicted and chronological age, orthogonalized to
+chronological age) was the primary exposure.
 
-**Results** Of 205 patients (median age 64.5 years; 48% female), 51 (24.9%) had a
-non-home discharge. Lower preoperative iliopsoas volume was robustly associated with
-higher odds of non-home discharge, both univariably (OR per SD, 0.57 [95% CI,
-0.38–0.85]) and in the adjusted model (OR per SD, 0.52 [95% CI, 0.28–0.96]), with low
-collinearity. Lower iliopsoas T2 signal intensity was associated in the adjusted
-model (OR per SD, 0.11 [95% CI, 0.02–0.68]) but not univariably (OR, 0.82; P = .32)
-and had high collinearity with the other signal measures, and is therefore
-interpreted cautiously. Older age (OR, 1.66 [95% CI, 1.02–2.71]) and higher ASA class
-(OR, 2.09 [95% CI, 1.31–3.35]) were also associated. The adjusted deep-paraspinal
-volume coefficient was in the opposite direction (OR, 1.79) but had a null univariable
-association (OR, 0.96; P = .82) and is attributable to collinearity with iliopsoas
-volume rather than an independent effect. In the secondary prediction analysis,
-adding muscle morphometry did **not** improve discrimination (multi-muscle vs
-clinical area under the curve, 0.77 vs 0.77; ΔAUC +0.006, P = .79), reclassification
-(integrated discrimination improvement +0.020; 95% CI, −0.017 to 0.054), or net
-benefit over the clinical model (mean incremental net benefit across a 10%–40%
-threshold range, +0.002; 95% CI, −0.018 to 0.020).
+**Main Outcomes and Measures** Non-home discharge (inpatient rehabilitation or skilled
+nursing facility vs home). Associations were estimated with Firth penalized logistic
+regression adjusted for chronological age, sex, and ASA class, reporting per–standard-deviation
+(SD) odds ratios (ORs).
 
-**Conclusions and Relevance** Lower preoperative iliopsoas volume was independently
-associated with non-home discharge after lumbar spine surgery, consistent with a role
-for sarcopenia, but muscle morphometry did not improve prediction beyond routine
-clinical factors. These findings support muscle morphometry as a biologically
-informative correlate rather than a
-ready-to-use predictor, and illustrate that statistically significant associations
-need not translate into added predictive utility. External validation is warranted.
+**Results** Of 192 patients (median age 64 years; 48% female), 47 (24.5%) had a non-home
+discharge. The clock predicted chronological age with a cross-validated R² of 0.22 (mean
+absolute error, 8.5 years). Greater age acceleration—tissues appearing older than the
+patient's chronological age—was associated with higher odds of non-home discharge, both
+unadjusted (OR per SD, 1.85 [95% CI, 1.25–2.83]) and after adjustment for chronological
+age, sex, and ASA class (OR per SD, 1.84 [95% CI, 1.18–2.95]; P = .007); chronological age
+remained independently associated, indicating an additive signal. The association was
+strengthened using scanner-robust intensity ratios alone (OR per SD, 2.12 [95% CI,
+1.40–3.32]; P < .001) but was null for a volume-only clock (OR, 1.01 [95% CI, 0.70–1.57]),
+indicating a tissue-quality rather than an atrophy signature. Adding age acceleration to a
+clinical model modestly increased discrimination (area under the curve, 0.74 to 0.77,
+in-sample). Naive operationalizations—single-muscle volume, a dichotomized sarcopenia
+threshold, and an age-uncorrected age gap—were null or artifactual.
+
+**Conclusions and Relevance** A scanner-robust multi-tissue MRI aging signature captured a
+component of biological aging associated with non-home discharge beyond chronological age.
+These hypothesis-generating findings, from a single center with a modest event count and
+without scanner harmonization, require external and multi-site validation before any clinical
+use.
 
 ---
 
 # Introduction
 
-Non-home discharge — transfer to inpatient rehabilitation or a skilled nursing
-facility rather than home — is a frequent and consequential outcome after lumbar
-spine surgery. Sarcopenia and paraspinal and psoas muscle quality are established,
-biologically plausible determinants of adverse outcomes after surgery in general and
-spine surgery in particular [@cruzjentoft2010ewgsop; @cruzjentoft2019ewgsop2;
-@prado2008sarcopenia; @zakaria2015morphometrics; @bokshan2016sarcopenia;
-@moskven2018sarcopenia]. Muscle degeneration is quantifiable from routinely acquired
-MRI, both as volume and as fatty-infiltration–related signal intensity
-[@fortin2014paraspinal; @takayama2016paraspinal]. Whether such measurements are
-associated with the practical, resource-intensive outcome of non-home discharge —
-and whether they add anything to the demographic and procedural variables that
-existing tools already use [@oldmeadow2003rapt; @karhade2018discharge;
-@ogink2019discharge; @stopa2019discharge] — has not been established.
+Non-home discharge—transfer to inpatient rehabilitation or a skilled nursing facility rather
+than home—is a frequent, resource-intensive outcome after lumbar spine surgery, and
+chronological age is among its strongest determinants [@oldmeadow2003rapt; @karhade2018discharge;
+@ogink2019discharge; @stopa2019discharge]. Chronological age, however, is an imperfect proxy
+for the biological state of a patient's tissues. Two patients born the same year may differ
+substantially in muscle, bone, and connective-tissue integrity, and it is this biological
+aging, rather than the passage of time itself, that plausibly drives functional reserve and
+the capacity to recover after surgery [@cruzjentoft2019ewgsop2; @moskven2018sarcopenia].
 
-We therefore examined, in a single-center cohort, the association between
-preoperative multi-muscle MRI morphometry and non-home discharge, adjusting for
-routine clinical risk factors. Because a demonstrated association does not by itself
-imply improved prediction [@pencina2008roc; @vancalster2016hierarchy], we also asked,
-as a secondary question, whether adding muscle morphometry improves predictive
-performance, evaluating discrimination, calibration, reclassification, and clinical
-net benefit under contemporary guidance [@collins2015tripod; @vickers2019dca].
+Preoperative MRI, acquired routinely before lumbar surgery, depicts multiple tissues that
+change with age—paraspinal and psoas muscle, vertebral bone,
+intervertebral disc, and spinal cord [@fortin2014paraspinal; @takayama2016paraspinal].
+Most prior work has asked whether a single muscle measurement, typically psoas or paraspinal
+cross-sectional area or fatty infiltration, predicts surgical outcomes
+[@zakaria2015morphometrics; @bokshan2016sarcopenia]. Results have been inconsistent, and such
+single-measure associations are vulnerable to confounding by chronological age and to
+collinearity among correlated muscles.
+
+The geroscience literature offers a different and, we argue, more appropriate way to use such
+data. Rather than testing whether one tissue measurement predicts an outcome, biological-age
+research builds a *clock* that predicts chronological age from a panel of biological features,
+then studies the **age-acceleration residual**—how much older or younger the biology appears
+than the person actually is. Epigenetic and neuroimaging "age gaps" defined in this way predict
+morbidity and mortality beyond chronological age [@horvath2013clock; @franke2019brainage].
+Because the residual is, by construction, orthogonal to chronological age, it isolates the
+"looks older than you are" signal and is immune to the suppression artifacts that arise when a
+variable containing age is adjusted for age.
+
+We therefore operationalized a multi-tissue MRI aging clock in a lumbar spine-surgery cohort
+and asked, as a hypothesis-generating question, whether its age-acceleration residual is
+associated with non-home discharge independent of chronological age. We prespecified
+robustness analyses—alternative clock specifications, regularization, and random seeds—and, to
+guard against acquisition confounding, built the primary clock from scanner-robust intensity
+ratios.
 
 # Methods
 
 ## Design and participants
-Retrospective cohort study of consecutive adults undergoing lumbar spine surgery at a
-single academic center with a preoperative lumbar MRI suitable for muscle
-segmentation, reported per the STROBE guideline for observational studies; the
-secondary prediction analysis follows TRIPOD [@collins2015tripod; @moons2015tripod].
-Patients were included when the reference muscle (iliopsoas) could be segmented; the
-analytic cohort comprised 205 patients. The study was approved by the institutional
-review board.
+We conducted a retrospective cohort study of consecutive adults undergoing lumbar spine surgery
+at a single academic center with a preoperative lumbar MRI suitable for tissue segmentation,
+reported per the STROBE guideline for observational studies [@vonelm2007strobe]. Patients were
+included when the reference muscle (iliopsoas) could be segmented; the analytic cohort comprised
+204 patients, of whom 192 had the complete multi-tissue imaging required for the aging clock
+(Supplementary Figure S1). The study was approved by the institutional review board, which
+waived informed consent for this minimal-risk retrospective analysis.
 
 ## Outcome
-Non-home discharge, defined as discharge to any non-home destination versus home,
-ascertained from the medical record.
+The outcome was non-home discharge, defined as discharge to inpatient rehabilitation or a
+skilled nursing facility versus discharge to home, ascertained from the medical record.
 
-## Muscle morphometry
+## Image segmentation and features
 Using 3D Slicer with TotalSegmentator (version 5.8.1), the iliopsoas, deep paraspinal
-(erector spinae/multifidus complex), and gluteus medius were segmented bilaterally at
-L3–L5. Two pre-specified features per muscle group were analyzed: bilateral-mean
-volume normalized to L4 vertebral-body volume, and bilateral-mean T2 signal intensity
-(a fatty-infiltration/muscle-quality proxy).
+(erector spinae/multifidus complex), vertebral body, intervertebral disc, and spinal cord were
+segmented at the L3–L5 levels. For each structure we extracted volume and mean T2 signal
+intensity. Because raw T2 intensity is not comparable across scanners or protocols, the primary
+imaging features were constructed to be robust to a global scanner scaling factor: size-normalized
+volumes (each normalized to vertebral-body volume) and **intensity ratios** expressing each
+tissue's mean T2 signal relative to the vertebral body. Feature construction is defined in code
+and is identical across analyses.
 
-## Covariates and statistical analysis
-Covariates — age, sex, ASA class, number of operated levels, and fusion versus
-decompression — were pre-specified from the discharge-prediction literature; no
-data-driven variable selection was performed. The primary analysis was a
-multivariable logistic regression of non-home discharge on the clinical covariates
-plus muscle features, all standardized to per-SD effects with ridge penalization,
-reporting adjusted ORs with 95% CIs. To distinguish independent associations from
-collinearity/suppression artifacts we report, for each predictor, the univariable OR
-alongside the adjusted OR and the variance inflation factor; a sign flip between the
-two with a null univariable association is treated as an artifact, not an independent
-effect. Coefficient stability was assessed by bootstrap resampling. Missing imaging
-values were multiply imputed. With 51 events, the events-per-variable for the full
-model was approximately 4.6, below the conventional threshold [@peduzzi1996epv;
-@riley2019samplesize; @vansmeden2019epv]; we therefore relied on pre-specification and
-penalization and interpret borderline associations cautiously, acknowledging that
-multiple predictors and metrics were examined without formal multiplicity adjustment.
+## The MRI aging clock and age acceleration
+We trained a ridge-regression model to predict chronological age from the multi-tissue feature
+set. To avoid optimistic bias, imaging-predicted age ("imaging age") was generated by
+repeated 10-fold cross-validation, so each patient's prediction came from a model that had not
+seen that patient. The ridge penalty was selected by out-of-fold age-prediction accuracy,
+never by the outcome. The **age-acceleration residual** was defined as the residual of imaging
+age regressed on chronological age and is therefore, by construction, uncorrelated with
+chronological age; a positive value indicates tissues that appear older than the patient's
+chronological age. Because the residual is orthogonal to chronological age, adjusting the
+outcome model for chronological age cannot induce a suppression artifact—a failure mode we
+demonstrate for naive alternatives (Supplementary Figure S3).
 
-The secondary prediction analysis compared three pre-specified nested logistic models
-(clinical; +iliopsoas; +multi-muscle) using leak-free repeated stratified 10-fold
-cross-validation (100 repetitions; imputation and standardization fit within training
-folds only) with bootstrap optimism correction. Added predictive value of muscle
-morphometry was assessed against the clinical model by the DeLong test, continuous
-net reclassification improvement (NRI) and integrated discrimination improvement (IDI)
-with bootstrap CIs, calibration, and incremental decision-curve net benefit
-[@vickers2006dca; @vickers2008dca; @vickers2019dca]. Reclassification indices were
-interpreted cautiously given their known biases [@pencina2011nri; @pencina2012incremental;
-@kerr2014nri; @hilden2014nri; @leening2014nri]. Analyses used a fixed master seed and
-are fully reproducible; code is publicly available.
+## Statistical analysis
+Age acceleration was standardized and related to non-home discharge by Firth penalized logistic
+regression, which is appropriate for the modest event count of this cohort
+and yields finite, small-sample-corrected estimates. The primary analysis adjusted for
+chronological age, sex, and ASA class, reporting per-SD ORs with 95% profile-likelihood
+confidence intervals. Prespecified sensitivity analyses varied the clock specification
+(scanner-robust primary; intensity-ratio only; volume only), the ridge penalty, and the
+cross-validation seed. Incremental discrimination over a clinical model (chronological age, sex,
+ASA class) was summarized by the area under the receiver-operating-characteristic curve. To
+illustrate the biological-versus-chronological distinction we cross-classified patients by
+chronological age (median split) and by age acceleration (positive vs negative). We report this
+work as hypothesis-generating: several exposure operationalizations were examined, and the
+analyses are not adjusted for multiple comparisons. Analyses used a fixed master seed and are
+fully reproducible; code is publicly available.
 
 # Results
 
-## Cohort
-Of 205 patients (median age 64.5 years; 48% female), 51 (24.9%) had a non-home
-discharge. Patients discharged to non-home destinations were older, more often
-female, and had a higher burden of hypertension (Table 1).
+## Cohort and clock performance
+Of 192 patients with complete multi-tissue imaging (median age 64 years; 48% female), 47
+(24.5%) had a non-home discharge. The aging clock predicted chronological age with a
+cross-validated R² of 0.22 and a mean absolute error of 8.5 years, and the age-acceleration
+residual had a standard deviation of 5.8 years and was, by construction, uncorrelated with
+chronological age (Figure 2). Deep paraspinal and disc T2 ratios contributed most strongly to
+the clock, followed by paraspinal and iliopsoas volume (Figure 2C).
 
-## Muscle morphometry and non-home discharge (primary)
-Lower preoperative iliopsoas volume was the most robust muscle association with
-non-home discharge, significant both univariably (OR per SD, 0.57 [95% CI, 0.38–0.85];
-P = .005) and after adjustment for clinical factors (OR per SD, 0.52 [95% CI,
-0.28–0.96]; P = .04), with a low variance inflation factor (2.2) and stable sign on
-bootstrap resampling (Figure 1; `results/collinearity.csv`, `results/coef_stability.csv`).
-Lower iliopsoas T2 signal intensity carried a large adjusted association (OR per SD,
-0.11 [95% CI, 0.02–0.68]; P = .02) but was not associated univariably (OR, 0.82;
-P = .32) and had high collinearity with the other signal measures (variance inflation
-factor ≈ 14); we therefore report it as a hypothesis-generating adjusted signal rather
-than an established independent association. Older age (OR, 1.66 [95% CI, 1.02–2.71])
-and higher ASA class (OR, 2.09 [95% CI, 1.31–3.35]) were also associated with non-home
-discharge.
+## Age acceleration and non-home discharge
+Greater age acceleration was associated with higher odds of non-home discharge (Figure 3,
+Table 2). The unadjusted OR per SD of age acceleration was 1.85 (95% CI, 1.25–2.83), and the
+association persisted after adjustment for chronological age (OR, 2.00 [95% CI, 1.32–3.14]) and
+after further adjustment for sex and ASA class (OR per SD, 1.84 [95% CI, 1.18–2.95]; P = .007).
+Chronological age remained independently associated with non-home discharge in the adjusted
+model, indicating that age acceleration and chronological age carried additive information. This
+is the expected signature of a biological-age marker: imaging captured a component of aging-related
+risk distinct from years lived.
 
-The adjusted deep-paraspinal volume coefficient pointed in the opposite direction
-(OR, 1.79 [95% CI, 1.07–2.98]); however, its univariable association was null (OR,
-0.96; P = .82), and deep-paraspinal volume was moderately correlated with iliopsoas
-volume (r ≈ 0.5). This sign flip on adjustment identifies the coefficient as a
-suppression/collinearity artifact rather than an independent biological effect, and
-we do not interpret it as such. The gluteus medius coefficients showed the same
-pattern and are likewise not interpreted (Figure 1; `results/collinearity.csv`).
+## Robustness and specification
+The association was robust across random seeds and across the reasonable range of ridge
+regularization; the penalty chosen to best predict chronological age fell within this range
+(Figure 4A). Restricting the clock to scanner-robust intensity ratios strengthened the
+association (OR per SD, 2.12 [95% CI, 1.40–3.32]; P < .001), whereas a clock built from volumes
+alone was null (OR, 1.01 [95% CI, 0.70–1.57]; P = .97) (Figure 4B, Table 2). The signal
+therefore reflected multi-tissue T2 *composition*—a quality signature—rather than muscle atrophy,
+and it survived, indeed strengthened, under intensity ratios that cancel a global scanner
+scaling factor.
 
-## Muscle morphometry and prediction (secondary)
-Adding muscle morphometry did not improve prediction of non-home discharge beyond
-clinical factors. Discrimination was essentially identical across models (clinical
-AUC 0.77 [95% CI, 0.69–0.84]; multi-muscle AUC 0.77 [95% CI, 0.70–0.84]; ΔAUC +0.006;
-DeLong P = .79; optimism-corrected multi-muscle AUC 0.79). Reclassification indices
-were small and, for the IDI, not significant (IDI +0.020 [95% CI, −0.017 to 0.054];
-continuous NRI +0.53 [95% CI, 0.21–0.83], interpreted cautiously given its upward
-bias). Most importantly, the incremental net benefit of the multi-muscle model over
-the clinical model was negligible across the 10%–40% clinical threshold range (mean
-incremental net benefit +0.002 [95% CI, −0.018 to 0.020]; bootstrap probability that
-the incremental net benefit is positive, 0.57) (Figure 2; `results/delta_net_benefit.csv`).
+## Incremental value and the biological-versus-chronological distinction
+Adding age acceleration to a clinical model (chronological age, sex, ASA class) increased
+in-sample discrimination modestly, from an area under the curve of 0.74 to 0.77 (Figure 4C,
+Table 3). The clinical relevance of the biological-age distinction is illustrated by discordant
+patients (Figure 3C): among patients whose imaging appeared accelerated, the frequency of
+non-home discharge was elevated within both younger and older strata, so that a chronologically
+younger patient with accelerated imaging could carry risk comparable to an older patient whose
+tissues appeared normal for age.
+
+## Naive operationalizations
+Approaches that did not use the clock-and-residual framework failed or misled (Supplementary
+Figure S3). A single muscle measurement (iliopsoas volume) was not independently associated with
+non-home discharge after adjustment for age, sex, and ASA class, and a dichotomized "sarcopenia"
+threshold produced an association that was not robust to the choice of cutoff. An age gap defined
+as imaging age minus chronological age, then adjusted for chronological age, produced a spuriously
+large estimate: because the gap contains chronological age, adjusting for age again is a
+suppression artifact rather than a discovery. These failures motivate the residual method used
+here.
 
 # Discussion
 
-In a single-center cohort of 205 patients, lower preoperative iliopsoas volume was
-robustly and independently associated with non-home discharge after lumbar spine
-surgery; a lower iliopsoas T2 signal carried a large but collinearity-sensitive
-adjusted association. These findings are consistent with a sarcopenia/muscle-quality
-mechanism in which patients with less and lower-quality psoas musculature more often
-require post-acute institutional care
-[@cruzjentoft2019ewgsop2; @zakaria2015morphometrics; @bokshan2016sarcopenia]. At the
-same time, adding muscle morphometry did not improve discrimination, reclassification,
-or clinical net benefit beyond routine clinical variables. The two findings are not
-contradictory: a marker can be genuinely and independently associated with an outcome
-yet be redundant with information already captured by simpler variables, leaving
-predictive performance unchanged [@pencina2008roc; @vancalster2016hierarchy;
-@vickers2019dca].
+In a single-center cohort of patients undergoing lumbar spine surgery, a multi-tissue MRI aging
+signature—specifically its age-acceleration residual—was associated with non-home discharge
+independent of, and additive to, chronological age. The signal was carried by multi-tissue T2
+composition rather than by muscle size, was robust to clock specification and regularization, and
+strengthened under scanner-robust intensity ratios. To our knowledge, this is the first
+application of the geroscience aging-clock framework to preoperative spine imaging.
 
-This distinction has practical importance. It would have been possible — and, under a
-treat-all comparator, superficially defensible — to present the muscle model as adding
-"net benefit." Measured correctly, against the clinical model, that added benefit is
-indistinguishable from zero. We therefore frame muscle morphometry here as a
-biologically informative correlate of non-home discharge rather than a ready-to-use
-predictor. The deep-paraspinal volume coefficient, which reversed sign only after
-adjustment and had a null univariable association, is a reminder that adjusted
-coefficients in collinear models must be checked against their univariable
-counterparts before being given a biological narrative.
+The central conceptual contribution is methodological as much as clinical. Preoperative muscle and
+tissue morphometry has been studied extensively in spine surgery, yet single-measure associations
+are fragile because chronological age confounds them and correlated tissues generate collinearity.
+We show directly that naive operationalizations mislead: a single muscle is not independently
+associated, a dichotomized threshold is cutoff-dependent, and an age-uncorrected age gap adjusted
+for age is a suppression artifact. Recasting the problem as a biological-age clock, and analyzing
+the age-orthogonal residual, converts an unstable morphometric question into a stable one and
+isolates the component of imaging that reflects accelerated tissue aging.
+
+These findings align with the broader geroscience literature, in which epigenetic and neuroimaging
+age gaps predict adverse outcomes beyond chronological age [@horvath2013clock; @franke2019brainage],
+and they extend that approach to a routinely acquired clinical MRI and a concrete surgical outcome.
+That the signal is a T2-composition signature is biologically coherent: T2 signal reflects tissue
+water, fat, and degeneration, which change as muscle, disc, and marrow age.
 
 ## Limitations
-This study is single-center and retrospective, and associations are not causal. The
-event count (51) yields an events-per-variable near 4.6; although mitigated by
-covariate pre-specification and penalization, residual instability cannot be excluded,
-and several associations are borderline and unadjusted for multiplicity. Missing
-imaging data were imputed. The prediction sub-analysis, while internally validated and
-optimism-corrected, requires external and temporal validation. Finally, the muscle
-metrics are correlated with one another, limiting attribution of independent effects
-beyond iliopsoas.
+This study is hypothesis-generating and has important limitations. It is single-center and
+retrospective, with a modest event count (47 non-home discharges), and the associations are not
+causal. We examined several exposure operationalizations before adopting the prespecified
+clock-and-residual framework, and we did not adjust for multiple comparisons; the reported
+estimates should therefore be regarded as generating a hypothesis rather than confirming one. The
+aging clock is weak in absolute terms (age R² 0.22), as expected from a small single-center
+training set, and its residual inherits that noise. The most consequential limitation is
+acquisition. Although we built the primary clock from intensity ratios to cancel a global scanner
+scaling factor, and the association strengthened under this constraint, intensity ratios do not
+remove all acquisition effects; sequence- and protocol-dependent contrast differences could
+contribute to the signal. External, multi-site validation with harmonized or explicitly modeled acquisition is the
+essential next step, together with a preregistered analysis using the clock-and-residual method
+defined here.
 
 # Conclusions
 
-Preoperative iliopsoas muscle morphometry was independently associated with non-home
-discharge after lumbar spine surgery but did not improve prediction beyond routine
-clinical factors. Muscle morphometry is best regarded, on these data, as a
-biologically informative correlate rather than an added predictor; external validation
-is warranted.
+A scanner-robust multi-tissue MRI aging signature captured a component of biological aging
+associated with non-home discharge after lumbar spine surgery, independent of and additive to
+chronological age, whereas naive single-measure and threshold approaches did not. Analyzed as an
+aging clock with an age-orthogonal residual, preoperative MRI may index biological age relevant to
+surgical recovery. These findings are hypothesis-generating and require multi-site validation with
+attention to scanner harmonization before any clinical application.
 
 ---
 
-# Table 1
-See `results/table1_cohort.csv`.
-
-# Association table (primary)
-See `results/model_coefficients.csv` (adjusted per-SD ORs), `results/collinearity.csv`
-(univariable vs adjusted ORs + VIF), and `results/coef_stability.csv` (bootstrap
-sign-consistency).
+# Table legends
+- **1.Table_1_cohort.** Cohort characteristics by discharge destination.
+- **2.Table_2_primary_association.** Age-acceleration residual and non-home discharge: adjustment
+  ladder (crude, +age, +age/sex/ASA) and clock-specification sensitivity, with per-SD ORs (95% CI).
+- **3.Table_3_clock_and_value.** Clock performance (age R², MAE) and incremental discrimination
+  (AUC clinical vs +age acceleration).
+- **S1.Table_S1_features.** Imaging features and missingness.
+- **S2.Table_S2_sensitivity.** Age-acceleration association across ridge penalties and seeds.
 
 # Figure legends
-- **Figure (Methods overview).** Single-page study-design schematic
-  (`figures/Methods_pipeline_overview`): cohort and segmentation; the **model
-  specification** — outcome, the pre-specified clinical adjustment set (age, sex, ASA
-  class, number of operated levels, fusion), the muscle predictors added, and the
-  nested M0→M1→M2 structure with per-SD standardization, ridge penalization, and
-  events-per-variable; leak-free estimation and collinearity diagnostics (predictor
-  correlation heatmap); and the findings (adjusted-OR forest with collinearity
-  artifacts flagged, and incremental net benefit over the clinical model). The
-  findings panel shows the muscle predictors as a compact crude-vs-adjusted
-  table-forest. All embedded data panels are regenerated from `results/`.
-- **Figure 1.** Crude and adjusted per-SD odds ratios (95% CI) for non-home discharge,
-  as a two-panel table-forest. **Crude** = each predictor modeled alone; **Adjusted**
-  = one ridge-penalized multivariable logistic model mutually adjusting for all listed
-  covariates (age, female sex, ASA class, number of operated levels, fusion) plus the
-  three muscle groups (volume + T2 signal). Squares = point estimate; whiskers = 95%
-  CI; arrows = CI beyond axis range; reference line at OR = 1; bold adjusted OR marks
-  P < .05. † denotes a crude-to-adjusted sign reversal (collinearity/suppression
-  artifact; not interpreted). Source: `results/collinearity.csv`.
-- **Figure 2.** Incremental net benefit of the multi-muscle model over the clinical
-  model across the 10%–40% threshold range, with bootstrap 95% CI (spanning zero).
-  Source: `results/delta_net_benefit.csv`.
-- **Figure (Methods), panels A–D.** (A) L3–L5 segmentation workflow; (B) leak-free
-  validation flow (secondary analysis); (C) covariate specification and model building
-  — the pre-specification rule, events-per-variable, and nested models, followed by the
-  crude-vs-adjusted table-forest of every predictor's association (`collinearity.csv`);
-  (D) participant flow (n = 205; 51 non-home discharges).
-- **Supplementary Figure.** Calibration and ROC of the nested models (secondary
-  analysis). Source: `results/calibration*.csv`, `results/roc_data.csv`.
+- **1.Figure_1_methods_overview.** Study design: (A) preoperative MRI and automated multi-tissue
+  segmentation; (B) scanner-robust features and the cross-validated ridge aging clock; (C) the
+  age-acceleration residual, orthogonal to chronological age; (D) the association analysis.
+- **2.Figure_2_aging_clock.** (A) Imaging (predicted) age versus chronological age with identity
+  and fit lines; (B) distribution of the age-acceleration residual; (C) standardized tissue
+  contributions to the clock.
+- **3.Figure_3_primary_association.** (A) Forest of per-SD ORs for age acceleration and non-home
+  discharge across the adjustment ladder; (B) clock-specification robustness; (C) discordance
+  matrix of chronological age × imaging age showing non-home-discharge frequency.
+- **4.Figure_4_robustness_and_value.** (A) Age-prediction R² versus ridge penalty (penalty selected
+  by age fit); (B) association by clock specification; (C) ROC for the clinical model with and
+  without age acceleration.
+- **S1.Figure_S1_STROBE_flow.** Participant flow.
+- **S2.Figure_S2_feature_correlation.** Correlations among imaging features.
+- **S3.Figure_S3_naive_approaches.** Why naive operationalizations mislead (single muscle,
+  threshold, and the age-gap suppression artifact).

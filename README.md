@@ -1,76 +1,83 @@
 # lumbar-discharge-morphometry
 
-Reproducible analysis of **preoperative muscle MRI morphometry and non-home
-discharge** after lumbar spine surgery. Companion code for the manuscript
-*"Preoperative iliopsoas muscle morphometry is associated with non-home discharge
-after lumbar spine surgery: a segmentation-based cohort study"* (reporting
-standard: STROBE; prediction sub-analysis per TRIPOD).
+Reproducible analysis for the manuscript *"A Multi-Tissue MRI Aging Signature and
+Non-Home Discharge After Lumbar Spine Surgery: A Hypothesis-Generating Study of
+Imaging Age Acceleration"* (reporting standard: STROBE).
 
-Single-center retrospective cohort, **n = 205, 51 non-home-discharge events
-(24.9%)**. Preoperative muscle volume and T2 signal (iliopsoas, deep paraspinal,
-gluteus medius) are segmented at L3–L5 with 3D Slicer / TotalSegmentator.
+Single-center retrospective cohort, **n = 204** (analytic); **n = 192** with the
+complete multi-tissue imaging required for the aging clock, **47 non-home-discharge
+events (24.5%)**. Iliopsoas, deep paraspinal, vertebra, disc, and spinal cord are
+segmented at L3–L5 with 3D Slicer / TotalSegmentator.
 
-> **Headline result:** lower preoperative **iliopsoas volume and T2 signal are
-> independently associated** with non-home discharge (adjusted OR per SD 0.52 and
-> 0.11), consistent with sarcopenia — **but muscle morphometry does not improve
-> prediction beyond routine clinical factors** (flat AUC; non-significant IDI;
-> incremental net benefit over the clinical model ≈ 0). A cautionary example that a
-> real association need not add predictive utility. See
-> [`docs/NUMBERS_LEDGER.md`](docs/NUMBERS_LEDGER.md) and
-> [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md).
+> **Headline result.** A ridge-regression **aging clock** predicts chronological age
+> from a scanner-robust multi-tissue MRI signature (size-normalized volumes + vertebra-
+> referenced T2 intensity ratios; cross-validated age R² = 0.22, MAE 8.5 y). Its
+> **age-acceleration residual** — tissues looking older than the patient's chronological
+> age, orthogonal to age by construction — is associated with non-home discharge
+> **independent of and additive to chronological age** (OR per SD 1.84 [95% CI 1.18–2.95],
+> P = .007; intensity-ratio clock OR 2.12, P < .001; volume-only clock null). Naive
+> single-muscle, threshold, and age-uncorrected "age-gap" approaches are null or
+> artifactual. **Hypothesis-generating** — single center, modest events, no scanner
+> harmonization; external multi-site validation required.
+
+## Why the aging-clock framing
+Single preoperative muscle measurements are confounded by chronological age and are
+collinear with each other, which produces unstable and sometimes artifactual
+associations (see `S3.Figure_S3_naive_approaches`). Following geroscience practice, we
+instead train a clock to predict age from the imaging and analyze the **age-orthogonal
+residual** (à la epigenetic / brain-age acceleration). Because the residual is
+uncorrelated with chronological age by construction, adjusting the outcome model for age
+cannot induce a suppression artifact.
 
 ## This repo is code-only
-Patient-level data are **not** distributed (protected health information). The
-pipeline reads a frozen analytic CSV kept locally and gitignored; only aggregate
-result tables are committed. Tests run on synthetic frames. See
-[`DATA_AVAILABILITY.md`](DATA_AVAILABILITY.md).
+Patient-level data are **not** distributed (protected health information). The pipeline
+reads a frozen analytic CSV kept locally and gitignored; only aggregate result tables are
+committed, and row-level clock predictions (`results/clock_predictions.csv`) are gitignored.
+See [`DATA_AVAILABILITY.md`](DATA_AVAILABILITY.md).
 
 ## Reproduce
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+cp config.example.yaml config.yaml           # point data_path at your local cohort
 
-# 1. analysis → results/ (deterministic; fixed master seed in config.yaml)
-cp config.example.yaml config.yaml          # point data_path at your local cohort
-python -m src.pipeline                       # writes results/*.csv
+# 1. aging-clock analysis → results/clock_*.csv (deterministic; fixed master seed)
+python -m src.aging_clock
 
-# 2. figures → figures/  (regenerated purely from results/)
-python -m src.figures
-python -m src.methods_figures
+# 2. figures (SVG + PNG + PDF) + tables → figures/, tables/
+python -m src.clock_figures
 
 # 3. tests (mocked frames — no real data needed)
 pytest -q
 ```
 
-Two consecutive pipeline runs produce byte-identical `results/`.
-
-## What the pipeline does
-Leak-free repeated stratified 10-fold CV (×100) of three **pre-specified nested**
-models (`M0 clinical → M1 +iliopsoas → M2 +multi-muscle`). Imputation and scaling
-are fit **inside each training fold**; performance is reported with bootstrap CIs,
-**bootstrap optimism correction**, calibration, DeLong tests, cautious NRI/IDI
-(with CIs), and **decision-curve analysis** with uncertainty bands. Rationale for
-every non-obvious choice is in [`docs/adr/`](docs/adr/).
+The clock ridge penalty is selected by out-of-fold **age-prediction** accuracy (never the
+outcome); all estimation is Firth-penalized. Two consecutive runs are byte-identical.
 
 ## Figure / table → source map
 | Output | Produced by | Reads |
 |---|---|---|
-| Table 1, univariate | `src/cohort.py` | analytic cohort |
-| Model metrics, coefficients | `src/models.py` | analytic cohort |
-| DeLong, NRI/IDI, calibration, optimism, stability | `src/validation.py` | OOF preds |
-| Decision-curve values | `src/dca.py` | OOF preds |
-| Fig 1 forest / Fig 2 DCA / Fig 3 calibration / Fig S ROC | `src/figures.py` | `results/*.csv` |
-| Methods: covariate selection / validation flow / participant flow | `src/methods_figures.py` | `src/features.py`, `results/run_meta.json` |
+| `1.Figure_1_methods_overview` | `src/clock_figures.py` | schematic |
+| `2.Figure_2_aging_clock` | `src/clock_figures.py` | `results/clock_predictions.csv`, `clock_coefficients.csv` |
+| `3.Figure_3_primary_association` | `src/clock_figures.py` | `aar_association.csv`, `clock_specs_sensitivity.csv` |
+| `4.Figure_4_robustness_and_value` | `src/clock_figures.py` | clock recompute + `clock_specs_sensitivity.csv` |
+| `S1–S3.Figure_S*` | `src/clock_figures.py` | STROBE flow / feature corr / naive-approach comparison |
+| `1–3.Table_*`, `S1–S2.Table_*` | `src/clock_figures.py` | `results/clock_*.csv` |
+| Aging clock, AAR, association | `src/aging_clock.py` | analytic cohort |
+| Firth penalized logistic (profile CIs, PLR p) | `src/firth.py` | — |
 
 ## Layout
 ```
-src/            pipeline modules (features = the single source of truth for covariates)
-results/        aggregate result tables (row-level preds gitignored)
-figures/        regenerated figures (gitignored)
-docs/adr/       architecture decision records
-docs/           NUMBERS_LEDGER.md, VALIDATION_REPORT.md, refs.bib, LITERATURE.md, manuscript.md
-tests/          synthetic-data tests incl. the leak-free contract test
+src/aging_clock.py   the MRI aging clock + age-acceleration residual + association
+src/firth.py         Firth penalized logistic regression (profile CIs, PLR p-values)
+src/clock_figures.py manuscript figures (SVG/PNG/PDF) and tables
+src/                 cohort loading + the earlier discharge-association analysis
+                     (retained for the naive-approach cautionary comparison)
+results/             aggregate result tables (row-level clock predictions gitignored)
+figures/ , tables/   regenerated outputs
+docs/                manuscript.md, refs.bib, adr/
+tests/               synthetic-data tests incl. the leak-free contract test
 ```
 
 ## Citation

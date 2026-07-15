@@ -227,11 +227,18 @@ def collinearity_diagnostics(df, cfg, model: str = "M2_multimuscle"):
 
 
 def coefficient_stability(df, cfg, model: str = "M2_multimuscle", n_boot: int | None = None):
-    """Bootstrap per-SD ORs; report median OR, CI, and sign-consistency fraction."""
-    import statsmodels.api as sm
+    """Bootstrap Firth per-SD/per-unit ORs; report median OR, CI, and sign-consistency.
+
+    Uses the same Firth point estimator as the main association analysis so the
+    stability check is consistent with the reported coefficients. Only the point
+    estimate is needed per resample, so the (slow) profile intervals are skipped.
+    """
+    from .features import BINARY
+    from .firth import _firth_solve
 
     n_boot = n_boot or cfg["n_boot"] // 4
     predictors = model_specs()[model]
+    cont = [j for j, f in enumerate(predictors) if f not in BINARY]
     y = df[cfg["outcome"]].to_numpy(dtype=int)
     X0 = df[predictors].astype(float).to_numpy()
     n = len(y)
@@ -242,10 +249,14 @@ def coefficient_stability(df, cfg, model: str = "M2_multimuscle", n_boot: int | 
         if len(np.unique(y[bi])) < 2:
             continue
         Xb = IterativeImputer(max_iter=10, random_state=cfg["seed"] + b).fit_transform(X0[bi])
-        Xb = StandardScaler().fit_transform(Xb)
+        Xb = Xb.copy()
+        for j in cont:  # standardize continuous predictors; leave binary as 0/1
+            sd = Xb[:, j].std(ddof=0)
+            if sd > 0:
+                Xb[:, j] = (Xb[:, j] - Xb[:, j].mean()) / sd
         try:
-            res = sm.Logit(y[bi], sm.add_constant(Xb)).fit(disp=0)
-            boot_or.append(np.exp(np.asarray(res.params)[1:]))
+            beta, _, _ = _firth_solve(np.column_stack([np.ones(n), Xb]), y[bi].astype(float))
+            boot_or.append(np.exp(beta[1:]))
         except Exception:
             continue
     boot_or = np.vstack(boot_or)

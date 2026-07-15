@@ -1,18 +1,19 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "lumbar-discharge-morphometry: internally-validated multi-muscle MRI morphometry for predicting non-home discharge after lumbar spine surgery"
+title: "lumbar-discharge-morphometry: a multi-tissue MRI aging clock and age-acceleration analysis for non-home discharge after lumbar spine surgery"
 type: software
 authors:
   - family-names: "Pacheco-Barrios"
     given-names: "Niels"
-version: 0.1.0
-date-released: "2026-07-08"
+version: 0.2.0
+date-released: "2026-07-15"
 license: MIT
 repository-code: "https://github.com/nielspac177/lumbar-discharge-morphometry"
 keywords:
-  - clinical prediction model
-  - decision-curve analysis
-  - sarcopenia
+  - biological age
+  - aging clock
+  - age acceleration
+  - multi-tissue MRI morphometry
   - lumbar spine surgery
   - discharge disposition
-  - TRIPOD
+  - STROBE

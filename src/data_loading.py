@@ -37,8 +37,11 @@ def load_cohort(cfg: dict) -> pd.DataFrame:
     # Clinical derivations
     df["female"] = (df["sex"] == "F").astype(int)
     df["fusion"] = (df["surgery"] == 1).astype(int)
-    for c in ["age_yrs", "asa", "num_level"]:
+    for c in ["age_yrs", "asa", "num_level", "htn", "diabetes"]:
         df[c] = pd.to_numeric(df[c], errors="coerce")
+
+    # Drop implausible ages (data-entry errors, e.g. age recorded as ~0)
+    df = df[df["age_yrs"].between(18, 100)].copy()
 
     # Imaging features → numeric (NaNs preserved for in-fold imputation)
     for c in imaging_features(MUSCLES_M2):

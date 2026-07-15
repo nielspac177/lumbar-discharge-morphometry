@@ -41,8 +41,14 @@ results/*
 !results/table1_cohort.csv
 !results/univariate_imaging.csv
 !results/run_meta.json
+# aging-clock aggregate results (PHI-free)
+!results/clock_metrics.csv
+!results/aar_association.csv
+!results/clock_specs_sensitivity.csv
+!results/clock_coefficients.csv
 # explicitly NOT whitelisted (row-level / logs):
 results/roc_data.csv
+results/clock_predictions.csv
 results/_run.log
 
 # Figures are regenerable, PHI-free aggregate plots/schematics — committed for readers.
@@ -51,6 +57,10 @@ figures/*
 !figures/*.png
 !figures/*.pdf
 !figures/*.svg
+
+# Manuscript tables are aggregate, PHI-free — committed for readers.
+!tables/
+!tables/*.csv
 
 # Python
 __pycache__/

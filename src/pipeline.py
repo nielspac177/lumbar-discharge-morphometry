@@ -21,11 +21,13 @@ from sklearn.exceptions import ConvergenceWarning
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 from .cohort import table1, univariate_imaging
+from .association import (firth_coefficients, firth_collinearity,
+                          iliopsoas_sensitivity, missingness, primary_model)
 from .data_loading import load_cohort, load_config
 from .dca import (dca_summary, decision_curve, delta_net_benefit, delta_nb_summary)
 from .features import epv, model_specs
-from .models import fit_full_logit, model_metrics_table, run_nested_models
-from .validation import (calibration, coefficient_stability, collinearity_diagnostics,
+from .models import model_metrics_table, run_nested_models
+from .validation import (calibration, coefficient_stability,
                          delong_test, nri_idi_ci, optimism_corrected_auc)
 
 MODEL_ORDER = ["M0_clinical", "M1_iliopsoas", "M2_multimuscle"]
@@ -110,10 +112,15 @@ def run(config_path: str = "config.yaml", outdir: str = "results") -> dict:
     with open(f"{outdir}/delta_net_benefit_summary.json", "w") as f:
         json.dump(dnb_sum, f, indent=2)
 
-    # --- Coefficients + stability + collinearity --------------------------------------
-    fit_full_logit(df, cfg).to_csv(f"{outdir}/model_coefficients.csv", index=False)
+    # --- Association analysis (Firth penalized) ---------------------------------------
+    # Primary etiologic estimate: parsimonious confounder-adjusted model (complete cases).
+    primary_model(df, cfg).to_csv(f"{outdir}/primary_model.csv", index=False)
+    iliopsoas_sensitivity(df, cfg).to_csv(f"{outdir}/iliopsoas_sensitivity.csv", index=False)
+    missingness(df, cfg).to_csv(f"{outdir}/missingness.csv", index=False)
+    # Saturated multi-muscle model: coefficient table + collinearity/suppression diagnostic.
+    firth_coefficients(df, cfg).to_csv(f"{outdir}/model_coefficients.csv", index=False)
     coefficient_stability(df, cfg).to_csv(f"{outdir}/coef_stability.csv", index=False)
-    collinearity_diagnostics(df, cfg).to_csv(f"{outdir}/collinearity.csv", index=False)
+    firth_collinearity(df, cfg).to_csv(f"{outdir}/collinearity.csv", index=False)
 
     # Aggregate predictor correlation matrix (imputed, standardized) — PHI-free,
     # used by the pipeline-overview methods figure.

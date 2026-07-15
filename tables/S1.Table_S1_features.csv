@@ -1,0 +1,9 @@
+Feature,Spec,n observed,% missing
+Iliopsoas volume,"scanner_robust, volume_only",204,0.0
+Deep paraspinal volume,"scanner_robust, volume_only",203,0.5
+Disc volume,"scanner_robust, volume_only",204,0.0
+Cord volume,"scanner_robust, volume_only",194,4.9
+Iliopsoas T2 ratio,"scanner_robust, intensity_ratio_only",202,1.0
+Deep paraspinal T2 ratio,"scanner_robust, intensity_ratio_only",201,1.5
+Disc T2 ratio,"scanner_robust, intensity_ratio_only",203,0.5
+Cord T2 ratio,"scanner_robust, intensity_ratio_only",193,5.4

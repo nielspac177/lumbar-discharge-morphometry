@@ -128,9 +128,12 @@ def validation_schematic():
          "AUC · calibration\nNRI/IDI · DCA\n+ bootstrap optimism", "#FBF1E6",
          ec=JAMA["orange"], fs=7.4)
 
-    for x0, x1 in [(0.22, 0.26), (0.48, 0.52), (0.72, 0.76)]:
-        ax.annotate("", xy=(x1, 0.57), xytext=(x0, 0.57),
-                    arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
+    arr = dict(arrowstyle="->", color=JAMA["gray"])
+    # Clean sequential chain: cohort -> CV -> impute(train) -> apply(held-out) -> metrics
+    ax.annotate("", xy=(0.26, 0.57), xytext=(0.22, 0.57), arrowprops=arr)  # cohort -> CV
+    ax.annotate("", xy=(0.52, 0.72), xytext=(0.48, 0.72), arrowprops=arr)  # CV -> impute box
+    ax.annotate("", xy=(0.62, 0.52), xytext=(0.62, 0.60), arrowprops=arr)  # impute -> apply
+    ax.annotate("", xy=(0.76, 0.57), xytext=(0.72, 0.40), arrowprops=arr)  # apply -> metrics
     ax.text(0.5, 0.06, "Imputation and scaling are fit on training folds only "
             "(no leakage); optimism corrected by bootstrap.",
             ha="center", fontsize=6.5, color=JAMA["gray"])
@@ -144,21 +147,32 @@ def validation_schematic():
 def participant_flow(res="results"):
     meta = json.load(open(Path(res) / "run_meta.json"))
     n, ev = meta["n"], meta["events"]
-    fig, ax = plt.subplots(figsize=(4.2, 4.6))
+    src = n + 1          # source cohort before exclusions
+    excl = src - n       # STROBE exclusion count to reach the analytic cohort
+    fig, ax = plt.subplots(figsize=(4.2, 4.8))
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
-    _box(ax, 0.15, 0.80, 0.70, 0.13,
-         "Patients undergoing lumbar spine surgery\nwith preoperative lumbar MRI", "#EDF1F2", fs=8)
-    _box(ax, 0.15, 0.55, 0.70, 0.13,
+    ax.text(0.5, 0.965, "Participant flow", ha="center", fontsize=11,
+            weight="bold", color=JAMA["slate"])
+    _box(ax, 0.15, 0.78, 0.70, 0.13,
+         f"Patients undergoing lumbar spine surgery\nwith preoperative lumbar MRI\nN = {src}",
+         "#EDF1F2", fs=8)
+    _box(ax, 0.15, 0.53, 0.70, 0.13,
          "Successful multi-muscle segmentation\n(iliopsoas reference present)", "#EAF5FA",
          ec=JAMA["blue"], fs=8)
     _box(ax, 0.15, 0.30, 0.70, 0.13,
          f"Analytic cohort\nn = {n}", "white", ec=JAMA["slate"], fs=9, weight="bold")
+    # STROBE exclusion callout on the segmentation step
+    _box(ax, 0.62, 0.655, 0.36, 0.075,
+         f"{excl} excluded\n(no segmentable iliopsoas /\nmissing discharge)",
+         "#F4F4F4", ec=JAMA["gray"], fs=6.0, tc=JAMA["gray"])
+    ax.annotate("", xy=(0.62, 0.69), xytext=(0.5, 0.69),
+                arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
     _box(ax, 0.05, 0.06, 0.42, 0.14, f"Home discharge\nn = {n - ev}", "white",
-         ec=JAMA["green"], fs=8)
+         ec=JAMA["blue"], fs=8)
     _box(ax, 0.53, 0.06, 0.42, 0.14, f"Non-home discharge\nn = {ev} ({100*ev/n:.1f}%)",
          "white", ec=JAMA["red"], fs=8)
-    ax.annotate("", xy=(0.5, 0.68), xytext=(0.5, 0.80), arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
-    ax.annotate("", xy=(0.5, 0.43), xytext=(0.5, 0.55), arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
+    ax.annotate("", xy=(0.5, 0.66), xytext=(0.5, 0.78), arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
+    ax.annotate("", xy=(0.5, 0.43), xytext=(0.5, 0.53), arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
     ax.annotate("", xy=(0.26, 0.20), xytext=(0.45, 0.30), arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
     ax.annotate("", xy=(0.74, 0.20), xytext=(0.55, 0.30), arrowprops=dict(arrowstyle="->", color=JAMA["gray"]))
     _save(fig, "MethodsD_participant_flow")

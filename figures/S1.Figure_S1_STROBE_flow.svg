@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="374.4pt" height="417.6pt" viewBox="0 0 374.4 417.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-15T11:43:42.509526</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 417.6 
+L 374.4 417.6 
+L 374.4 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 63.36 90.2592 
+L 311.04 90.2592 
+Q 315.36 90.2592 315.36 85.4208 
+L 315.36 45.9072 
+Q 315.36 41.0688 311.04 41.0688 
+L 63.36 41.0688 
+Q 59.04 41.0688 59.04 45.9072 
+L 59.04 85.4208 
+Q 59.04 90.2592 63.36 90.2592 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 63.36 191.0592 
+L 311.04 191.0592 
+Q 315.36 191.0592 315.36 186.2208 
+L 315.36 146.7072 
+Q 315.36 141.8688 311.04 141.8688 
+L 63.36 141.8688 
+Q 59.04 141.8688 59.04 146.7072 
+L 59.04 186.2208 
+Q 59.04 191.0592 63.36 191.0592 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 63.36 291.8592 
+L 311.04 291.8592 
+Q 315.36 291.8592 315.36 287.0208 
+L 315.36 243.4752 
+Q 315.36 238.6368 311.04 238.6368 
+L 63.36 238.6368 
+Q 59.04 238.6368 59.04 243.4752 
+L 59.04 287.0208 
+Q 59.04 291.8592 63.36 291.8592 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #ffffff; stroke: #00a1d5; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 74.16 388.6272 
+L 177.84 388.6272 
+Q 182.16 388.6272 182.16 383.7888 
+L 182.16 336.2112 
+Q 182.16 331.3728 177.84 331.3728 
+L 74.16 331.3728 
+Q 69.84 331.3728 69.84 336.2112 
+L 69.84 383.7888 
+Q 69.84 388.6272 74.16 388.6272 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #f4f7f8; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 196.56 388.6272 
+L 300.24 388.6272 
+Q 304.56 388.6272 304.56 383.7888 
+L 304.56 336.2112 
+Q 304.56 331.3728 300.24 331.3728 
+L 196.56 331.3728 
+Q 192.24 331.3728 192.24 336.2112 
+L 192.24 383.7888 
+Q 192.24 388.6272 196.56 388.6272 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #fbf3ea; stroke: #df8f44; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 187.2 89.841727 
+Q 187.2 116.066261 187.2 140.837351 
+" clip-path="url(#pf6b35a1783)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 189.4 136.437351 
+L 187.2 140.837351 
+L 185 136.437351 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 187.2 190.639512 
+Q 187.2 214.849212 187.2 237.605467 
+" clip-path="url(#pf6b35a1783)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 189.4 233.205467 
+L 187.2 237.605467 
+L 185 233.205467 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 185.582593 290.612145 
+Q 156.600447 311.615676 128.79519 331.76631 
+" clip-path="url(#pf6b35a1783)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 133.648959 330.965731 
+L 128.79519 331.76631 
+L 131.066988 327.402947 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 188.817407 290.612145 
+Q 217.799553 311.615676 245.60481 331.76631 
+" clip-path="url(#pf6b35a1783)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 243.333012 327.402947 
+L 245.60481 331.76631 
+L 240.751041 330.965731 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 225.36 136.6272 
+L 343.44 136.6272 
+Q 347.76 136.6272 347.76 131.7888 
+L 347.76 106.3872 
+Q 347.76 101.5488 343.44 101.5488 
+L 225.36 101.5488 
+Q 221.04 101.5488 221.04 106.3872 
+L 221.04 131.7888 
+Q 221.04 136.6272 225.36 136.6272 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #ffffff; stroke: #80796b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 225.36 237.4272 
+L 343.44 237.4272 
+Q 347.76 237.4272 347.76 232.5888 
+L 347.76 207.1872 
+Q 347.76 202.3488 343.44 202.3488 
+L 225.36 202.3488 
+Q 221.04 202.3488 221.04 207.1872 
+L 221.04 232.5888 
+Q 221.04 237.4272 225.36 237.4272 
+z
+" clip-path="url(#pf6b35a1783)" style="fill: #ffffff; stroke: #80796b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #374e55" x="187.2" y="19.296" transform="rotate(-0 187.2 19.296)">Participant flow (STROBE)</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(106.68 62.941344)">Adults undergoing lumbar spine surgery</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(106.789375 72.543531)">with preoperative lumbar MRI (N = 206)</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(98.860625 163.741344)">Analytic cohort with discharge outcome and</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(121.976875 173.343531)">segmentable iliopsoas (n = 204)</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(111.080625 262.525344)">Complete multi-tissue imaging for the</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(144.021875 272.127531)">aging clock (n = 192)</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(114.186875 357.277344)">Home</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(106.814375 366.878906)">(n = 145)</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(227.641875 357.277656)">Non-home</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(220.32625 366.879219)">(n = 47, 24%)</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(239.699297 116.875842)">Excluded: outcome missing</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(255.197734 124.677619)">or no iliopsoas (2)</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(249.3325 217.675842)">Excluded: incomplete</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(243.41293 225.477619)">multi-tissue imaging (12)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pf6b35a1783">
+   <rect x="7.2" y="7.2" width="360" height="403.2"/>
+  </clipPath>
+ </defs>
+</svg>
