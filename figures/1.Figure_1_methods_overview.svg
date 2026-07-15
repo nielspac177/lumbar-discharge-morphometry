@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="532.8pt" height="345.6pt" viewBox="0 0 532.8 345.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="561.6pt" height="691.2pt" viewBox="0 0 561.6 691.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-07-15T11:43:40.045386</dc:date>
+    <dc:date>2026-07-15T15:15:11.696480</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -21,535 +21,293 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 345.6 
-L 532.8 345.6 
-L 532.8 0 
+   <path d="M 0 691.2 
+L 561.6 691.2 
+L 561.6 0 
 L 0 0 
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 20.6784 141.6672 
-L 118.1376 141.6672 
-Q 124.3584 141.6672 124.3584 137.6928 
-L 124.3584 48.9312 
-Q 124.3584 44.9568 118.1376 44.9568 
-L 20.6784 44.9568 
-Q 14.4576 44.9568 14.4576 48.9312 
-L 14.4576 137.6928 
-Q 14.4576 141.6672 20.6784 141.6672 
+    <path d="M 14.8608 158.8032 
+L 40.032 158.8032 
+Q 46.5984 158.8032 46.5984 150.6816 
+L 46.5984 59.9904 
+Q 46.5984 51.8688 40.032 51.8688 
+L 14.8608 51.8688 
+Q 8.2944 51.8688 8.2944 59.9904 
+L 8.2944 150.6816 
+Q 8.2944 158.8032 14.8608 158.8032 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #f4f7f8; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
-    <path d="M 150.2784 141.6672 
-L 258.1056 141.6672 
-Q 264.3264 141.6672 264.3264 137.6928 
-L 264.3264 48.9312 
-Q 264.3264 44.9568 258.1056 44.9568 
-L 150.2784 44.9568 
-Q 144.0576 44.9568 144.0576 48.9312 
-L 144.0576 137.6928 
-Q 144.0576 141.6672 150.2784 141.6672 
+    <path d="M 14.8608 319.5432 
+L 40.032 319.5432 
+Q 46.5984 319.5432 46.5984 311.4216 
+L 46.5984 197.0424 
+Q 46.5984 188.9208 40.032 188.9208 
+L 14.8608 188.9208 
+Q 8.2944 188.9208 8.2944 197.0424 
+L 8.2944 311.4216 
+Q 8.2944 319.5432 14.8608 319.5432 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #f4f7f8; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
-    <path d="M 290.2464 121.7952 
-L 387.7056 121.7952 
-Q 393.9264 121.7952 393.9264 117.8208 
-L 393.9264 68.8032 
-Q 393.9264 64.8288 387.7056 64.8288 
-L 290.2464 64.8288 
-Q 284.0256 64.8288 284.0256 68.8032 
-L 284.0256 117.8208 
-Q 284.0256 121.7952 290.2464 121.7952 
+    <path d="M 14.8608 443.0592 
+L 40.032 443.0592 
+Q 46.5984 443.0592 46.5984 434.9376 
+L 46.5984 344.2464 
+Q 46.5984 336.1248 40.032 336.1248 
+L 14.8608 336.1248 
+Q 8.2944 336.1248 8.2944 344.2464 
+L 8.2944 434.9376 
+Q 8.2944 443.0592 14.8608 443.0592 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #ffffff; stroke: #00a1d5; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #c77b30; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
-    <path d="M 414.6624 141.6672 
-L 512.1216 141.6672 
-Q 518.3424 141.6672 518.3424 137.6928 
-L 518.3424 48.9312 
-Q 518.3424 44.9568 512.1216 44.9568 
-L 414.6624 44.9568 
-Q 408.4416 44.9568 408.4416 48.9312 
-L 408.4416 137.6928 
-Q 408.4416 141.6672 414.6624 141.6672 
+    <path d="M 14.8608 652.8672 
+L 40.032 652.8672 
+Q 46.5984 652.8672 46.5984 644.7456 
+L 46.5984 479.6064 
+Q 46.5984 471.4848 40.032 471.4848 
+L 14.8608 471.4848 
+Q 8.2944 471.4848 8.2944 479.6064 
+L 8.2944 644.7456 
+Q 8.2944 652.8672 14.8608 652.8672 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #fbf3ea; stroke: #df8f44; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
-    <path d="M 123.250852 93.312 
-Q 134.209472 93.312 143.714648 93.312 
-" clip-path="url(#p190d1a4065)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
-    <path d="M 139.314648 91.112 
-L 143.714648 93.312 
-L 139.314648 95.512 
+    <path d="M 171.36 161.479336 
+Q 171.36 173.016373 171.36 183.099966 
+" clip-path="url(#p2276d00864)" style="fill: none; stroke: #8a8a8a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 173.56 178.699966 
+L 171.36 183.099966 
+L 169.16 178.699966 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+" clip-path="url(#p2276d00864)" style="fill: #8a8a8a; stroke: #8a8a8a; stroke-width: 1.3; stroke-linecap: round"/>
    </g>
    <g id="patch_7">
-    <path d="M 263.218852 93.312 
-Q 274.177472 93.312 283.682648 93.312 
-" clip-path="url(#p190d1a4065)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
-    <path d="M 279.282648 91.112 
-L 283.682648 93.312 
-L 279.282648 95.512 
+    <path d="M 171.36 320.531467 
+Q 171.36 326.990078 171.36 331.995245 
+" clip-path="url(#p2276d00864)" style="fill: none; stroke: #8a8a8a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 173.56 327.595245 
+L 171.36 331.995245 
+L 169.16 327.595245 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+" clip-path="url(#p2276d00864)" style="fill: #8a8a8a; stroke: #8a8a8a; stroke-width: 1.3; stroke-linecap: round"/>
    </g>
    <g id="patch_8">
-    <path d="M 392.818219 93.312 
-Q 401.185761 93.312 408.099859 93.312 
-" clip-path="url(#p190d1a4065)" style="fill: none; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
-    <path d="M 403.699859 91.112 
-L 408.099859 93.312 
-L 403.699859 95.512 
+    <path d="M 171.36 445.735336 
+Q 171.36 457.272373 171.36 467.355966 
+" clip-path="url(#p2276d00864)" style="fill: none; stroke: #8a8a8a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 173.56 462.955966 
+L 171.36 467.355966 
+L 169.16 462.955966 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #80796b; stroke: #80796b; stroke-width: 1.3; stroke-linecap: round"/>
+" clip-path="url(#p2276d00864)" style="fill: #8a8a8a; stroke: #8a8a8a; stroke-width: 1.3; stroke-linecap: round"/>
    </g>
    <g id="patch_9">
-    <path d="M 41.4144 307.2672 
-L 242.5536 307.2672 
-Q 248.7744 307.2672 248.7744 303.2928 
-L 248.7744 194.6592 
-Q 248.7744 190.6848 242.5536 190.6848 
-L 41.4144 190.6848 
-Q 35.1936 190.6848 35.1936 194.6592 
-L 35.1936 303.2928 
-Q 35.1936 307.2672 41.4144 307.2672 
+    <path d="M 65.2032 102.6288 
+L 304.8768 102.6288 
+Q 311.4432 102.6288 311.4432 94.5072 
+L 311.4432 55.2528 
+Q 311.4432 47.1312 304.8768 47.1312 
+L 65.2032 47.1312 
+Q 58.6368 47.1312 58.6368 55.2528 
+L 58.6368 94.5072 
+Q 58.6368 102.6288 65.2032 102.6288 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
-    <path d="M 247.665902 248.976 
-Q 268.994066 248.976 288.868786 248.976 
-" clip-path="url(#p190d1a4065)" style="fill: none; stroke: #df8f44; stroke-width: 1.3; stroke-linecap: round"/>
-    <path d="M 284.468786 246.776 
-L 288.868786 248.976 
-L 284.468786 251.176 
+    <path d="M 65.2032 158.8032 
+L 304.8768 158.8032 
+Q 311.4432 158.8032 311.4432 150.6816 
+L 311.4432 111.4272 
+Q 311.4432 103.3056 304.8768 103.3056 
+L 65.2032 103.3056 
+Q 58.6368 103.3056 58.6368 111.4272 
+L 58.6368 150.6816 
+Q 58.6368 158.8032 65.2032 158.8032 
 z
-" clip-path="url(#p190d1a4065)" style="fill: #df8f44; stroke: #df8f44; stroke-width: 1.3; stroke-linecap: round"/>
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
-   <g id="text_1">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #374e55" x="266.4" y="18.792" transform="rotate(-0 266.4 18.792)">Multi-tissue MRI aging clock and age acceleration</text>
-   </g>
-   <g id="text_2">
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(21.501203 65.72448)">A. Preoperative lumbar MRI</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(69.408 74.125848)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(24.667063 82.527762)">Automated segmentation</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(16.533391 90.929676)">(3D Slicer / TotalSegmentator)</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(69.408 99.331043)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(50.957531 107.732957)">• Iliopsoas</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(37.591359 116.134871)">• Deep paraspinal</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(27.006594 124.536785)">• Vertebra • Disc • Cord</text>
-   </g>
-   <g id="text_3">
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(161.787312 61.523523)">B. Multi-tissue signature</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(204.192 69.924891)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(160.943484 78.326805)">Scanner-robust features:</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(158.417469 86.728719)">- size-normalized volumes</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(170.161062 95.130633)">- T2 intensity ratios</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(170.474422 103.532547)">  (tissue / vertebra)</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(204.192 111.933914)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(162.862469 120.335828)">yields ridge aging clock</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(149.009578 128.737742)">(10-fold CV; lambda by age R2)</text>
-   </g>
-   <g id="text_4">
-    <text style="font-weight: 700; font-size: 7.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(312.755297 90.75951)">Imaging age</text>
-    <text style="font-weight: 700; font-size: 7.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(289.928344 99.761561)">(predicted from tissue)</text>
-   </g>
-   <g id="text_5">
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(429.280125 65.72448)">C. Age acceleration</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(463.392 74.125848)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(445.037781 82.527762)">residual of</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(405.452781 90.929676)">imaging age ~ chronological age</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(463.392 99.331043)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(428.350437 107.732957)">AAR independent of</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(432.403875 116.134871)">chronological age</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(434.209656 124.536785)">(no suppression)</text>
-   </g>
-   <g id="text_6">
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(101.853219 212.98684)">D. Association analysis</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(141.984 221.388207)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(69.074078 229.790121)">Non-home discharge  ~  age acceleration</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(61.517906 238.192035)">adjusted for chronological age, sex, ASA class</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(141.984 246.593402)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(83.360094 254.995316)">Firth penalized logistic regression</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(103.691812 263.39723)">(small-sample robust)</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(141.984 271.798598)"/>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(62.454703 280.200512)">Sensitivity: clock specification, lambda, seed;</text>
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(66.310172 288.602426)">volume-only and intensity-ratio-only clocks</text>
-   </g>
-  </g>
-  <g id="axes_2">
    <g id="patch_11">
-    <path d="M 292.32 308.592 
-L 499.68 308.592 
-L 499.68 195.984 
-L 292.32 195.984 
+    <path d="M 335.52 150.6816 
+L 527.04 150.6816 
+L 527.04 55.9296 
+L 335.52 55.9296 
 z
-" style="fill: #ffffff"/>
-   </g>
-   <g id="PathCollection_1">
-    <defs>
-     <path id="C0_0_831c618778" d="M 0 1.581139 
-C 0.419323 1.581139 0.821528 1.41454 1.118034 1.118034 
-C 1.41454 0.821528 1.581139 0.419323 1.581139 -0 
-C 1.581139 -0.419323 1.41454 -0.821528 1.118034 -1.118034 
-C 0.821528 -1.41454 0.419323 -1.581139 0 -1.581139 
-C -0.419323 -1.581139 -0.821528 -1.41454 -1.118034 -1.118034 
-C -1.41454 -0.821528 -1.581139 -0.419323 -1.581139 0 
-C -1.581139 0.419323 -1.41454 0.821528 -1.118034 1.118034 
-C -0.821528 1.41454 -0.419323 1.581139 0 1.581139 
-z
-"/>
-    </defs>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="421.818523" y="250.954608" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="352.602703" y="277.900752" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="309.469336" y="238.030749" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="304.861064" y="276.628759" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="455.054288" y="231.059425" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="473.808179" y="236.993101" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="416.101813" y="218.160003" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="439.262188" y="217.70305" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="404.223707" y="236.658901" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="478.015107" y="268.844241" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="455.541266" y="235.618363" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="302.261687" y="257.321269" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="463.373955" y="217.942368" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="308.076641" y="278.003942" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="439.292139" y="209.252581" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="334.858136" y="284.179595" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="464.462528" y="245.747477" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="403.815817" y="231.666555" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="358.243871" y="256.194013" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="381.425838" y="218.423583" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="307.08397" y="264.638991" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="325.173982" y="274.654458" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="428.164253" y="248.624958" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="423.746561" y="261.568452" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="417.751142" y="265.973107" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="374.072162" y="243.069093" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="489.728593" y="219.499479" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="486.641833" y="208.142295" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="430.976351" y="254.37838" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="424.362941" y="214.63914" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="431.523922" y="246.398306" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="375.060679" y="226.970507" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="327.212374" y="270.851025" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="437.752566" y="252.627005" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="400.77952" y="243.841964" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="360.228868" y="239.238807" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="393.329836" y="246.907868" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="469.421998" y="243.421967" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="477.821149" y="254.370453" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="369.193102" y="278.301342" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="409.484023" y="237.74873" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="362.420761" y="239.479011" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="413.776413" y="248.070276" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="365.444792" y="273.585154" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="375.569196" y="238.669144" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="469.570263" y="255.087172" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="344.566726" y="271.907918" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="419.221897" y="233.702553" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="317.583111" y="303.473455" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="458.706446" y="229.322777" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="450.120641" y="247.428281" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="346.868771" y="257.579919" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="466.9707" y="235.357296" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="312.786062" y="263.207249" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="365.106576" y="243.887185" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="330.0745" y="275.727707" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="386.638519" y="227.110663" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="451.859819" y="225.048633" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="345.223608" y="245.564123" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-    <g clip-path="url(#p70a7e3cc9b)">
-     <use xlink:href="#C0_0_831c618778" x="311.551943" y="247.261883" style="fill: #00a1d5; fill-opacity: 0.6"/>
-    </g>
-   </g>
-   <g id="matplotlib.axis_1">
-    <g id="xtick_1">
-     <g id="line2d_1">
-      <defs>
-       <path id="mddfbcb7bd6" d="M 0 0 
-L 0 3.5 
-" style="stroke: #000000; stroke-width: 0.8"/>
-      </defs>
-      <g>
-       <use xlink:href="#mddfbcb7bd6" x="301.745455" y="308.592" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_7">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="301.745455" y="320.150594" transform="rotate(-0 301.745455 320.150594)">40</text>
-     </g>
-    </g>
-    <g id="xtick_2">
-     <g id="line2d_2">
-      <g>
-       <use xlink:href="#mddfbcb7bd6" x="343.636364" y="308.592" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_8">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="343.636364" y="320.150594" transform="rotate(-0 343.636364 320.150594)">50</text>
-     </g>
-    </g>
-    <g id="xtick_3">
-     <g id="line2d_3">
-      <g>
-       <use xlink:href="#mddfbcb7bd6" x="385.527273" y="308.592" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_9">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="385.527273" y="320.150594" transform="rotate(-0 385.527273 320.150594)">60</text>
-     </g>
-    </g>
-    <g id="xtick_4">
-     <g id="line2d_4">
-      <g>
-       <use xlink:href="#mddfbcb7bd6" x="427.418182" y="308.592" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_10">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="427.418182" y="320.150594" transform="rotate(-0 427.418182 320.150594)">70</text>
-     </g>
-    </g>
-    <g id="xtick_5">
-     <g id="line2d_5">
-      <g>
-       <use xlink:href="#mddfbcb7bd6" x="469.309091" y="308.592" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_11">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="469.309091" y="320.150594" transform="rotate(-0 469.309091 320.150594)">80</text>
-     </g>
-    </g>
-    <g id="text_12">
-     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="396" y="330.910906" transform="rotate(-0 396 330.910906)">Chronological age, y</text>
-    </g>
-   </g>
-   <g id="matplotlib.axis_2">
-    <g id="ytick_1">
-     <g id="line2d_6">
-      <defs>
-       <path id="m5bd6bd0c41" d="M 0 0 
-L -3.5 0 
-" style="stroke: #000000; stroke-width: 0.8"/>
-      </defs>
-      <g>
-       <use xlink:href="#m5bd6bd0c41" x="292.32" y="295.786701" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_13">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="285.32" y="298.065998" transform="rotate(-0 285.32 298.065998)">40</text>
-     </g>
-    </g>
-    <g id="ytick_2">
-     <g id="line2d_7">
-      <g>
-       <use xlink:href="#m5bd6bd0c41" x="292.32" y="274.745778" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_14">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="285.32" y="277.025075" transform="rotate(-0 285.32 277.025075)">50</text>
-     </g>
-    </g>
-    <g id="ytick_3">
-     <g id="line2d_8">
-      <g>
-       <use xlink:href="#m5bd6bd0c41" x="292.32" y="253.704854" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_15">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="285.32" y="255.984151" transform="rotate(-0 285.32 255.984151)">60</text>
-     </g>
-    </g>
-    <g id="ytick_4">
-     <g id="line2d_9">
-      <g>
-       <use xlink:href="#m5bd6bd0c41" x="292.32" y="232.663931" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_16">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="285.32" y="234.943228" transform="rotate(-0 285.32 234.943228)">70</text>
-     </g>
-    </g>
-    <g id="ytick_5">
-     <g id="line2d_10">
-      <g>
-       <use xlink:href="#m5bd6bd0c41" x="292.32" y="211.623007" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_17">
-      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: end" x="285.32" y="213.902304" transform="rotate(-0 285.32 213.902304)">80</text>
-     </g>
-    </g>
-    <g id="text_18">
-     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle" x="272.003359" y="252.288" transform="rotate(-90 272.003359 252.288)">Imaging age, y</text>
-    </g>
-   </g>
-   <g id="line2d_11">
-    <path d="M 301.745455 295.786701 
-L 490.254545 201.102545 
-" clip-path="url(#p70a7e3cc9b)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #80796b"/>
-   </g>
-   <g id="line2d_12">
-    <path d="M 473.808179 232.640617 
-L 473.808179 236.993101 
-" clip-path="url(#p70a7e3cc9b)" style="fill: none; stroke: #df8f44; stroke-width: 0.8; stroke-linecap: square"/>
-   </g>
-   <g id="line2d_13">
-    <path d="M 307.08397 267.812285 
-L 307.08397 264.638991 
-" clip-path="url(#p70a7e3cc9b)" style="fill: none; stroke: #df8f44; stroke-width: 0.8; stroke-linecap: square"/>
-   </g>
-   <g id="line2d_14">
-    <path d="M 409.484023 246.210259 
-L 409.484023 237.74873 
-" clip-path="url(#p70a7e3cc9b)" style="fill: none; stroke: #df8f44; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
    </g>
    <g id="patch_12">
-    <path d="M 292.32 308.592 
-L 292.32 195.984 
-" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+    <path d="M 65.2032 292.1328 
+L 233.7408 292.1328 
+Q 240.3072 292.1328 240.3072 284.0112 
+L 240.3072 227.8368 
+Q 240.3072 219.7152 233.7408 219.7152 
+L 65.2032 219.7152 
+Q 58.6368 219.7152 58.6368 227.8368 
+L 58.6368 284.0112 
+Q 58.6368 292.1328 65.2032 292.1328 
+z
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_13">
-    <path d="M 292.32 308.592 
-L 499.68 308.592 
-" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+    <path d="M 253.44 304.992 
+L 384.768 304.992 
+L 384.768 203.472 
+L 253.44 203.472 
+z
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
    </g>
-   <g id="text_19">
-    <text style="font-size: 7.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #374e55" x="396" y="189.984" transform="rotate(-0 396 189.984)">Age acceleration = vertical residual</text>
+   <g id="patch_14">
+    <path d="M 395.712 304.992 
+L 527.04 304.992 
+L 527.04 203.472 
+L 395.712 203.472 
+z
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 65.2032 424.1088 
+L 310.3488 424.1088 
+Q 316.9152 424.1088 316.9152 415.9872 
+L 316.9152 363.1968 
+Q 316.9152 355.0752 310.3488 355.0752 
+L 65.2032 355.0752 
+Q 58.6368 355.0752 58.6368 363.1968 
+L 58.6368 415.9872 
+Q 58.6368 424.1088 65.2032 424.1088 
+z
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #c77b30; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 346.464 430.2 
+L 527.04 430.2 
+L 527.04 348.984 
+L 346.464 348.984 
+z
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 65.2032 569.6208 
+L 255.6288 569.6208 
+Q 262.1952 569.6208 262.1952 561.4992 
+L 262.1952 488.4048 
+Q 262.1952 480.2832 255.6288 480.2832 
+L 65.2032 480.2832 
+Q 58.6368 480.2832 58.6368 488.4048 
+L 58.6368 561.4992 
+Q 58.6368 569.6208 65.2032 569.6208 
+z
+" clip-path="url(#p2276d00864)" style="fill: #ffffff; stroke: #374e55; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 280.8 568.944 
+L 527.04 568.944 
+L 527.04 480.96 
+L 280.8 480.96 
+z
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 280.8 656.928 
+L 390.24 656.928 
+L 390.24 582.48 
+L 280.8 582.48 
+z
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 406.656 656.928 
+L 527.04 656.928 
+L 527.04 582.48 
+L 406.656 582.48 
+z
+" clip-path="url(#p2276d00864)" style="fill: #f4f6f7; stroke-dasharray: 4,3; stroke-dashoffset: 0; stroke: #8a8a8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #1a1a1a" x="297.216" y="22.0896" transform="rotate(-0 297.216 22.0896)">Study design: a multi-tissue MRI aging clock and age acceleration</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(24.383412 127.885922) rotate(-90)">Cohort &amp;</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(35.185873 140.408578) rotate(-90)">segmentation</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(24.383412 279.640828) rotate(-90)">MRI aging</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(35.185873 267.194109) rotate(-90)">clock</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(24.38306 399.347859) rotate(-90)">Age</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(35.185521 420.85575) rotate(-90)">acceleration</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(24.383412 591.342328) rotate(-90)">Association</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(35.185873 582.828187) rotate(-90)">analysis</text>
+   </g>
+   <g id="text_6">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="431.28" y="105.124233" transform="rotate(-0 431.28 105.124233)">[ segmented MRI panel ]</text>
+   </g>
+   <g id="text_7">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="319.104" y="256.050633" transform="rotate(-0 319.104 256.050633)">[ λ-selection curve ]</text>
+   </g>
+   <g id="text_8">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="461.376" y="256.050633" transform="rotate(-0 461.376 256.050633)">[ imaging vs chronological age ]</text>
+   </g>
+   <g id="text_9">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="436.752" y="391.410633" transform="rotate(-0 436.752 391.410633)">[ age-acceleration distribution ]</text>
+   </g>
+   <g id="text_10">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="403.92" y="526.770633" transform="rotate(-0 403.92 526.770633)">[ table-forest of the association ]</text>
+   </g>
+   <g id="text_11">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="335.52" y="621.522633" transform="rotate(-0 335.52 621.522633)">[ discordance matrix ]</text>
+   </g>
+   <g id="text_12">
+    <text style="font-style: italic; font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #8a8a8a" x="466.848" y="621.522633" transform="rotate(-0 466.848 621.522633)">[ ROC: clinical ± AAR ]</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(114.14025 68.108625)">204 patients · preoperative lumbar MRI</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(116.719312 76.750594)">Automated multi-tissue segmentation</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(130.654687 85.392562)">(3D Slicer / TotalSegmentator)</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(142.40932 120.424222)">Scanner-robust features:</text>
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(102.486891 128.706109)">size-normalized volumes + vertebra-referenced</text>
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(105.343922 136.987996)">T2 intensity ratios (iliopsoas, deep paraspinal,</text>
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(150.128156 145.269882)">vertebra, disc, cord)</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(103.69125 244.831641)">Ridge regression predicts</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(101.025 253.473609)">chronological age from the</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(110.213437 262.115578)">multi-tissue signature</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(88.578 270.757547)">(10-fold CV; λ selected by age R²)</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(121.827937 378.499641)">Age acceleration (AAR) = residual of</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(128.181375 387.141609)">imaging age ~ chronological age</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(98.654625 395.783578)">Orthogonal to chronological age (no suppression)</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(95.806687 404.425547)">positive = tissues look older than the patient's age</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(100.117125 505.218234)">Firth penalized logistic regression</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(160.416 513.859641)"/>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(85.422937 522.501609)">Non-home discharge  ~  age acceleration</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(90.255375 531.143578)">+ chronological age + sex + ASA class</text>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(160.416 539.784984)"/>
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #374e55" transform="translate(73.791562 548.426953)">Sensitivity: clock specification · λ · random seed</text>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="p190d1a4065">
-   <rect x="7.2" y="7.2" width="518.4" height="331.2"/>
-  </clipPath>
-  <clipPath id="p70a7e3cc9b">
-   <rect x="292.32" y="195.984" width="207.36" height="112.608"/>
+  <clipPath id="p2276d00864">
+   <rect x="7.2" y="7.2" width="547.2" height="676.8"/>
   </clipPath>
  </defs>
 </svg>

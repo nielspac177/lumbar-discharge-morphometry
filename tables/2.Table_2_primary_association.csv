@@ -1,7 +1,7 @@
 Analysis,Clock,OR per SD (95% CI),P,n
-Crude,Scanner-robust,1.85 (1.25–2.83),0.002,192
-Adjusted for age,Scanner-robust,2.00 (1.32–3.14),0.001,192
-"Adjusted for age, sex, ASA",Scanner-robust,1.84 (1.18–2.95),0.007,192
-"Adjusted for age, sex, ASA",Scanner-robust,1.84 (1.18–2.95),0.007,192
-"Adjusted for age, sex, ASA",Intensity-ratio only,2.12 (1.40–3.32),0.000,192
-"Adjusted for age, sex, ASA",Volume only,1.01 (0.70–1.57),0.969,193
+Crude,Scanner-robust,1.85 (1.25-2.83),0.002,192
+Adjusted for age,Scanner-robust,2.00 (1.32-3.14),0.001,192
+"Adjusted for age, sex, ASA",Scanner-robust,1.84 (1.18-2.95),0.007,192
+"Adjusted for age, sex, ASA",Scanner-robust,1.84 (1.18-2.95),0.007,192
+"Adjusted for age, sex, ASA",Intensity-ratio only,2.12 (1.40-3.32),0.000,192
+"Adjusted for age, sex, ASA",Volume only,1.01 (0.70-1.57),0.969,193
