@@ -553,7 +553,10 @@ def tables(df, cfg):
 def make_all():
     from .data_loading import load_cohort, load_config
     cfg = load_config("config.yaml"); df = load_cohort(cfg)
-    fig1_methods_overview(df, cfg)
+    # fig1_methods_overview is intentionally NOT called here: the committed Figure 1
+    # is hand-finalized in Inkscape (it embeds the de-identified multi-tissue MRI
+    # panel). Run fig1_methods_overview(df, cfg) explicitly to regenerate the code
+    # baseline (this overwrites the hand-edited figure with the MRI placeholder).
     fig2_aging_clock(df, cfg)
     fig3_primary_association(df, cfg)
     fig4_robustness_and_value(df, cfg)
