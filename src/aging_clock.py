@@ -264,6 +264,55 @@ def bmi_sensitivity(df: pd.DataFrame, cfg: dict, spec: str = PRIMARY_SPEC) -> pd
     return pd.DataFrame(rows)
 
 
+def surgical_sensitivity(df: pd.DataFrame, cfg: dict, spec: str = PRIMARY_SPEC) -> pd.DataFrame:
+    """Age-acceleration OR after adjustment for surgical invasiveness (number of
+    operated levels, fusion, operative time), which correlates with both degenerative
+    tissue appearance and discharge destination and is a candidate confounder."""
+    aar, age, female, asa, y, clock = _design_adjusted(df, cfg, spec)
+    sub = df.loc[clock.index]
+    nlev = pd.to_numeric(sub["num_level"], errors="coerce")
+    fusion = (pd.to_numeric(sub["surgery"], errors="coerce") == 1).astype(float).to_numpy()
+    opmin = pd.to_numeric(sub["tot_surgery_min"], errors="coerce")
+
+    def _row(name, cols, mask):
+        f = firth_logit(np.column_stack(cols), y[mask])
+        return {"model": name, "n": int(mask.sum()), "AAR_OR": float(f["or"][1]),
+                "ci_lo": float(f["ci_lo"][1]), "ci_hi": float(f["ci_hi"][1]), "p": float(f["p"][1])}
+    full = np.ones(len(y), bool)
+    ml = nlev.notna().to_numpy()
+    mo = (nlev.notna() & opmin.notna()).to_numpy()
+    rows = [_row("Adjusted for age, sex, ASA", [aar, age, female, asa], full),
+            _row("+ number of operated levels", [aar[ml], age[ml], female[ml], asa[ml], _z(nlev[ml].to_numpy())], ml),
+            _row("+ levels + fusion", [aar[ml], age[ml], female[ml], asa[ml], _z(nlev[ml].to_numpy()), fusion[ml]], ml),
+            _row("+ levels + fusion + operative time",
+                 [aar[mo], age[mo], female[mo], asa[mo], _z(nlev[mo].to_numpy()), fusion[mo], _z(opmin[mo].to_numpy())], mo)]
+    return pd.DataFrame(rows)
+
+
+def scandate_analysis(df: pd.DataFrame, cfg: dict, spec: str = PRIMARY_SPEC) -> dict:
+    """Partial test of acquisition/protocol drift. Scanner and sequence metadata are
+    unavailable, but the surgery date is a proxy for protocol era: we correlate the
+    age-acceleration residual with surgery year and re-estimate the outcome association
+    adjusting for surgery year."""
+    from scipy.stats import pearsonr
+    clock, _ = fit_clock(df, cfg, spec)
+    sub = df.loc[clock.index]
+    year = pd.to_datetime(sub["dos"], errors="coerce").dt.year
+    m = year.notna().to_numpy()
+    aar = clock["aar"].to_numpy()
+    r, rp = pearsonr(aar[m], year[m].to_numpy().astype(float))
+    aarz, yr = _z(aar[m]), _z(year[m].to_numpy().astype(float))
+    age = _z(pd.to_numeric(sub["age_yrs"], errors="coerce").to_numpy()[m])
+    female = (sub["sex"] == "F").astype(float).to_numpy()[m]
+    asa = pd.to_numeric(sub["asa"], errors="coerce"); asa = _z(asa.fillna(asa.median()).to_numpy()[m])
+    y = clock[cfg["outcome"]].astype(int).to_numpy()[m]
+    f = firth_logit(np.column_stack([aarz, age, female, asa, yr]), y)
+    return {"corr_aar_year": float(r), "corr_p": float(rp), "n": int(m.sum()),
+            "aar_or_adj_year": float(f["or"][1]), "ci_lo": float(f["ci_lo"][1]),
+            "ci_hi": float(f["ci_hi"][1]), "p": float(f["p"][1]),
+            "year_min": int(year.min()), "year_max": int(year.max())}
+
+
 def _common_index(df: pd.DataFrame, cfg: dict):
     """Patients with complete data for the union of all clock features (n=192), so the
     three clock specifications are compared on the same cohort."""
@@ -315,8 +364,11 @@ def run(config_path: str = "config.yaml", outdir: str = "results") -> None:
     clock_coefficients(df, cfg).to_csv(f"{outdir}/clock_coefficients.csv", index=False)
     adjusted_coefficients(df, cfg).to_csv(f"{outdir}/adjusted_model_coefficients.csv", index=False)
     bmi_sensitivity(df, cfg).to_csv(f"{outdir}/bmi_sensitivity.csv", index=False)
+    surgical_sensitivity(df, cfg).to_csv(f"{outdir}/surgical_sensitivity.csv", index=False)
     with open(f"{outdir}/incremental_auc.json", "w") as fh:
         json.dump(incremental_auc(df, cfg), fh, indent=2)
+    with open(f"{outdir}/scandate_analysis.json", "w") as fh:
+        json.dump(scandate_analysis(df, cfg), fh, indent=2)
     clock, _ = fit_clock(df, cfg)
     # row-level predictions are gitignored (contain per-patient age)
     clock[["age_yrs", "imaging_age", "aar", cfg["outcome"]]].to_csv(

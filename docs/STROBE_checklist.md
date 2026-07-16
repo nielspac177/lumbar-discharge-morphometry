@@ -10,7 +10,7 @@ Reporting of this study follows the STROBE statement for observational studies (
 | 2 | Background/rationale | Introduction |
 | 3 | Objectives / hypothesis | Introduction (final paragraph); Abstract (Objective) |
 | 4 | Study design | Methods, Design and participants |
-| 5 | Setting, locations, dates | Methods, Design and participants. **[Enrollment window to be added.]** |
+| 5 | Setting, locations, dates | Methods, Design and participants (single academic center; surgeries November 2012–February 2026) |
 | 6a | Eligibility, sources, methods of selection | Methods, Design and participants; Figure S1 |
 | 7 | Variables (outcome, exposures, confounders) | Methods, Outcome; Image segmentation; Aging clock; Statistical analysis |
 | 8 | Data sources / measurement | Methods, Image segmentation and features |
@@ -21,7 +21,7 @@ Reporting of this study follows the STROBE statement for observational studies (
 | 12b | Subgroups/interactions | Discordance analysis (Figure 4B) |
 | 12c | Missing data | Methods, Missing data; Table S3 |
 | 12d | Loss to follow-up | Not applicable (single-timepoint outcome) |
-| 12e | Sensitivity analyses | Methods; Figure 4; Table S2 |
+| 12e | Sensitivity analyses | Methods; Results (BMI, surgical invasiveness, scan-date drift); Figure 4; Table 2; Table S2 |
 | 13 | Participants (numbers at each stage) | Figure S1 |
 | 14 | Descriptive data | Table 1; Table S3 |
 | 15 | Outcome data | Results, Cohort; Table 1 |

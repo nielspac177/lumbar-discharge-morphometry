@@ -530,6 +530,10 @@ def tables(df, cfg):
         est, p = _est(r)
         t2.append({"Section": "Sensitivity: BMI adjustment", "Analysis": r["model"],
                    "OR (95% CI)": est, "P": p, "n": int(r["n"])})
+    for _, r in pd.read_csv(RES / "surgical_sensitivity.csv").iterrows():
+        est, p = _est(r)
+        t2.append({"Section": "Sensitivity: surgical invasiveness", "Analysis": r["model"],
+                   "OR (95% CI)": est, "P": p, "n": int(r["n"])})
     pd.DataFrame(t2).to_csv(TAB / "2.Table_2_primary_association.csv", index=False)
     met = pd.read_csv(RES / "clock_metrics.csv"); iauc = json.load(open(RES / "incremental_auc.json"))
     t3 = [{"Metric": "Clock age R² (out-of-fold)", "Value": f"{met.iloc[0]['age_R2']:.2f}"},

@@ -11,3 +11,7 @@ Full adjusted model (each term),ASA class (per SD),1.86 (1.24-2.86),.002,192
 "Clock specification (adjusted for age, sex, ASA)",Volume only,1.05 (0.72-1.63),.83,192
 Sensitivity: BMI adjustment,"Adjusted for age, sex, ASA (BMI subset)",1.74 (1.11-2.83),.02,161
 Sensitivity: BMI adjustment,"Adjusted for age, sex, ASA, BMI",1.81 (1.14-2.96),.01,161
+Sensitivity: surgical invasiveness,"Adjusted for age, sex, ASA",1.86 (1.19-2.99),.006,192
+Sensitivity: surgical invasiveness,+ number of operated levels,1.74 (1.10-2.81),.02,191
+Sensitivity: surgical invasiveness,+ levels + fusion,1.86 (1.16-3.06),.009,191
+Sensitivity: surgical invasiveness,+ levels + fusion + operative time,1.90 (1.15-3.26),.01,161
