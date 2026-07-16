@@ -87,3 +87,7 @@ results_chk/
 results_chk.log
 .venv/
 submission_package/
+
+# committed de-identified MRI assets for the methods figure
+!figures/assets/
+!figures/assets/*.png

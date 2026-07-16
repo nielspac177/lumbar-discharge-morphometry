@@ -1,12 +1,12 @@
 Section,Analysis,OR (95% CI),P,n
-Age acceleration and non-home discharge (scanner-robust clock),Crude,1.87 (1.26-2.86),.001,192
-Age acceleration and non-home discharge (scanner-robust clock),Adjusted for age,2.03 (1.33-3.19),<.001,192
-Age acceleration and non-home discharge (scanner-robust clock),"Adjusted for age, sex, ASA",1.86 (1.19-2.99),.006,192
+Age acceleration and non-home discharge (multi-tissue clock),Crude,1.87 (1.26-2.86),.001,192
+Age acceleration and non-home discharge (multi-tissue clock),Adjusted for age,2.03 (1.33-3.19),<.001,192
+Age acceleration and non-home discharge (multi-tissue clock),"Adjusted for age, sex, ASA",1.86 (1.19-2.99),.006,192
 Full adjusted model (each term),Age acceleration (per SD),1.86 (1.19-2.99),.006,192
 Full adjusted model (each term),Chronological age (per SD),1.60 (1.05-2.51),.03,192
 Full adjusted model (each term),Female sex,1.79 (0.86-3.78),.12,192
 Full adjusted model (each term),ASA class (per SD),1.86 (1.24-2.86),.002,192
-"Clock specification (adjusted for age, sex, ASA)",Scanner-robust,1.86 (1.19-2.99),.006,192
+"Clock specification (adjusted for age, sex, ASA)",Multi-tissue,1.86 (1.19-2.99),.006,192
 "Clock specification (adjusted for age, sex, ASA)",Intensity-ratio only,2.13 (1.41-3.35),<.001,192
 "Clock specification (adjusted for age, sex, ASA)",Volume only,1.05 (0.72-1.63),.83,192
 Sensitivity: BMI adjustment,"Adjusted for age, sex, ASA (BMI subset)",1.74 (1.11-2.83),.02,161

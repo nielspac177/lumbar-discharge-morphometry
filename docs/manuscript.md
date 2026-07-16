@@ -24,7 +24,7 @@ paraspinal, vertebra, intervertebral disc, and spinal cord were segmented at L3�
 complete multi-tissue imaging required for the clock.
 
 **Exposures** A ridge-regression aging clock was trained to predict chronological age
-from scanner-robust multi-tissue features (size-normalized volumes and vertebra-referenced
+from multi-tissue features (size-normalized volumes and vertebra-referenced
 T2 intensity ratios), using out-of-fold cross-validation. The **age-acceleration residual**
 (the difference between imaging-predicted and chronological age, orthogonalized to
 chronological age) was the primary exposure.
@@ -41,7 +41,7 @@ patient's chronological age—was associated with higher odds of non-home discha
 unadjusted (OR per SD, 1.87 [95% CI, 1.26–2.86]) and after adjustment for chronological
 age, sex, and ASA class (OR per SD, 1.86 [95% CI, 1.19–2.99]; P = .006); chronological age
 remained independently associated, indicating an additive signal. The association was
-strengthened using scanner-robust intensity ratios alone (OR per SD, 2.13 [95% CI,
+strengthened using intensity ratios alone (OR per SD, 2.13 [95% CI,
 1.41–3.35]; P < .001) but was null for a volume-only clock (OR, 1.05 [95% CI, 0.72–1.63]),
 with the signal confined to T2 intensity ratios rather than muscle size—a channel whose scanner sensitivity we could not exclude (see below). The age-acceleration
 association was unchanged after adjustment for body mass index. In cross-validation, adding age acceleration to a clinical model increased the area under
@@ -94,7 +94,7 @@ operationalization we examined; the clock-and-residual definition was adopted on
 grounds—its orthogonality to chronological age—and its construction was blind to the outcome,
 but no analysis is adjusted for multiplicity. We examined the robustness of the association to
 clock specification, regularization, and random seed, and, to guard against acquisition
-confounding, built the primary clock from scanner-robust intensity ratios.
+confounding, built the primary clock from vertebra-referenced intensity ratios, which cancel a global intensity-scaling factor.
 
 # Methods
 
@@ -152,7 +152,7 @@ and yields finite, small-sample-corrected estimates. The primary analysis adjust
 chronological age, sex, and ASA class, reporting per-SD ORs with 95% profile-likelihood
 confidence intervals, and we report the full covariate coefficients so that the independence of
 age acceleration from chronological age can be judged directly. Sensitivity analyses varied the
-clock specification (scanner-robust primary; intensity-ratio only; volume only, all on the same
+clock specification (multi-tissue primary; intensity-ratio only; volume only, all on the same
 192 patients), the ridge penalty, and the cross-validation seed, and additionally adjusted for
 body mass index (recomputed from weight and height with implausible values removed) to test
 confounding by adiposity. Incremental discrimination over a clinical model (chronological age,
@@ -193,7 +193,7 @@ acquisition would produce the same pattern, so it does not by itself establish a
 ## Robustness and specification
 The association was robust across random seeds and across the reasonable range of ridge
 regularization; the penalty chosen to best predict chronological age fell within this range
-(Figure 4A). Restricting the clock to scanner-robust intensity ratios strengthened the
+(Figure 4A). Restricting the clock to intensity ratios alone strengthened the
 association (OR per SD, 2.13 [95% CI, 1.41–3.35]; P < .001), whereas a clock built from volumes
 alone was null (OR, 1.05 [95% CI, 0.72–1.63]; P = .83) (Figure 3, Table 2). The signal thus lay
 in multi-tissue T2 composition rather than in muscle volume. We interpret this localization
@@ -341,8 +341,8 @@ provided as a supplement.
   contributions to the clock.
 - **3.Figure_3_primary_association.** Per-SD odds ratios (95% CI) for age acceleration and non-home
   discharge, shown as a table-forest with two sections: the adjustment ladder (crude, +age,
-  +age/sex/ASA) for the scanner-robust clock, and the clock-specification sensitivity
-  (scanner-robust, intensity-ratio only, volume only).
+  +age/sex/ASA) for the multi-tissue clock, and the clock-specification sensitivity
+  (multi-tissue, intensity-ratio only, volume only).
 - **4.Figure_4_robustness_and_value.** (A) Age-prediction R² versus ridge penalty (penalty selected
   by age fit); (B) discordance matrix of chronological age × imaging age showing non-home-discharge
   frequency; (C) ROC for the clinical model with and without age acceleration.

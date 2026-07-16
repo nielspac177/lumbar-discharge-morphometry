@@ -214,8 +214,17 @@ def fig1_methods_overview(df, cfg):
     _box(ax, 0.10, 0.865, 0.45, 0.070,
          "204 patients · preoperative lumbar MRI\nAutomated multi-tissue segmentation\n(3D Slicer / TotalSegmentator)", fc=LIGHT, fs=7.2)
     _box(ax, 0.10, 0.782, 0.45, 0.070,
-         "Scanner-robust features:\nsize-normalized volumes + vertebra-referenced\nT2 intensity ratios (iliopsoas, deep paraspinal,\nvertebra, disc, cord)", fc="white", fs=6.9)
-    _placeholder(ax, 0.60, 0.788, 0.35, 0.14, "segmented MRI panel")
+         "Multi-tissue features:\nsize-normalized volumes + vertebra-referenced\nT2 intensity ratios (iliopsoas, deep paraspinal,\nvertebra, disc, cord)", fc="white", fs=6.9)
+    # de-identified MRI panels: native axial T2 and the multi-tissue segmentation
+    for xi, fn, lab in [(0.595, "mri_native_t2.png", "Native axial T2"),
+                        (0.775, "mri_segmentation.png", "Multi-tissue segmentation")]:
+        axm = fig.add_axes([xi, 0.788, 0.175, 0.132]); axm.axis("off")
+        asset = FIG / "assets" / fn
+        if asset.exists():
+            axm.imshow(plt.imread(str(asset)))
+        else:
+            axm.add_patch(Rectangle((0, 0), 1, 1, fc=LIGHT, ec=GRAY, lw=1.0, ls=(0, (4, 3))))
+        axm.set_title(lab, fontsize=6.3, color=SLATE, pad=2)
 
     # Stage 2 — real clock panels
     _box(ax, 0.10, 0.585, 0.30, 0.095,
@@ -326,12 +335,12 @@ def fig2_aging_clock(df, cfg):
 def fig3_primary_association(df, cfg):
     a = pd.read_csv(RES / "aar_association.csv").set_index("model")
     s = pd.read_csv(RES / "clock_specs_sensitivity.csv").set_index("spec")
-    rows = [{"section": "Age acceleration and non-home discharge (scanner-robust clock)"}]
+    rows = [{"section": "Age acceleration and non-home discharge (multi-tissue clock)"}]
     for m, lab in [("crude", "Crude"), ("adj_age", "Adjusted for chronological age"),
                    ("adj_age_sex_asa", "Adjusted for age, sex, ASA class")]:
         r = a.loc[m]; rows.append({"label": lab, "n": r["n"], "or": r["AAR_OR"], "lo": r["ci_lo"], "hi": r["ci_hi"], "p": r["p"]})
     rows.append({"section": "Clock specification (adjusted for age, sex, ASA class)"})
-    for sp, lab in [("scanner_robust", "Scanner-robust (primary)"), ("intensity_ratio_only", "Intensity-ratio only"),
+    for sp, lab in [("scanner_robust", "Multi-tissue (primary)"), ("intensity_ratio_only", "Intensity-ratio only"),
                     ("volume_only", "Volume only")]:
         r = s.loc[sp]; rows.append({"label": lab, "n": r["n"], "or": r["AAR_OR"], "lo": r["ci_lo"], "hi": r["ci_hi"], "p": r["p"]})
     table_forest(rows, "3.Figure_3_primary_association", xlim=(0.5, 3.5),
@@ -514,7 +523,7 @@ def tables(df, cfg):
     t2 = []
     for _, r in a.iterrows():
         est, p = _est(r)
-        t2.append({"Section": "Age acceleration and non-home discharge (scanner-robust clock)",
+        t2.append({"Section": "Age acceleration and non-home discharge (multi-tissue clock)",
                    "Analysis": {"crude": "Crude", "adj_age": "Adjusted for age",
                                 "adj_age_sex_asa": "Adjusted for age, sex, ASA"}[r["model"]],
                    "OR (95% CI)": est, "P": p, "n": int(r["n"])})
@@ -524,7 +533,7 @@ def tables(df, cfg):
     for _, r in s.iterrows():
         est, p = _est(r)
         t2.append({"Section": "Clock specification (adjusted for age, sex, ASA)",
-                   "Analysis": {"scanner_robust": "Scanner-robust", "intensity_ratio_only": "Intensity-ratio only",
+                   "Analysis": {"scanner_robust": "Multi-tissue", "intensity_ratio_only": "Intensity-ratio only",
                                 "volume_only": "Volume only"}[r["spec"]], "OR (95% CI)": est, "P": p, "n": int(r["n"])})
     for _, r in bmi.iterrows():
         est, p = _est(r)
@@ -563,10 +572,7 @@ def tables(df, cfg):
 def make_all():
     from .data_loading import load_cohort, load_config
     cfg = load_config("config.yaml"); df = load_cohort(cfg)
-    # fig1_methods_overview is intentionally NOT called here: the committed Figure 1
-    # is hand-finalized in Inkscape (it embeds the de-identified multi-tissue MRI
-    # panel). Run fig1_methods_overview(df, cfg) explicitly to regenerate the code
-    # baseline (this overwrites the hand-edited figure with the MRI placeholder).
+    fig1_methods_overview(df, cfg)   # embeds the committed de-identified MRI assets
     fig2_aging_clock(df, cfg)
     fig3_primary_association(df, cfg)
     fig4_robustness_and_value(df, cfg)
