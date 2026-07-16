@@ -1,18 +1,17 @@
 """Firth's penalized-likelihood logistic regression.
 
-At 51 events and up to 11 predictors (events-per-variable ~4.6), ordinary maximum
-likelihood is small-sample biased and unstable, and near-separation inflates the
-odds ratios and confidence intervals of sparse predictors (e.g. iliopsoas signal
-intensity). Firth's method adds the Jeffreys invariant prior 0.5*log|I(beta)| to
-the log-likelihood, which removes the first-order bias and always yields finite
+With 47 non-home-discharge events and small adjusted models (age acceleration plus a
+few covariates), ordinary maximum likelihood is small-sample biased and unstable.
+Firth's method adds the Jeffreys invariant prior 0.5*log|I(beta)| to the
+log-likelihood, which removes the first-order bias and always yields finite
 estimates. This module implements the penalized fit, profile-penalized-likelihood
 confidence intervals, and penalized likelihood-ratio p-values, matching R's
 ``logistf`` (Heinze & Schemper 2002). It has no external dependency beyond
 NumPy/SciPy so it runs in the offline analysis environment.
 
-We report Firth estimates for every association (etiologic) odds ratio in the
-paper. Continuous predictors are standardized to per-SD effects before fitting;
-binary predictors are left as 0/1 and reported per unit.
+We report Firth estimates for every association odds ratio in the paper. Continuous
+predictors are standardized to per-SD effects before fitting; binary predictors are
+left as 0/1 and reported per unit.
 """
 from __future__ import annotations
 

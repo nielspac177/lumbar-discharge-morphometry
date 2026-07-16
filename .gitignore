@@ -46,6 +46,9 @@ results/*
 !results/aar_association.csv
 !results/clock_specs_sensitivity.csv
 !results/clock_coefficients.csv
+!results/adjusted_model_coefficients.csv
+!results/bmi_sensitivity.csv
+!results/incremental_auc.json
 # explicitly NOT whitelisted (row-level / logs):
 results/roc_data.csv
 results/clock_predictions.csv

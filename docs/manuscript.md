@@ -35,24 +35,25 @@ regression adjusted for chronological age, sex, and ASA class, reporting per–s
 (SD) odds ratios (ORs).
 
 **Results** Of 192 patients (median age 64 years; 48% female), 47 (24.5%) had a non-home
-discharge. The clock predicted chronological age with a cross-validated R² of 0.22 (mean
+discharge. The clock predicted chronological age with a cross-validated R² of 0.23 (mean
 absolute error, 8.5 years). Greater age acceleration—tissues appearing older than the
 patient's chronological age—was associated with higher odds of non-home discharge, both
-unadjusted (OR per SD, 1.85 [95% CI, 1.25–2.83]) and after adjustment for chronological
-age, sex, and ASA class (OR per SD, 1.84 [95% CI, 1.18–2.95]; P = .007); chronological age
+unadjusted (OR per SD, 1.87 [95% CI, 1.26–2.86]) and after adjustment for chronological
+age, sex, and ASA class (OR per SD, 1.86 [95% CI, 1.19–2.99]; P = .006); chronological age
 remained independently associated, indicating an additive signal. The association was
-strengthened using scanner-robust intensity ratios alone (OR per SD, 2.12 [95% CI,
-1.40–3.32]; P < .001) but was null for a volume-only clock (OR, 1.01 [95% CI, 0.70–1.57]),
-indicating a tissue-quality rather than an atrophy signature. Adding age acceleration to a
-clinical model modestly increased discrimination (area under the curve, 0.74 to 0.77,
-in-sample). Naive operationalizations—single-muscle volume, a dichotomized sarcopenia
-threshold, and an age-uncorrected age gap—were null or artifactual.
+strengthened using scanner-robust intensity ratios alone (OR per SD, 2.13 [95% CI,
+1.41–3.35]; P < .001) but was null for a volume-only clock (OR, 1.05 [95% CI, 0.72–1.63]),
+locating the signal in tissue T2 composition rather than muscle size. The age-acceleration
+association was unchanged after adjustment for body mass index. In cross-validation, adding age acceleration to a clinical model increased the area under
+the curve from 0.71 to 0.75 (change +0.037; 95% CI, −0.003 to 0.078), a small and not
+statistically resolved gain. Naive operationalizations—single-muscle volume, a dichotomized
+sarcopenia threshold, and an age-uncorrected age gap—were null or artifactual.
 
-**Conclusions and Relevance** A scanner-robust multi-tissue MRI aging signature captured a
-component of biological aging associated with non-home discharge beyond chronological age.
-These hypothesis-generating findings, from a single center with a modest event count and
-without scanner harmonization, require external and multi-site validation before any clinical
-use.
+**Conclusions and Relevance** A multi-tissue MRI age-acceleration residual was associated with
+non-home discharge beyond chronological age. Whether it reflects tissue biology or image
+acquisition is unresolved. These hypothesis-generating findings, from a single center with a
+modest event count and without scanner harmonization, require external and multi-site validation
+before any interpretation or clinical use.
 
 ---
 
@@ -88,20 +89,22 @@ variable containing age is adjusted for age.
 
 We therefore operationalized a multi-tissue MRI aging clock in a lumbar spine-surgery cohort
 and asked, as a hypothesis-generating question, whether its age-acceleration residual is
-associated with non-home discharge independent of chronological age. We prespecified
-robustness analyses—alternative clock specifications, regularization, and random seeds—and, to
-guard against acquisition confounding, built the primary clock from scanner-robust intensity
-ratios.
+associated with non-home discharge independent of chronological age. We report every exposure
+operationalization we examined; the clock-and-residual definition was adopted on methodological
+grounds—its orthogonality to chronological age—and its construction was blind to the outcome,
+but no analysis is adjusted for multiplicity. We examined the robustness of the association to
+clock specification, regularization, and random seed, and, to guard against acquisition
+confounding, built the primary clock from scanner-robust intensity ratios.
 
 # Methods
 
 ## Design and participants
 We conducted a retrospective cohort study of consecutive adults undergoing lumbar spine surgery
 at a single academic center with a preoperative lumbar MRI suitable for tissue segmentation,
-reported per the STROBE guideline for observational studies [@vonelm2007strobe]. Patients were
-included when the reference muscle (iliopsoas) could be segmented; the analytic cohort comprised
-204 patients, of whom 192 had the complete multi-tissue imaging required for the aging clock
-(Supplementary Figure S1). The study was approved by the institutional review board, which
+reported per the STROBE guideline for observational studies [@vonelm2007strobe]. Of 206 patients
+screened, 204 were eligible (a documented discharge outcome, a plausible recorded age, and a
+segmentable iliopsoas), of whom 192 had the complete multi-tissue imaging required for the aging
+clock (Supplementary Figure S1). The study was approved by the institutional review board, which
 waived informed consent for this minimal-risk retrospective analysis.
 
 ## Outcome
@@ -130,9 +133,10 @@ unlikely. The clock was therefore fit on complete cases without imputation.
 ## The MRI aging clock and age acceleration
 We trained a ridge-regression model to predict chronological age from the multi-tissue feature
 set. To avoid optimistic bias, imaging-predicted age ("imaging age") was generated by
-repeated 10-fold cross-validation, so each patient's prediction came from a model that had not
-seen that patient. The ridge penalty was selected by out-of-fold age-prediction accuracy,
-never by the outcome. The **age-acceleration residual** was defined as the residual of imaging
+10-fold cross-validation, with feature standardization fit within each training fold, so that
+each patient's prediction—neither the scaling nor the coefficients—borrowed information from
+that patient. The ridge penalty was selected by out-of-fold age-prediction accuracy, never by
+the outcome, and the outcome entered nowhere in clock construction. The **age-acceleration residual** was defined as the residual of imaging
 age regressed on chronological age and is therefore, by construction, uncorrelated with
 chronological age; a positive value indicates tissues that appear older than the patient's
 chronological age. Because the residual is orthogonal to chronological age, adjusting the
@@ -144,14 +148,19 @@ Age acceleration was standardized and related to non-home discharge by Firth pen
 regression, which is appropriate for the modest event count of this cohort
 and yields finite, small-sample-corrected estimates. The primary analysis adjusted for
 chronological age, sex, and ASA class, reporting per-SD ORs with 95% profile-likelihood
-confidence intervals. Prespecified sensitivity analyses varied the clock specification
-(scanner-robust primary; intensity-ratio only; volume only), the ridge penalty, and the
-cross-validation seed. Incremental discrimination over a clinical model (chronological age, sex,
-ASA class) was summarized by the area under the receiver-operating-characteristic curve. To
-illustrate the biological-versus-chronological distinction we cross-classified patients by
-chronological age (median split) and by age acceleration (positive vs negative). We report this
-work as hypothesis-generating: several exposure operationalizations were examined, and the
-analyses are not adjusted for multiple comparisons. Analyses used a fixed master seed and are
+confidence intervals, and we report the full covariate coefficients so that the independence of
+age acceleration from chronological age can be judged directly. Sensitivity analyses varied the
+clock specification (scanner-robust primary; intensity-ratio only; volume only, all on the same
+192 patients), the ridge penalty, and the cross-validation seed, and additionally adjusted for
+body mass index (recomputed from weight and height with implausible values removed) to test
+confounding by adiposity. Incremental discrimination over a clinical model (chronological age,
+sex, ASA class) was estimated by **repeated cross-validation**, refitting the outcome model
+within each fold, with a bootstrap 95% CI on the change in the area under the curve; an
+apparent (in-sample) estimate is reported only as a visual reference. To illustrate the
+biological-versus-chronological distinction we cross-classified patients by chronological age
+(median split) and by age acceleration (positive vs negative). We report this work as
+hypothesis-generating: several exposure operationalizations were examined, and the analyses are
+not adjusted for multiple comparisons. Analyses used a fixed master seed and are
 fully reproducible; code is publicly available.
 
 # Results
@@ -159,38 +168,43 @@ fully reproducible; code is publicly available.
 ## Cohort and clock performance
 Of 192 patients with complete multi-tissue imaging (median age 64 years; 48% female), 47
 (24.5%) had a non-home discharge. Patients with a non-home discharge were older and had higher
-ASA class, more hypertension, and greater age acceleration (median +2.8 vs −0.1 years) than
+ASA class, more hypertension, and greater age acceleration (median +3.0 vs −0.3 years) than
 those discharged home (Table 1). The aging clock predicted chronological age with a
-cross-validated R² of 0.22 and a mean absolute error of 8.5 years, and the age-acceleration
+cross-validated R² of 0.23 and a mean absolute error of 8.5 years, and the age-acceleration
 residual had a standard deviation of 5.8 years and was, by construction, uncorrelated with
 chronological age (Figure 2). Deep paraspinal and disc T2 ratios contributed most strongly to
 the clock, followed by paraspinal and iliopsoas volume (Figure 2C).
 
 ## Age acceleration and non-home discharge
 Greater age acceleration was associated with higher odds of non-home discharge (Figure 3,
-Table 2). The unadjusted OR per SD of age acceleration was 1.85 (95% CI, 1.25–2.83), and the
-association persisted after adjustment for chronological age (OR, 2.00 [95% CI, 1.32–3.14]) and
-after further adjustment for sex and ASA class (OR per SD, 1.84 [95% CI, 1.18–2.95]; P = .007).
-Chronological age remained independently associated with non-home discharge in the adjusted
-model, indicating that age acceleration and chronological age carried additive information. This
-is the expected signature of a biological-age marker: imaging captured a component of aging-related
-risk distinct from years lived.
+Table 2). The unadjusted OR per SD of age acceleration was 1.87 (95% CI, 1.26–2.86), and the
+association persisted after adjustment for chronological age (OR, 2.03 [95% CI, 1.33–3.19]) and
+after further adjustment for sex and ASA class (OR per SD, 1.86 [95% CI, 1.19–2.99]; P = .006).
+In that adjusted model chronological age remained independently associated with non-home
+discharge (OR per SD, 1.60 [95% CI, 1.05–2.51]; P = .03), so age acceleration and chronological
+age carried additive information (Table 2). This is the expected signature of a biological-age
+marker: imaging captured a component of aging-related risk distinct from years lived.
 
 ## Robustness and specification
 The association was robust across random seeds and across the reasonable range of ridge
 regularization; the penalty chosen to best predict chronological age fell within this range
 (Figure 4A). Restricting the clock to scanner-robust intensity ratios strengthened the
-association (OR per SD, 2.12 [95% CI, 1.40–3.32]; P < .001), whereas a clock built from volumes
-alone was null (OR, 1.01 [95% CI, 0.70–1.57]; P = .97) (Figure 4B, Table 2). The signal
-therefore reflected multi-tissue T2 *composition*—a quality signature—rather than muscle atrophy,
-and it survived, indeed strengthened, under intensity ratios that cancel a global scanner
-scaling factor.
+association (OR per SD, 2.13 [95% CI, 1.41–3.35]; P < .001), whereas a clock built from volumes
+alone was null (OR, 1.05 [95% CI, 0.72–1.63]; P = .83) (Figure 3, Table 2). The signal thus lay
+in multi-tissue T2 composition rather than in muscle volume. We interpret this localization
+cautiously: T2 signal intensity is also the imaging channel most sensitive to scanner, coil, and
+sequence, so a signal confined to intensity ratios is compatible with an acquisition contribution
+as well as with genuine tissue aging (Discussion). The association was unchanged after adjustment
+for body mass index (OR per SD, 1.81 [95% CI, 1.14–2.96] with vs 1.74 without BMI, among the 161
+patients with body-size data), arguing against confounding by adiposity.
 
 ## Incremental value and the biological-versus-chronological distinction
-Adding age acceleration to a clinical model (chronological age, sex, ASA class) increased
-in-sample discrimination modestly, from an area under the curve of 0.74 to 0.77 (Figure 4C,
-Table 3). The clinical relevance of the biological-age distinction is illustrated by discordant
-patients (Figure 3C): among patients whose imaging appeared accelerated, the frequency of
+In repeated cross-validation, adding age acceleration to a clinical model (chronological age,
+sex, ASA class) increased the area under the curve from 0.71 to 0.75, a change of +0.037 (95%
+CI, −0.003 to 0.078; positive in 97% of bootstrap resamples). The discrimination gain is
+therefore small and not statistically resolved, consistent with an etiologic marker rather than
+a ready prediction tool (Figure 4C, Table 3). The clinical relevance of the biological-age distinction is illustrated by discordant
+patients (Figure 4B): among patients whose imaging appeared accelerated, the frequency of
 non-home discharge was elevated within both younger and older strata, so that a chronologically
 younger patient with accelerated imaging could carry risk comparable to an older patient whose
 tissues appeared normal for age.
@@ -207,12 +221,13 @@ here.
 
 # Discussion
 
-In a single-center cohort of patients undergoing lumbar spine surgery, a multi-tissue MRI aging
-signature—specifically its age-acceleration residual—was associated with non-home discharge
+In a single-center cohort of patients undergoing lumbar spine surgery, an age-acceleration
+residual derived from a multi-tissue MRI aging clock was associated with non-home discharge
 independent of, and additive to, chronological age. The signal was carried by multi-tissue T2
-composition rather than by muscle size, was robust to clock specification and regularization, and
-strengthened under scanner-robust intensity ratios. To our knowledge, this is the first
-application of the geroscience aging-clock framework to preoperative spine imaging.
+composition rather than by muscle size and was stable across clock specification, regularization,
+and random seed. We are not aware of a prior application of the aging-clock framework to
+preoperative spine imaging, but we emphasize that these are exploratory findings from one center
+and that, as discussed below, we cannot separate a biological signal from image acquisition.
 
 This result is as much methodological as clinical. Preoperative muscle and tissue morphometry has
 been studied extensively in spine surgery, yet single-measure associations are fragile because
@@ -230,28 +245,34 @@ That the signal is a T2-composition signature is biologically coherent: T2 signa
 water, fat, and degeneration, which change as muscle, disc, and marrow age.
 
 ## Limitations
-This study is hypothesis-generating and has important limitations. It is single-center and
-retrospective, with a modest event count (47 non-home discharges), and the associations are not
-causal. We examined several exposure operationalizations before adopting the prespecified
-clock-and-residual framework, and we did not adjust for multiple comparisons; the reported
-estimates should therefore be regarded as generating a hypothesis rather than confirming one. The
-aging clock is weak in absolute terms (age R² 0.22), as expected from a small single-center
-training set, and its residual inherits that noise. The most consequential limitation is
-acquisition. Although we built the primary clock from intensity ratios to cancel a global scanner
-scaling factor, and the association strengthened under this constraint, intensity ratios do not
-remove all acquisition effects; sequence- and protocol-dependent contrast differences could
-contribute to the signal. External, multi-site validation with harmonized or explicitly modeled acquisition is the
-essential next step, together with a preregistered analysis using the clock-and-residual method
-defined here.
+This study is hypothesis-generating, and its limitations are substantial. It is single-center
+and retrospective, with a modest event count (47 non-home discharges), and the associations are
+observational and not causal. We examined several exposure operationalizations before adopting
+the clock-and-residual framework, the analysis was not preregistered, and no result is adjusted
+for multiple comparisons; the estimates should be read as generating a hypothesis, not as
+confirming one. The aging clock is weak in absolute terms (age R² 0.23), and its residual
+inherits that noise, so age acceleration is a coarse measure. The most important limitation is
+acquisition confounding, and we do not consider it resolved. The entire signal lies in T2
+intensity ratios and none in volumes; because T2 intensity is precisely the channel most
+sensitive to scanner, coil, and pulse-sequence parameters, this pattern is at least as
+consistent with an acquisition artifact as with tissue biology. Intensity ratios cancel only a
+single global scaling factor, not sequence-dependent contrast differences, and the vertebral
+reference itself changes with age through marrow fatty conversion, so the ratio is an imperfect
+control. We could not test the aging signature against scanner, field-strength, or protocol
+metadata, and enrollment spanned a period over which imaging protocols may have drifted. For
+these reasons the biological interpretation is provisional. External, multi-site validation with
+harmonized or explicitly modeled acquisition—and, ideally, a preregistered analysis using the
+clock-and-residual definition given here—is the essential next step.
 
 # Conclusions
 
-A scanner-robust multi-tissue MRI aging signature captured a component of biological aging
-associated with non-home discharge after lumbar spine surgery, independent of and additive to
-chronological age, whereas naive single-measure and threshold approaches did not. Analyzed as an
-aging clock with an age-orthogonal residual, preoperative MRI may index biological age relevant to
-surgical recovery. These findings are hypothesis-generating and require multi-site validation with
-attention to scanner harmonization before any clinical application.
+In this single-center cohort, an age-acceleration residual derived from a multi-tissue MRI aging
+clock was associated with non-home discharge after lumbar spine surgery, independent of and
+additive to chronological age, whereas naive single-measure and threshold approaches were not.
+Whether this residual reflects biological tissue aging or residual differences in image
+acquisition cannot be determined from these data. The findings are hypothesis-generating and
+would require external, multi-site validation with attention to scanner harmonization before any
+firm interpretation or clinical use.
 
 ---
 
@@ -281,10 +302,13 @@ provided as a supplement.
 # Table legends
 - **1.Table_1_cohort.** Characteristics of the analytic cohort (n = 192) by discharge destination,
   including imaging age and age acceleration, with standardized mean differences.
-- **2.Table_2_primary_association.** Age acceleration and non-home discharge: adjustment ladder
-  (crude, +age, +age/sex/ASA) and clock-specification sensitivity, with per-SD ORs (95% CI).
-- **3.Table_3_clock_and_value.** Clock performance (age R², MAE) and incremental discrimination
-  (AUC of the clinical model with and without age acceleration).
+- **2.Table_2_primary_association.** Age acceleration and non-home discharge: the adjustment ladder
+  (crude, +age, +age/sex/ASA), the full adjusted-model coefficients (including chronological age,
+  sex, and ASA class), the clock-specification sensitivity, and a body-mass-index sensitivity
+  analysis, with per-SD ORs (95% CI).
+- **3.Table_3_clock_and_value.** Out-of-fold clock performance (age R², MAE) and cross-validated
+  incremental discrimination (AUC of the clinical model with and without age acceleration, and the
+  bootstrap CI on the change in AUC).
 - **S1.Table_S1_features.** Imaging features and per-feature missingness.
 - **S2.Table_S2_sensitivity.** Age-acceleration association across ridge penalties and random seeds.
 - **S3.Table_S3_attrition.** Comparison of included (complete multi-tissue imaging) versus excluded
@@ -311,7 +335,3 @@ provided as a supplement.
 - **S2.Figure_S2_feature_correlation.** Correlations among imaging features.
 - **S3.Figure_S3_naive_approaches.** Why naive operationalizations mislead (single muscle,
   dichotomized threshold, and the age-gap suppression artifact) versus the age-acceleration residual.
-- **S1.Figure_S1_STROBE_flow.** Participant flow.
-- **S2.Figure_S2_feature_correlation.** Correlations among imaging features.
-- **S3.Figure_S3_naive_approaches.** Why naive operationalizations mislead (single muscle,
-  threshold, and the age-gap suppression artifact).

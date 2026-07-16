@@ -10,6 +10,7 @@ All figures render to vector SVG (for Inkscape editing) plus PNG and PDF, named
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
@@ -195,8 +196,8 @@ def fig1_methods_overview(df, cfg):
     cols = CLOCK_SPECS[PRIMARY_SPEC]
     feats = build_features(df)[cols].dropna()
     d = pd.concat([feats, df.loc[feats.index, ["age_yrs"]]], axis=1).dropna()
-    Xs = ((d[cols] - d[cols].mean()) / d[cols].std()).to_numpy(); agev = d["age_yrs"].to_numpy()
-    r2s = [1 - np.sum((agev - _ridge_cv_age(Xs, agev, lam, cfg["seed"])) ** 2) / np.sum((agev - agev.mean()) ** 2) for lam in LAMBDA_GRID]
+    Xraw = d[cols].to_numpy(float); agev = d["age_yrs"].to_numpy()
+    r2s = [1 - np.sum((agev - _ridge_cv_age(Xraw, agev, lam, cfg["seed"])) ** 2) / np.sum((agev - agev.mean()) ** 2) for lam in LAMBDA_GRID]
 
     fig = plt.figure(figsize=(7.6, 9.4))
     ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off"); ax.set_xlim(0, 1); ax.set_ylim(0, 1)
@@ -345,8 +346,8 @@ def fig4_robustness_and_value(df, cfg):
     feats = build_features(df); outcome = cfg["outcome"]
     cols = CLOCK_SPECS[PRIMARY_SPEC]
     d = pd.concat([feats[cols], df[["age_yrs", outcome]]], axis=1).dropna()
-    X = d[cols].to_numpy(float); age = d["age_yrs"].to_numpy(float); Xs = (X - X.mean(0)) / X.std(0)
-    r2s = [1 - np.sum((age - _ridge_cv_age(Xs, age, lam, cfg["seed"])) ** 2) / np.sum((age - age.mean()) ** 2) for lam in LAMBDA_GRID]
+    X = d[cols].to_numpy(float); age = d["age_yrs"].to_numpy(float)
+    r2s = [1 - np.sum((age - _ridge_cv_age(X, age, lam, cfg["seed"])) ** 2) / np.sum((age - age.mean()) ** 2) for lam in LAMBDA_GRID]
     clock, _ = fit_clock(df, cfg); idx = clock.index; sub = df.loc[idx]
     y = clock[outcome].astype(int).to_numpy(); aar_raw = clock["aar"].to_numpy(); agec = clock["age_yrs"].to_numpy()
 
@@ -384,11 +385,14 @@ def fig4_robustness_and_value(df, cfg):
         tpr = []; fpr = []
         for t in np.r_[np.inf, np.sort(lp)[::-1], -np.inf]:
             pred = lp >= t; tpr.append((pred & (y == 1)).sum() / (y == 1).sum()); fpr.append((pred & (y == 0)).sum() / (y == 0).sum())
-        ax.plot(fpr, tpr, color=color, ls=ls, lw=1.7, label=f"{lab} (AUC {_auc(lp, y):.2f})")
+        ax.plot(fpr, tpr, color=color, ls=ls, lw=1.7, label=f"{lab} (apparent AUC {_auc(lp, y):.2f})")
     ax.plot([0, 1], [0, 1], color=GRAY, ls=":", lw=0.8)
     ax.set_xlabel("1 − specificity"); ax.set_ylabel("Sensitivity")
     ax.set_title("C  Incremental value", loc="left", fontsize=9, weight="bold")
     ax.legend(frameon=False, fontsize=6, loc="lower right"); ax.set_aspect("equal"); ax.spines[["top", "right"]].set_visible(False)
+    iauc = json.load(open(RES / "incremental_auc.json"))
+    ax.text(0.5, -0.36, f"Cross-validated ΔAUC {iauc['delta_auc']:+.3f} (95% CI {iauc['ci_lo']:+.3f} to {iauc['ci_hi']:+.3f})",
+            transform=ax.transAxes, ha="center", fontsize=5.6, color=GRAY)
     fig.tight_layout(); _save(fig, "4.Figure_4_robustness_and_value")
 
 
@@ -504,33 +508,35 @@ def tables(df, cfg):
         ve = f"{100*ae.mean():.0f}" if binary else f"{ae.mean():.1f}"
         arows.append({"Characteristic": lab, "Included": vi, "Excluded": ve, "SMD": f"{_smd(ai, ae, binary):+.2f}"})
     pd.DataFrame(arows).to_csv(TAB / "S3.Table_S3_attrition.csv", index=False)
+    def _est(r): return f"{r['AAR_OR']:.2f} ({r['ci_lo']:.2f}-{r['ci_hi']:.2f})", _pfmt(r["p"])
     a = pd.read_csv(RES / "aar_association.csv"); s = pd.read_csv(RES / "clock_specs_sensitivity.csv")
+    ac = pd.read_csv(RES / "adjusted_model_coefficients.csv"); bmi = pd.read_csv(RES / "bmi_sensitivity.csv")
     t2 = []
     for _, r in a.iterrows():
-        est, p = _fmt(r["AAR_OR"], r["ci_lo"], r["ci_hi"], r["p"])
-        t2.append({"Analysis": {"crude": "Crude", "adj_age": "Adjusted for age",
+        est, p = _est(r)
+        t2.append({"Section": "Age acceleration and non-home discharge (scanner-robust clock)",
+                   "Analysis": {"crude": "Crude", "adj_age": "Adjusted for age",
                                 "adj_age_sex_asa": "Adjusted for age, sex, ASA"}[r["model"]],
-                   "Clock": "Scanner-robust", "OR per SD (95% CI)": est, "P": p, "n": int(r["n"])})
+                   "OR (95% CI)": est, "P": p, "n": int(r["n"])})
+    for _, r in ac.iterrows():
+        t2.append({"Section": "Full adjusted model (each term)", "Analysis": r["term"],
+                   "OR (95% CI)": f"{r['OR']:.2f} ({r['ci_lo']:.2f}-{r['ci_hi']:.2f})", "P": _pfmt(r["p"]), "n": 192})
     for _, r in s.iterrows():
-        est, p = _fmt(r["AAR_OR"], r["ci_lo"], r["ci_hi"], r["p"])
-        t2.append({"Analysis": "Adjusted for age, sex, ASA",
-                   "Clock": {"scanner_robust": "Scanner-robust", "intensity_ratio_only": "Intensity-ratio only",
-                             "volume_only": "Volume only"}[r["spec"]],
-                   "OR per SD (95% CI)": est, "P": p, "n": int(r["n"])})
+        est, p = _est(r)
+        t2.append({"Section": "Clock specification (adjusted for age, sex, ASA)",
+                   "Analysis": {"scanner_robust": "Scanner-robust", "intensity_ratio_only": "Intensity-ratio only",
+                                "volume_only": "Volume only"}[r["spec"]], "OR (95% CI)": est, "P": p, "n": int(r["n"])})
+    for _, r in bmi.iterrows():
+        est, p = _est(r)
+        t2.append({"Section": "Sensitivity: BMI adjustment", "Analysis": r["model"],
+                   "OR (95% CI)": est, "P": p, "n": int(r["n"])})
     pd.DataFrame(t2).to_csv(TAB / "2.Table_2_primary_association.csv", index=False)
-    met = pd.read_csv(RES / "clock_metrics.csv")
-    clock, _ = fit_clock(df, cfg); idx = clock.index; subc = df.loc[idx]
-    y = clock[outcome].astype(int).to_numpy()
-    age_z = _z(subc["age_yrs"].astype(float).to_numpy()); fem = (subc["sex"] == "F").astype(float).to_numpy()
-    asa_z = _z(pd.to_numeric(subc["asa"], errors="coerce").fillna(2).to_numpy()); aar = _z(clock["aar"].to_numpy())
-    def auc_model(cols):
-        f = firth_logit(np.column_stack(cols), y); lp = np.column_stack([np.ones(len(y))] + cols) @ f["beta"]; return _auc(lp, y)
-    auc_c = auc_model([age_z, fem, asa_z]); auc_a = auc_model([age_z, fem, asa_z, aar])
-    t3 = [{"Metric": "Clock age R² (CV)", "Value": f"{met.iloc[0]['age_R2']:.2f}"},
-          {"Metric": "Clock MAE, y", "Value": f"{met.iloc[0]['MAE']:.1f}"},
-          {"Metric": "AUC clinical (age, sex, ASA)", "Value": f"{auc_c:.3f}"},
-          {"Metric": "AUC clinical + age acceleration", "Value": f"{auc_a:.3f}"},
-          {"Metric": "ΔAUC (in-sample)", "Value": f"{auc_a-auc_c:+.3f}"}]
+    met = pd.read_csv(RES / "clock_metrics.csv"); iauc = json.load(open(RES / "incremental_auc.json"))
+    t3 = [{"Metric": "Clock age R² (out-of-fold)", "Value": f"{met.iloc[0]['age_R2']:.2f}"},
+          {"Metric": "Clock MAE, y (out-of-fold)", "Value": f"{met.iloc[0]['MAE']:.1f}"},
+          {"Metric": "AUC clinical (age, sex, ASA), CV", "Value": f"{iauc['auc_clinical_cv']:.3f}"},
+          {"Metric": "AUC clinical + age acceleration, CV", "Value": f"{iauc['auc_plus_aar_cv']:.3f}"},
+          {"Metric": "ΔAUC (cross-validated)", "Value": f"{iauc['delta_auc']:+.3f} (95% CI {iauc['ci_lo']:+.3f} to {iauc['ci_hi']:+.3f})"}]
     pd.DataFrame(t3).to_csv(TAB / "3.Table_3_clock_and_value.csv", index=False)
     feats = build_features(df); from .aging_clock import FEATURE_LABELS
     n = len(df)
@@ -540,11 +546,11 @@ def tables(df, cfg):
     pd.DataFrame(st1).to_csv(TAB / "S1.Table_S1_features.csv", index=False)
     cols = CLOCK_SPECS[PRIMARY_SPEC]
     d = pd.concat([feats[cols], df[["age_yrs", outcome]]], axis=1).dropna()
-    X = d[cols].to_numpy(float); agev = d["age_yrs"].to_numpy(float); Xs = (X - X.mean(0)) / X.std(0)
+    X = d[cols].to_numpy(float); agev = d["age_yrs"].to_numpy(float)
     yv = d[outcome].astype(int).to_numpy(); st2 = []
     for seed in [1, 7, 42, 2024]:
         for lam in [3.0, 10.0, 30.0]:
-            pred = _ridge_cv_age(Xs, agev, lam, seed); b = np.polyfit(agev, pred, 1); aarv = pred - (b[0]*agev+b[1])
+            pred = _ridge_cv_age(X, agev, lam, seed); b = np.polyfit(agev, pred, 1); aarv = pred - (b[0]*agev+b[1])
             f = firth_logit(np.column_stack([_z(aarv), _z(agev)]), yv)
             st2.append({"seed": seed, "lambda": lam, "AAR_OR": round(f["or"][1], 2), "P": round(f["p"][1], 3)})
     pd.DataFrame(st2).to_csv(TAB / "S2.Table_S2_sensitivity.csv", index=False)
